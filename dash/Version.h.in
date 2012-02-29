@@ -1,0 +1,63 @@
+
+// Copyright (c) 2011 EPFL/BBP. All rights reserved.
+// Author: Stefan Eilemann
+
+#ifndef DASH_VERSION_H_
+#define DASH_VERSION_H_
+
+#include <string>
+
+namespace dash
+{
+    /** The current major version. */
+#   define DASH_VERSION_MAJOR @VERSION_MAJOR@
+
+    /** The current minor version. */
+#   define DASH_VERSION_MINOR @VERSION_MINOR@
+
+    /** The current patch level. */
+#   define DASH_VERSION_PATCH @VERSION_PATCH@
+
+/** True if the current version is newer than the given one. */
+#   define DASH_VERSION_GT( MAJOR, MINOR, PATCH )                      \
+    ( (DASH_VERSION_MAJOR>MAJOR) ||                                    \
+      (DASH_VERSION_MAJOR==MAJOR && (DASH_VERSION_MINOR>MINOR ||      \
+                     (DASH_VERSION_MINOR==MINOR && DASH_VERSION_PATCH>PATCH))))
+
+/** True if the current version is equal or newer to the given. */
+#   define DASH_VERSION_GE( MAJOR, MINOR, PATCH )                      \
+    ( (DASH_VERSION_MAJOR>MAJOR) ||                                    \
+      (DASH_VERSION_MAJOR==MAJOR && (DASH_VERSION_MINOR>MINOR ||      \
+                    (DASH_VERSION_MINOR==MINOR && DASH_VERSION_PATCH>=PATCH))))
+
+/** True if the current version is older than the given one. */
+#   define DASH_VERSION_LT( MAJOR, MINOR, PATCH )                      \
+    ( (DASH_VERSION_MAJOR<MAJOR) ||                                    \
+      (DASH_VERSION_MAJOR==MAJOR && (DASH_VERSION_MINOR<MINOR ||      \
+                     (DASH_VERSION_MINOR==MINOR && DASH_VERSION_PATCH<PATCH))))
+
+/** True if the current version is older or equal to the given. */
+#   define DASH_VERSION_LE( MAJOR, MINOR, PATCH )                      \
+    ( (DASH_VERSION_MAJOR<MAJOR) ||                                    \
+      (DASH_VERSION_MAJOR==MAJOR && (DASH_VERSION_MINOR<MINOR ||      \
+                    (DASH_VERSION_MINOR==MINOR && DASH_VERSION_PATCH<=PATCH))))
+
+    /** Information about the current dash version. */
+    class Version
+    {
+    public:
+        /** @return the current major version of dash. */
+        static int getMajor();
+
+        /** @return the current minor version of dash. */
+        static int getMinor();
+
+        /** @return the current patch level of dash. */
+        static int getPatch();
+
+        /** @return the current dash version (MM.mm.pp). */
+        static std::string getString();
+    };
+}
+
+#endif // DASH_VERSION_H_
