@@ -1,0 +1,39 @@
+
+/**
+@page contextptr Multi-Buffer Basics
+
+Each writable data structure is multi-buffered, that is, each context points to
+a reference-counted and context-counted version of the data. The pointers are
+stored in a lock-free vector to allow for run-time context creation and
+destruction. The lock-free vector is loosely based on "Lock-free Dynamically
+Resizable Arrays. Damian Dechev, Peter Pirkelbauer, and Bjarne Stroustrup". 
+
+@image html dashMultiBuffer.png "Simple (left) and optimized (right) Multi-Buffered Data"
+The Context is the index to access the per-context data item. The index is
+either a direct pointer or an index (byte or short) to a pointer list. The
+second approach is an optimization to minimize memory overhead when buffers are
+shared. The optimized algorithm will only be implemented if memory overhead
+turns out to be an issue. It has a higher complexity and requires more memory
+allocations to keep the optimal size. Both algorithms are depicted in the Figure
+on the right.
+
+When writing to a structure which is referenced by more than one context, a copy
+of the structure is made and set as the context copy. Therefore read and write
+access from multiple contexts is thread-safe, access from multiple threads to a
+single context data item is not.
+
+<pre>
+read value
+    Context context = getCurrentContext();
+    return *_values[ context ];
+
+write value
+    Context context = getCurrentContext();
+    const Value* value = _values[ context ];
+    if( value->getRefCount() > 1 )
+        value = new Value( *value );
+        _values[ context ] = value;
+    *value = input
+</pre>
+
+*/

@@ -1,0 +1,35 @@
+
+/**
+@page threading Threading Contract
+
+DASH is at its core a library for building multi-threaded applications. To
+achieve optimal performance it implements a relaxed thread-safety model, that
+is, not all API calls are fully thread-safe. The rationale is to provide a fast
+API for methods called often, and proposing a thread-unsafe API for methods
+called rarely. Furthermore, thread-unsafe API calls are designed in a way that
+the typical call pattern is single-threaded, that is, the programmer often does
+not need take special care when calling them.
+
+The following sections describe the design rationale and threading caveats for
+specific parts of the dash API.
+
+
+@section context dash::Context and Threads
+
+A dash::Context is a primitive closely linked to an operating system
+thread. Each thread has a current context. The current context is the context
+used for all methods of dash::Node and dash::Attribute. One context may be
+current in multiple threads. There is always a current context, with the main
+context being the default context. Often there is a one-to-one relationship
+between contexts and threads.
+
+All methods of dash::Node and dash::Attribute are context-safe, that is,
+concurrent calls from different contexts are safe. No operation in other
+contexts in threads has any side-effects on a given context.
+
+All methods of dash::Node and dash::Attribute using a single Context are not
+thread-safe, that is, reading and writing values from multiple threads with the
+same current context behaves exactly as with non-protected variables or
+objects. The programmer may use locks or other means of proctection in this
+case.
+*/

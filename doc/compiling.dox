@@ -1,0 +1,15 @@
+
+/**
+@page compiling Compiling
+
+DASH uses CMake as a build system. It currently depends on Boost and
+Equalizer. Building should be as easy as:
+
+<pre>
+  dash> sudo add-apt-repository ppa:eilemann/equalizer-dev/ubuntu
+  dash> sudo apt-get install equalizer-apps equalizer-examples equalizer-tools
+
+  dash> make
+</pre>
+
+*/
