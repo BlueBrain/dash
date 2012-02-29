@@ -2,7 +2,7 @@
 /**
 @mainpage DASH API Documentation
 
-@verbinclude "../README.rst"
+@verbinclude "../README.txt"
 
 @section toc Further Information
  - @ref overview
