@@ -1,3 +1,6 @@
+# DASH
+
+## Description
 
 The goal of DASH is to address generic, efficient multi-threaded data
 access, data distribution and synchronization in heterogenous environments.
@@ -6,11 +9,11 @@ distributed applications. The implementation of data parallel operations
 is possible, but not facilitated by dash.
 
 DASH fulfils the following requirements:
+
 * Memory efficient
     * All threads share the data and copy-on-write
     * Single-threaded use shall not create any additional copies
-    * Different data representations can share underlying data, e.g., triangles
-      between BVH and kd-tree.
+    * Different data representations can share underlying data, e.g., triangles between BVH and kd-tree.
 * High-Performance
     * Lock-free read access
     * Data update from thread A to B shall be a simple pointer swaps
