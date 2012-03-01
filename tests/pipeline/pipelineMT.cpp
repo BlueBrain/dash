@@ -59,8 +59,10 @@ public:
                 producedData = 0;
             *attr_ = producedData;
             co::base::sleep( producedData );
-            const int attrProducedData = static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
-            TESTINFO(attrProducedData == producedData, producedData << "!=" << attrProducedData );
+            const int attrProducedData =
+                    static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
+            TESTINFO(attrProducedData == producedData,
+                     producedData << "!=" << attrProducedData );
             dash::Commit commit = context_.commit();
             outputQ_->push(commit);
             if( producedData == 0 )
@@ -94,7 +96,11 @@ public:
     void setInputQueue(CommitQueue* input) { inputQ_ = input; }
     void setOutputQueue(CommitQueue* output) { outputQ_ = output; }
 
-    virtual ~Filter() {}
+    virtual ~Filter()
+    {
+        context_.setCurrent();
+        context_.commit();  // consume remaining changes
+    }
 
     virtual void run()
     {
@@ -109,8 +115,10 @@ public:
             co::base::sleep( filterNo_ );
             dash::Commit commit = inputQ_->pop();
             context_.apply(commit);
-            const int outData = static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
-            TESTINFO( outData == consumeMultiplier_ * producerData, outData << "!=" << consumeMultiplier_ * producerData );
+            const int outData =
+                    static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
+            TESTINFO( outData == consumeMultiplier_ * producerData,
+                      outData << "!=" << consumeMultiplier_ * producerData );
             *attr_ = MULT_CONST * outData;
             commit = context_.commit();
             outputQ_->push(commit);
@@ -151,7 +159,11 @@ public:
             consumeMultiplier_ *= MULT_CONST;
     }
 
-    virtual ~Consumer() {}
+    virtual ~Consumer()
+    {
+        context_.setCurrent();
+        context_.commit();  // consume remaining changes
+    }
 
     virtual void run()
     {
@@ -165,8 +177,10 @@ public:
             const int targetConsumedData = producerData * consumeMultiplier_;
             dash::Commit iCommit = inputQ_->pop();
             context_.apply(iCommit);
-            const int consumedData = static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
-            TESTINFO(consumedData == targetConsumedData, consumedData << "!=" << targetConsumedData);
+            const int consumedData =
+                    static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
+            TESTINFO(consumedData == targetConsumedData,
+                     consumedData << "!=" << targetConsumedData);
             if(consumedData == 0)
                 exit();
         }
@@ -185,32 +199,38 @@ private:
 
 int dash::test::main( int argc, char **argv )
 {
-    CommitQueue queue[ FILTER_COUNT + 1 ];
-
-    Filter filter[ FILTER_COUNT ];
-
-    Producer producer( &queue[0] );
-    for(int i = 0; i < FILTER_COUNT; ++i)
+    dash::Context& mainCtx = dash::Context::getMain( argc, argv );
     {
-        filter[ i ].setInputQueue( &queue[ i ] );
-        filter[ i ].setOutputQueue( &queue[ i + 1 ] );
+        CommitQueue queue[ FILTER_COUNT + 1 ];
+
+        Filter filter[ FILTER_COUNT ];
+
+        Producer producer( &queue[0] );
+        for(int i = 0; i < FILTER_COUNT; ++i)
+        {
+            filter[ i ].setInputQueue( &queue[ i ] );
+            filter[ i ].setOutputQueue( &queue[ i + 1 ] );
+        }
+        Consumer consumer( &queue[ FILTER_COUNT ] );
+
+        filter[0].setAttribute( producer.mapAttributeToContext( filter[ 0 ].getContext() ) );
+        for(int i = 1; i < FILTER_COUNT; ++i)
+            filter[ i ].setAttribute( filter[ i - 1 ].mapAttributeToContext( filter[ i ].getContext() ) );
+        consumer.setAttribute( filter[ FILTER_COUNT - 1 ].mapAttributeToContext( consumer.getContext() ) );
+
+        producer.start();
+        for(int i = 0; i < FILTER_COUNT; ++i)
+            filter[ i ].start();
+        consumer.start();
+
+        producer.join();
+        for(int i = 0; i < FILTER_COUNT; ++i)
+                filter[ i ].join();
+        consumer.join();
     }
-    Consumer consumer( &queue[ FILTER_COUNT ] );
 
-    filter[0].setAttribute( producer.mapAttributeToContext( filter[ 0 ].getContext() ) );
-    for(int i = 1; i < FILTER_COUNT; ++i)
-        filter[ i ].setAttribute( filter[ i - 1 ].mapAttributeToContext( filter[ i ].getContext() ) );
-    consumer.setAttribute( filter[ FILTER_COUNT - 1 ].mapAttributeToContext( consumer.getContext() ) );
-
-    producer.start();
-    for(int i = 0; i < FILTER_COUNT; ++i)
-        filter[ i ].start();
-    consumer.start();
-
-    producer.join();
-    for(int i = 0; i < FILTER_COUNT; ++i)
-            filter[ i ].join();
-    consumer.join();
+    mainCtx.commit();
+    delete &mainCtx;
 
     return EXIT_SUCCESS;
 }

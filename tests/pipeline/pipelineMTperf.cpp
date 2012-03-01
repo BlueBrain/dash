@@ -72,8 +72,10 @@ public:
             if( producedData == ITERATION_COUNT )
                 producedData = 0;
             *attr_ = producedData;
-            const int attrProducedData = static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
-            TESTINFO( attrProducedData == producedData, producedData << "!=" << attrProducedData );
+            const int attrProducedData =
+                    static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
+            TESTINFO( attrProducedData == producedData,
+                      producedData << "!=" << attrProducedData );
             dash::Commit commit = context_.commit();
             outputQ_->push( commit );
             if( producedData == 0 )
@@ -126,8 +128,10 @@ public:
                 producerData = 0;
             dash::Commit commit = inputQ_->pop();
             context_.apply(commit);
-            const int outData = static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
-            TESTINFO( outData == consumeMultiplier_ * producerData, outData << "!=" << consumeMultiplier_ * producerData );
+            const int outData =
+                    static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
+            TESTINFO( outData == consumeMultiplier_ * producerData,
+                      outData << "!=" << consumeMultiplier_ * producerData );
             *attr_ = MULT_CONST * outData;
             commit = context_.commit();
             outputQ_->push( commit );
@@ -146,7 +150,7 @@ public:
     {
         context_.map( attr_, toContext );
         return attr_;
-    };
+    }
 
 private:
 
@@ -171,7 +175,11 @@ public:
             consumeMultiplier_ *= MULT_CONST;
     }
 
-    virtual ~Consumer() {}
+    virtual ~Consumer()
+    {
+        context_.setCurrent();
+        context_.commit();  // consume remaining changes
+    }
 
     virtual void run()
     {
@@ -188,8 +196,10 @@ public:
             const int targetConsumedData = producerData * consumeMultiplier_;
             dash::Commit iCommit = inputQ_->pop();
             context_.apply( iCommit );
-            const int consumedData = static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
-            TESTINFO( consumedData == targetConsumedData, consumedData << "!=" << targetConsumedData );
+            const int consumedData =
+                    static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
+            TESTINFO( consumedData == targetConsumedData,
+                      consumedData << "!=" << targetConsumedData );
             if(consumedData == 0)
             {
                 _consumerStopTime = _clock.getTimef();
@@ -211,44 +221,50 @@ private:
 
 int dash::test::main( int argc, char **argv )
 {
-    CommitQueue queue[ FILTER_COUNT + 1 ];
-
-    Filter filter[ FILTER_COUNT ];
-
-    Producer producer( &queue[0] );
-    for(int i = 0; i < FILTER_COUNT; ++i)
+    dash::Context& mainCtx = dash::Context::getMain( argc, argv );
     {
-        filter[ i ].setInputQueue( &queue[ i ] );
-        filter[ i ].setOutputQueue( &queue[ i + 1 ] );
+        CommitQueue queue[ FILTER_COUNT + 1 ];
+
+        Filter filter[ FILTER_COUNT ];
+
+        Producer producer( &queue[0] );
+        for(int i = 0; i < FILTER_COUNT; ++i)
+        {
+            filter[ i ].setInputQueue( &queue[ i ] );
+            filter[ i ].setOutputQueue( &queue[ i + 1 ] );
+        }
+        Consumer consumer( &queue[ FILTER_COUNT ] );
+
+        filter[0].setAttribute( producer.mapAttributeToContext( filter[ 0 ].getContext() ) );
+        for( int i = 1; i < FILTER_COUNT; ++i )
+            filter[ i ].setAttribute( filter[ i - 1 ].mapAttributeToContext( filter[ i ].getContext() ) );
+        consumer.setAttribute( filter[ FILTER_COUNT - 1 ].mapAttributeToContext( consumer.getContext() ) );
+
+        producer.start();
+        for( int i = 0; i < FILTER_COUNT; ++i )
+            filter[ i ].start();
+        consumer.start();
+
+        producer.join();
+        for( int i = 0; i < FILTER_COUNT; ++i )
+                filter[ i ].join();
+        consumer.join();
+
+        // commits/second
+        std::cerr << "Producer start time:  "
+                  << std::setw(11) <<  _producerStartTime << "ms, " << std::setw(11)
+                  << float(ITERATION_COUNT) /(_producerStopTime - _producerStartTime)
+                  << " commits/ms, Stop time: " << std::setw(11)
+                  <<  _producerStopTime << " ms" << std::endl
+                  << "Consumer start time: " << std::setw(11) <<  _consumerStartTime
+                  << " ms, " << std::setw(11)
+                  << float(ITERATION_COUNT) /(_consumerStopTime - _consumerStartTime)
+                  << " apply/ms, Stop time:   "
+                  << std::setw(11) <<  _consumerStopTime << " ms" << std::endl;
     }
-    Consumer consumer( &queue[ FILTER_COUNT ] );
 
-    filter[0].setAttribute( producer.mapAttributeToContext( filter[ 0 ].getContext() ) );
-    for( int i = 1; i < FILTER_COUNT; ++i )
-        filter[ i ].setAttribute( filter[ i - 1 ].mapAttributeToContext( filter[ i ].getContext() ) );
-    consumer.setAttribute( filter[ FILTER_COUNT - 1 ].mapAttributeToContext( consumer.getContext() ) );
-
-    producer.start();
-    for( int i = 0; i < FILTER_COUNT; ++i )
-        filter[ i ].start();
-    consumer.start();
-
-    producer.join();
-    for( int i = 0; i < FILTER_COUNT; ++i )
-            filter[ i ].join();
-    consumer.join();
-
-    // commits/second
-    std::cerr << "Producer start time:  "
-              << std::setw(11) <<  _producerStartTime << "ms, " << std::setw(11)
-              << float(ITERATION_COUNT) /(_producerStopTime - _producerStartTime)
-              << " commits/ms, Stop time: " << std::setw(11)
-              <<  _producerStopTime << " ms" << std::endl
-              << "Consumer start time: " << std::setw(11) <<  _consumerStartTime
-              << " ms, " << std::setw(11)
-              << float(ITERATION_COUNT) /(_consumerStopTime - _consumerStartTime)
-              << " apply/ms, Stop time:   "
-              << std::setw(11) <<  _consumerStopTime << " ms" << std::endl;
+    mainCtx.commit();
+    delete &mainCtx;
 
     return EXIT_SUCCESS;
 }

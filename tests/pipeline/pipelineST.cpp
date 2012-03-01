@@ -79,5 +79,7 @@ int dash::test::main( int argc, char **argv )
     value = static_cast< dash::AttributeConstPtr >( attr )->get<int>();
     TESTINFO( value == currentVal, value << "!=" << currentVal);
 
+    ctx.commit();   // consume remaining changes
+
     return EXIT_SUCCESS;
 }
