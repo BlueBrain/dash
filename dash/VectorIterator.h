@@ -21,7 +21,7 @@
 #ifndef DASH_DETAIL_VECTOR_ITERATOR_H
 #define DASH_DETAIL_VECTOR_ITERATOR_H
 
-#include <dash/detail/Iterator.h>
+#include <dash/Iterator.h>
 
 namespace dash
 {

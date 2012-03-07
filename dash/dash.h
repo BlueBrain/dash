@@ -33,6 +33,8 @@
  * graph and hold attributes. Attributes store any data.
  */
 
+#include <dash/Attribute.h>
+#include <dash/Commit.h>
 #include <dash/Context.h>
 #include <dash/Node.h>
 #include <dash/Vector.h>
