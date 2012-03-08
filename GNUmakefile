@@ -17,7 +17,7 @@ clean:
 
 else
 
-all: install
+all: debug
 install: Debug/Makefile Release/Makefile
 	@$(MAKE) -C Debug install
 	@$(MAKE) -C Release install

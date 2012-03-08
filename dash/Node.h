@@ -26,8 +26,8 @@
 #include <dash/NodeVisitor.h>   // nested typedef
 #include <dash/VisitorResult.h> // return value
 
-#include <dash/AttributeIterator.h> // return value
-#include <dash/ChildIterator.h>     // return value
+#include <dash/detail/AttributeIterator.h> // return value
+#include <dash/detail/ChildIterator.h>     // return value
 
 #include <co/base/referenced.h> // base class
 

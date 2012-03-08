@@ -437,7 +437,7 @@ std::ostream& operator << ( std::ostream& os, const Vector< T >& v )
 
 }
 
-#include "VectorIterator.h"
+#include "detail/VectorIterator.h"
 
 namespace dash
 {

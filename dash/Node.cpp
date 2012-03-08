@@ -20,7 +20,7 @@
 
 #include "Node.h"
 
-#include "ChildIterator.h"
+#include "detail/ChildIterator.h"
 #include "detail/Node.h"
 
 namespace dash

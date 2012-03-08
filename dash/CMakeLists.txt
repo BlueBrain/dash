@@ -13,22 +13,14 @@ set(DASH_HEADERS
   Node.h
   NodeVisitor.h
   Vector.h
-  VisitorResult.h
-  AttributeIterator.h
-  ChildIterator.h
-  VectorIterator.h
-  Iterator.h
   "${CMAKE_CURRENT_BINARY_DIR}/Version.h"
 )
 
 set(DASH_DETAIL_HEADERS
-  detail/Attribute.h
-  detail/Change.h
-  detail/ContextPtr.h
-  detail/Commit.h
-  detail/Context.h
-  detail/Node.h
-  detail/types.h
+  detail/AttributeIterator.h
+  detail/ChildIterator.h
+  detail/Iterator.h
+  detail/VectorIterator.h
 )
 
 set(DASH_SOURCES
@@ -40,12 +32,18 @@ set(DASH_SOURCES
 )
 
 set(DASH_DETAIL_SOURCES
-
+  detail/Attribute.h
   detail/Attribute.cpp
+  detail/Change.h
   detail/Change.cpp
+  detail/ContextPtr.h
+  detail/Commit.h
   detail/Commit.cpp
+  detail/Context.h
   detail/Context.cpp
+  detail/Node.h
   detail/Node.cpp
+  detail/types.h
 )
 
 set(DASH_ALL ${DASH_HEADERS} ${DASH_SOURCES})
@@ -64,7 +62,7 @@ set_target_properties(${LIBRARY}
   COMPILE_DEFINITIONS DASH_SHARED
 )
 
-install(FILES ${DASH_HEADERS}
+install(FILES ${DASH_HEADERS} ${DASH_DETAIL_HEADERS}
         DESTINATION include/${LIB_INCLUDE} COMPONENT dev)
 install(TARGETS ${LIBRARY}
         ARCHIVE DESTINATION lib COMPONENT dev
