@@ -14,6 +14,7 @@ set(DASH_HEADERS
   NodeVisitor.h
   Vector.h
   "${CMAKE_CURRENT_BINARY_DIR}/Version.h"
+  VisitorResult.h
 )
 
 set(DASH_DETAIL_HEADERS
