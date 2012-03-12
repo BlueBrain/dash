@@ -21,9 +21,13 @@
 #include "Attribute.h"
 
 #include "detail/Attribute.h"
+#include "detail/Serializable.h"
 
 namespace dash
 {
+
+SERIALIZABLEIMPLTEXTARCHIVE( Attribute )
+
 Attribute::Attribute()
 {
     init_();
@@ -54,6 +58,13 @@ Attribute& Attribute::operator = ( const Attribute& from )
         return *this;
     *impl_ = *from.impl_;
     return *this;
+}
+
+bool Attribute::operator == ( const Attribute& rhs ) const
+{
+    if( this == &rhs )
+        return true;
+    return *impl_ == *rhs.impl_;
 }
 
 Attribute& Attribute::set_( const boost::any& value )

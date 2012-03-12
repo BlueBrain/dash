@@ -33,17 +33,4 @@
     void load( Archive& ar, const unsigned int version );       \
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-//! Provides default serialization implementation for classes using a pimpl.
-#define SERIALIZABLEIMPL( class, oarchive, iarchive )                   \
-    template<>                                                          \
-    void class::save( oarchive& ar, const unsigned int version ) const  \
-    {                                                                   \
-        ar << *getImpl();                                               \
-    }                                                                   \
-    template<>                                                          \
-    void class::load( iarchive& ar, const unsigned int version )        \
-    {                                                                   \
-        ar >> *getImpl();                                               \
-    }
-
 #endif // DASH_SERIALIZABLE_H

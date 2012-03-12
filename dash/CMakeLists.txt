@@ -22,6 +22,7 @@ set(DASH_DETAIL_HEADERS
   detail/AttributeIterator.h
   detail/ChildIterator.h
   detail/Iterator.h
+  detail/Serializable.h
   detail/VectorIterator.h
 )
 

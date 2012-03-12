@@ -23,6 +23,7 @@
 
 #include <dash/api.h>
 #include <dash/types.h>
+#include <dash/Serializable.h>
 
 #include <co/base/referenced.h> // base class
 #include <boost/any.hpp> // used inline
@@ -62,6 +63,13 @@ public:
     template< class T > Attribute& operator = ( const T& rhs )
         { return set_( boost::any( rhs )); }
 
+    /** Check this Attribute on equality. @version 0.1 */
+    DASH_API bool operator == ( const Attribute& rhs ) const;
+
+    /** Check this Attribute on inequality. @version 0.1 */
+    DASH_API bool operator != ( const Attribute& rhs ) const
+        { return !(*this == rhs); }
+
     /** @return the stored value. @throws boost::bad_any_cast. @version 0.1 */
     template< class T > T get() { return boost::any_cast< T >( get_( )); }
 
@@ -84,6 +92,8 @@ public:
     //@}
 
 private:
+    SERIALIZABLE()
+
     detail::Attribute* impl_;
 
     DASH_API void init_();
