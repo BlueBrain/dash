@@ -1,14 +1,10 @@
 
-# Copyright (c) 2011 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
+# Copyright (c) 2011-2012 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
 
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib") 
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
-
 project(dash)
 
-list(APPEND CMAKE_MODULE_PATH ${dash_SOURCE_DIR}/CMake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
 list(APPEND CMAKE_PREFIX_PATH ${SystemDrive}:/cygwin/bin)
 
 set(VERSION_MAJOR "0")
@@ -22,6 +18,8 @@ else()
   set(VERSION_ABI ${VERSION_MAJOR}${VERSION_MINOR})
 endif()
 
+enable_testing()
+
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif(NOT CMAKE_BUILD_TYPE)
@@ -30,10 +28,13 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT AND NOT MSVC)
   set(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "dash install prefix" FORCE)
 endif()
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED serialization)
 find_package(Collage 0.4.0 REQUIRED)
 
 include_directories(BEFORE ${dash_SOURCE_DIR} ${CMAKE_BINARY_DIR})
@@ -59,10 +60,10 @@ function(INSTALL_SYMLINK FROM TO WHERE)
   install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${FROM} ${TO} WORKING_DIRECTORY \$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WHERE})" )
 endfunction()
 
-enable_testing()
-add_subdirectory(tests)
 # add_subdirectory(examples)
 add_subdirectory(dash)
+add_subdirectory(tests)
 add_subdirectory(doc)
 
+include(CTest)
 # include(CPackConfig)
