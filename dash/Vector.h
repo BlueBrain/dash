@@ -26,6 +26,7 @@
 #include <co/base/scopedMutex.h> // member
 #include <co/base/spinLock.h> // member
 #include <algorithm> // used inline
+#include <strings.h> // bzero
 
 #include <dash/Serializable.h>
 
