@@ -26,7 +26,7 @@
 #include <dash/Serializable.h>
 
 #include <co/base/referenced.h> // base class
-#include <boost/any.hpp> // used inline
+#include <dash/detail/Any.h> // used inline
 
 namespace dash
 {
@@ -61,7 +61,7 @@ public:
 
     /** Assign a value to this Attribute. @version 0.1 */
     template< class T > Attribute& operator = ( const T& rhs )
-        { return set_( boost::any( rhs )); }
+        { return set_( detail::Any( rhs )); }
 
     /** Check this Attribute on equality. @version 0.1 */
     DASH_API bool operator == ( const Attribute& rhs ) const;
@@ -71,19 +71,19 @@ public:
         { return !(*this == rhs); }
 
     /** @return the stored value. @throws boost::bad_any_cast. @version 0.1 */
-    template< class T > T get() { return boost::any_cast< T >( get_( )); }
+    template< class T > T get() { return detail::any_cast< T >( get_( )); }
 
     /** @return the stored value. @throws boost::bad_any_cast. @version 0.1 */
     template< class T > const T get() const
-        { return boost::any_cast< const T >( get_( )); }
+        { return detail::any_cast< const T >( get_( )); }
 
     /** @return the stored value without checking the type. @version 0.1 */
     template< class T > T getUnsafe()
-        { return boost::unsafe_any_cast< T >( get_( )); }
+        { return detail::unsafe_any_cast< T >( get_( )); }
 
     /** @return the stored value without checking the type. @version 0.1 */
     template< class T > const T getUnsafe() const
-        { return boost::unsafe_any_cast< T >( get_( )); }
+        { return detail::unsafe_any_cast< T >( get_( )); }
 
     /** @name Internal */
     //@{
@@ -98,9 +98,9 @@ private:
 
     DASH_API void init_();
 
-    DASH_API Attribute& set_( const boost::any& value );
-    DASH_API boost::any& get_();
-    DASH_API const boost::any& get_() const;
+    DASH_API Attribute& set_( const detail::Any& value );
+    DASH_API detail::Any& get_();
+    DASH_API const detail::Any& get_() const;
 };
 
 }

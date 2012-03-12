@@ -67,18 +67,18 @@ bool Attribute::operator == ( const Attribute& rhs ) const
     return *impl_ == *rhs.impl_;
 }
 
-Attribute& Attribute::set_( const boost::any& value )
+Attribute& Attribute::set_( const detail::Any& value )
 {
     impl_->set( value );
     return *this;
 }
 
-boost::any& Attribute::get_()
+detail::Any& Attribute::get_()
 {
     return impl_->get();
 }
 
-const boost::any& Attribute::get_() const
+const detail::Any& Attribute::get_() const
 {
     return impl_->get();
 }

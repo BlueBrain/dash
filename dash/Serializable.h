@@ -23,8 +23,10 @@
 
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/split_member.hpp>
+#include <boost/serialization/export.hpp>
+#include <boost/serialization/extended_type_info.hpp>
 
-//! Declares a class to be serializable wrt boost.serialization.
+/** Declares a class to be serializable wrt boost.serialization. */
 #define SERIALIZABLE()                                          \
     friend class boost::serialization::access;                  \
     template<class Archive>                                     \
@@ -32,5 +34,13 @@
     template<class Archive>                                     \
     void load( Archive& ar, const unsigned int version );       \
     BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+/**
+ * Declares the given class to be serializable within a dash::Attribute.
+ * User is supposed to provide a valid GUID and use this macro on global scope.
+ */
+#define SERIALIZABLEATTRIBUTE( CLASS, GUID )                            \
+    BOOST_CLASS_EXPORT_GUID(dash::detail::Any::holder<CLASS>, GUID)
+
 
 #endif // DASH_SERIALIZABLE_H

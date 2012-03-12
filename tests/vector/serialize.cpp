@@ -19,43 +19,9 @@
  */
 
 #include "test.h"
-
-#include <fstream>
+#include "serialize.h"
 
 #include <dash/Vector.h>
-
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/archive/text_iarchive.hpp>
-
-namespace
-{
-    template< typename T >
-    void saveVector( const dash::Vector<T>& vector )
-    {
-        std::ofstream ofs( "filename" );
-        boost::archive::text_oarchive oarchive( ofs );
-        oarchive << vector;
-        ofs.close();
-    }
-
-    template< typename T >
-    void loadVector( dash::Vector<T>& vector )
-    {
-        std::ifstream ifs("filename");
-        boost::archive::text_iarchive iarchive( ifs );
-        iarchive >> vector;
-        ifs.close();
-    }
-
-    template< typename T >
-    void serializeAndTest( const dash::Vector<T>& vector )
-    {
-        saveVector( vector );
-        dash::Vector<T> loadedVector;
-        loadVector( loadedVector );
-        TEST( vector == loadedVector );
-    }
-}
 
 
 int dash::test::main( int argc, char **argv )
@@ -77,6 +43,15 @@ int dash::test::main( int argc, char **argv )
     stringVector.push_back( "blub" );
     stringVector.push_back( "tralala" );
     serializeAndTest( stringVector );
+
+    dash::Vector< Foo > fooVector;
+    Foo foo1 = {42, 1.5f, false, "blablub"};
+    Foo foo2 = {445, 41.2f, true, "foobar"};
+    Foo foo3 = {-992, 0.56f, false, "12345qwert"};
+    fooVector.push_back( foo1 );
+    fooVector.push_back( foo2 );
+    fooVector.push_back( foo3 );
+    serializeAndTest( fooVector );
 
     return EXIT_SUCCESS;
 }

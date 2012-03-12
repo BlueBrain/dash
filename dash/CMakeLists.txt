@@ -35,6 +35,8 @@ set(DASH_SOURCES
 )
 
 set(DASH_DETAIL_SOURCES
+  detail/Any.h
+  detail/AnySerialization.h
   detail/Attribute.h
   detail/Attribute.cpp
   detail/Change.h

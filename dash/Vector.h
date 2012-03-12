@@ -463,29 +463,6 @@ std::ostream& operator << ( std::ostream& os, const Vector< T >& v )
     return os << ']' << std::endl;
 }
 
-template< class T, int32_t nSlots >
-template< class Archive >
-inline void Vector< T, nSlots >::save( Archive& ar,
-                                       const unsigned int version ) const
-{
-    ar << size_;
-    for( size_t i = 0; i < size_; ++i )
-        ar << operator[](i);
-}
-
-template< class T, int32_t nSlots >
-template< class Archive >
-inline void Vector< T, nSlots >::load( Archive& ar, const unsigned int version )
-{
-    size_t newSize;
-    ar >> newSize;
-    expand( newSize );
-    EQASSERT( size_ == newSize );
-
-    for( size_t i = 0; i < size_; ++i )
-        ar >> operator[](i);
-}
-
 }
 
 #include "detail/VectorIterator.h"
@@ -515,6 +492,29 @@ template< class T, int32_t nSlots > inline typename
 Vector< T, nSlots >::iterator Vector< T, nSlots >::end()
 { 
     return iterator( this, size_ );
+}
+
+template< class T, int32_t nSlots >
+template< class Archive >
+inline void Vector< T, nSlots >::save( Archive& ar,
+                                       const unsigned int version ) const
+{
+    ar << size_;
+    for( size_t i = 0; i < size_; ++i )
+        ar << operator[](i);
+}
+
+template< class T, int32_t nSlots >
+template< class Archive >
+inline void Vector< T, nSlots >::load( Archive& ar, const unsigned int version )
+{
+    size_t newSize;
+    ar >> newSize;
+    expand( newSize );
+    EQASSERT( size_ == newSize );
+
+    for( size_t i = 0; i < size_; ++i )
+        ar >> operator[](i);
 }
 
 }

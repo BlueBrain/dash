@@ -1,0 +1,91 @@
+
+/* Copyright (c) 2012, EFPL/Blue Brain Project
+ *                     Daniel Nachbaur <daniel.nachbaur@epfl.ch>
+ *
+ * This file is part of DASH <https://github.com/BlueBrain/dash>
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License version 3.0 as published
+ * by the Free Software Foundation.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+#ifndef DASHTEST_SERIALIZE_H
+#define DASHTEST_SERIALIZE_H
+
+#include <sstream>
+
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+
+template< class T >
+void textSave( const T& object, std::stringstream& os )
+{
+    boost::archive::text_oarchive oarchive( os );
+    oarchive << object;
+}
+
+template< class T >
+void textLoad( T& object, std::stringstream& is  )
+{
+    boost::archive::text_iarchive iarchive( is );
+    iarchive >> object;
+}
+
+template< class T >
+void serialize( const T& object, T& loadedObject )
+{
+    std::stringstream stream;
+    textSave( object, stream );
+    textLoad( loadedObject, stream );
+}
+
+template< class T >
+void serializeAndTest( const T& object )
+{
+    T loadedObject;
+    serialize( object, loadedObject );
+    TEST( object == loadedObject );
+}
+
+struct Foo
+{
+    bool operator == ( const Foo& rhs ) const
+    {
+        if( this == &rhs )
+            return true;
+
+        return i == rhs.i && f == rhs.f && b == rhs.b && s == rhs.s;
+    }
+
+    bool operator != ( const Foo& rhs ) const
+    {
+        return !( *this == rhs );
+    }
+
+    int i;
+    float f;
+    bool b;
+    std::string s;
+
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & i;
+        ar & f;
+        ar & b;
+        ar & s;
+    }
+};
+SERIALIZABLEATTRIBUTE(Foo, "84eff694-8597-4fed-a2dd-c3e2960e1906");
+
+#endif // DASHTEST_SERIALIZE_H
+
