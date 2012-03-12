@@ -1,5 +1,5 @@
 
-# Copyright (c) 2011 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
+# Copyright (c) 2011-2012 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
 
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(dash)
@@ -34,7 +34,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED serialization)
 find_package(Collage 0.4.0 REQUIRED)
 
 include_directories(BEFORE ${dash_SOURCE_DIR} ${CMAKE_BINARY_DIR})

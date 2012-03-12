@@ -1,5 +1,5 @@
 
-# Copyright (c) 2011 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
+# Copyright (c) 2011-2012 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
 
 configure_file("Version.h.in" "${CMAKE_CURRENT_BINARY_DIR}/Version.h" @ONLY)
 
@@ -59,7 +59,7 @@ set(LIBRARY dash)
 set(LIB_INCLUDE ${LIBRARY}${VERSION_MAJOR})
 
 add_library(${LIBRARY} SHARED ${DASH_ALL} ${DASH_DETAIL_ALL})
-target_link_libraries(${LIBRARY} ${COLLAGE_LIBRARIES})
+target_link_libraries(${LIBRARY} ${COLLAGE_LIBRARIES} ${Boost_LIBRARIES})
 set_target_properties(${LIBRARY}
   PROPERTIES VERSION ${VERSION} SOVERSION ${VERSION_ABI}
   COMPILE_DEFINITIONS DASH_SHARED
