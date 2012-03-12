@@ -19,6 +19,8 @@ set(DASH_HEADERS
 )
 
 set(DASH_DETAIL_HEADERS
+  detail/Any.h
+  detail/AnySerialization.h
   detail/AttributeIterator.h
   detail/ChildIterator.h
   detail/Iterator.h
@@ -35,8 +37,6 @@ set(DASH_SOURCES
 )
 
 set(DASH_DETAIL_SOURCES
-  detail/Any.h
-  detail/AnySerialization.h
   detail/Attribute.h
   detail/Attribute.cpp
   detail/Change.h
