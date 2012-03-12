@@ -12,6 +12,7 @@ set(DASH_HEADERS
   Context.h
   Node.h
   NodeVisitor.h
+  Serializable.h
   Vector.h
   "${CMAKE_CURRENT_BINARY_DIR}/Version.h"
   VisitorResult.h

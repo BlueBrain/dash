@@ -27,6 +27,8 @@
 #include <co/base/spinLock.h> // member
 #include <algorithm> // used inline
 
+#include <dash/Serializable.h>
+
 #ifdef _WIN32
 #  define bzero( ptr, size ) memset( ptr, 0, size );
 #endif
@@ -365,6 +367,8 @@ public:
         }
 
 private:
+    SERIALIZABLE()
+
     T* slots_[ nSlots ];
     size_t size_;
     mutable co::base::SpinLock lock_;
@@ -433,6 +437,29 @@ std::ostream& operator << ( std::ostream& os, const Vector< T >& v )
         os << (*i) << ' ';
     }
     return os << ']' << std::endl;
+}
+
+template< class T, int32_t nSlots >
+template< class Archive >
+inline void Vector< T, nSlots >::save( Archive& ar,
+                                       const unsigned int version ) const
+{
+    ar << size_;
+    for( size_t i = 0; i < size_; ++i )
+        ar << operator[](i);
+}
+
+template< class T, int32_t nSlots >
+template< class Archive >
+inline void Vector< T, nSlots >::load( Archive& ar, const unsigned int version )
+{
+    size_t newSize;
+    ar >> newSize;
+    expand( newSize );
+    EQASSERT( size_ == newSize );
+
+    for( size_t i = 0; i < size_; ++i )
+        ar >> operator[](i);
 }
 
 }
