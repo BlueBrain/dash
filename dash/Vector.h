@@ -26,12 +26,13 @@
 #include <co/base/scopedMutex.h> // member
 #include <co/base/spinLock.h> // member
 #include <algorithm> // used inline
-#include <strings.h> // bzero
 
 #include <dash/Serializable.h>
 
 #ifdef _WIN32
 #  define bzero( ptr, size ) memset( ptr, 0, size );
+#else
+#  include <strings.h>
 #endif
 
 namespace dash
