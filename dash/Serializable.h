@@ -24,7 +24,7 @@
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/split_member.hpp>
 
-//! Declares a class to serializable wrt boost.serialization.
+//! Declares a class to be serializable wrt boost.serialization.
 #define SERIALIZABLE()                                          \
     friend class boost::serialization::access;                  \
     template<class Archive>                                     \

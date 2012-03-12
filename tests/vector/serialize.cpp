@@ -27,30 +27,8 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 
-# if defined __GNUC__
-#  pragma GCC diagnostic ignored "-Warray-bounds"   // see comment below why
-# endif
-
 namespace
 {
-    template< typename T >
-    bool isEqual( const dash::Vector<T>& v1, const dash::Vector<T>& v2 )
-    {
-        if( v1.size() != v2.size() )
-            return false;
-
-        for( size_t i = 0; i < v1.size(); ++i )
-        {
-            // this one causes an 'array subscript is below array bounds'
-            // warning with gcc 4.5. Could be related to something like this:
-            // http://gcc.gnu.org/bugzilla/show_bug.cgi?id=44848
-            if( v1[i] != v2[i] )
-                return false;
-        }
-
-        return true;
-    }
-
     template< typename T >
     void saveVector( const dash::Vector<T>& vector )
     {
@@ -75,7 +53,7 @@ namespace
         saveVector( vector );
         dash::Vector<T> loadedVector;
         loadVector( loadedVector );
-        TEST( isEqual( vector, loadedVector ) );
+        TEST( vector == loadedVector );
     }
 }
 

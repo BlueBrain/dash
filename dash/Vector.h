@@ -144,6 +144,29 @@ public:
             return *this;
         }
 
+    /** @version 0.1.0 */
+    bool operator == ( const Vector& rhs ) const
+    {
+        if( &rhs == this )
+            return true;
+
+        if( size() != rhs.size() )
+            return false;
+
+        const_iterator it = begin();
+        const_iterator rhsIt = rhs.begin();
+        for( ; it != end(); ++it, ++rhsIt )
+        {
+            if( *it != *rhsIt )
+                return false;
+        }
+
+        return true;
+    }
+
+    /** @version 0.1.0 */
+    bool operator != ( const Vector& rhs ) const { return !(*this == rhs); }
+
     bool empty() const { return size_ == 0; } //!< @version 0.1.0
     size_t size() const { return size_; } //!< @version 0.1.0
 
