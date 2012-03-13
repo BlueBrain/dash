@@ -24,7 +24,6 @@
 #include <dash/Attribute.h>
 #include <dash/detail/AnySerialization.cpp>
 
-
 int dash::test::main( int argc, char **argv )
 {
     dash::AttributePtr outAttribute = new dash::Attribute;
