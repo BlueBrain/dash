@@ -22,13 +22,14 @@
 #include "serialize.h"
 
 #include <dash/Attribute.h>
+#include <dash/detail/AnySerialization.cpp>
 
 
 int dash::test::main( int argc, char **argv )
 {
     dash::AttributePtr outAttribute = new dash::Attribute;
 
-    dash::AttributePtr intAttribute = new dash::Attribute( 42 );    
+    dash::AttributePtr intAttribute = new dash::Attribute( 42 );
     serialize( *intAttribute, *outAttribute );
     TEST( intAttribute->get<int>() == outAttribute->get<int>() )
 
