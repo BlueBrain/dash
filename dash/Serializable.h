@@ -42,5 +42,4 @@
 #define SERIALIZABLEATTRIBUTE( CLASS, GUID )                            \
     BOOST_CLASS_EXPORT_GUID(dash::detail::Any::holder<CLASS>, GUID)
 
-
 #endif // DASH_SERIALIZABLE_H

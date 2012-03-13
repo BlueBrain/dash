@@ -3,7 +3,7 @@
 
 configure_file("Version.h.in" "${CMAKE_CURRENT_BINARY_DIR}/Version.h" @ONLY)
 
-set(DASH_HEADERS
+set(DASH_HEADERS # public, installed
   api.h
   dash.h
   types.h
@@ -18,13 +18,12 @@ set(DASH_HEADERS
   VisitorResult.h
 )
 
-set(DASH_DETAIL_HEADERS
+set(DASH_DETAIL_HEADERS # private, installed
   detail/Any.h
   detail/AnySerialization.h
   detail/AttributeIterator.h
   detail/ChildIterator.h
   detail/Iterator.h
-  detail/Serializable.h
   detail/VectorIterator.h
 )
 
@@ -38,17 +37,18 @@ set(DASH_SOURCES
 
 set(DASH_DETAIL_SOURCES
   detail/AnySerialization.cpp
-  detail/Attribute.h
   detail/Attribute.cpp
-  detail/Change.h
+  detail/Attribute.h
   detail/Change.cpp
-  detail/ContextPtr.h
-  detail/Commit.h
+  detail/Change.h
   detail/Commit.cpp
-  detail/Context.h
+  detail/Commit.h
   detail/Context.cpp
-  detail/Node.h
+  detail/Context.h
+  detail/ContextPtr.h
   detail/Node.cpp
+  detail/Node.h
+  detail/Serializable.h
   detail/types.h
 )
 

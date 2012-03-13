@@ -157,7 +157,7 @@ public:
 
         const_iterator it = begin();
         const_iterator rhsIt = rhs.begin();
-        for( ; it != end(); ++it, ++rhsIt )
+        for( ; it != end() && rhsIt != end(); ++it, ++rhsIt )
         {
             if( *it != *rhsIt )
                 return false;
