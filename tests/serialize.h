@@ -25,8 +25,12 @@
 
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
+
+#pragma warning( push )
+#pragma warning( disable: 4996 )
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
+#pragma warning( pop )
 
 template< class T >
 void textSave( const T& object, std::stringstream& os )
