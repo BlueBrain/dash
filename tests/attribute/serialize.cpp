@@ -24,27 +24,30 @@
 #include <dash/Attribute.h>
 #include <dash/detail/AnySerialization.cpp>
 
+
 int dash::test::main( int argc, char **argv )
 {
     dash::AttributePtr outAttribute = new dash::Attribute;
 
     dash::AttributePtr intAttribute = new dash::Attribute( 42 );
-    serialize( *intAttribute, *outAttribute );
+    textSerialize( *intAttribute, *outAttribute );
+    TEST( intAttribute->get<int>() == outAttribute->get<int>() )
+    binarySerialize( *intAttribute, *outAttribute );
     TEST( intAttribute->get<int>() == outAttribute->get<int>() )
 
     dash::AttributePtr floatAttribute = new dash::Attribute( 42.f );
-    serialize( *floatAttribute, *outAttribute );
+    textSerialize( *floatAttribute, *outAttribute );
     TEST( floatAttribute->get<float>() == outAttribute->get<float>() )
 
     dash::AttributePtr stringAttribute =
                                      new dash::Attribute( std::string( "bla") );
-    serialize( *stringAttribute, *outAttribute );
+    textSerialize( *stringAttribute, *outAttribute );
     TEST( stringAttribute->get<std::string>() ==
           outAttribute->get<std::string>() )
 
     Foo foo = {42, 1.5f, false, "blablub"};
     dash::AttributePtr fooAttribute = new dash::Attribute( foo );
-    serialize( *fooAttribute, *outAttribute );
+    textSerialize( *fooAttribute, *outAttribute );
     const Foo& outFoo = outAttribute->get<Foo>();
     TEST( foo.i == outFoo.i );
     TEST( foo.f == outFoo.f );

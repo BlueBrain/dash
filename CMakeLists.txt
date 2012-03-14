@@ -34,7 +34,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-find_package(Boost REQUIRED serialization)
+find_package(Boost 1.42 REQUIRED serialization)
 link_directories(${Boost_LIBRARY_DIRS})
 find_package(Collage 0.4.0 REQUIRED)
 

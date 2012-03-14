@@ -30,19 +30,19 @@ int dash::test::main( int argc, char **argv )
     intVector.push_back( 0 );
     intVector.push_back( -7 );
     intVector.push_back( 42 );
-    serializeAndTest( intVector );
+    textSerializeAndTest( intVector );
 
     dash::Vector< float > floatVector;
     floatVector.push_back( 1.7f );
     floatVector.push_back( -8.2f );
     floatVector.push_back( 3.667f );
-    serializeAndTest( floatVector );
+    textSerializeAndTest( floatVector );
 
     dash::Vector< std::string > stringVector;
     stringVector.push_back( "bla" );
     stringVector.push_back( "blub" );
     stringVector.push_back( "tralala" );
-    serializeAndTest( stringVector );
+    textSerializeAndTest( stringVector );
 
     dash::Vector< Foo > fooVector;
     Foo foo1 = {42, 1.5f, false, "blablub"};
@@ -51,7 +51,7 @@ int dash::test::main( int argc, char **argv )
     fooVector.push_back( foo1 );
     fooVector.push_back( foo2 );
     fooVector.push_back( foo3 );
-    serializeAndTest( fooVector );
+    textSerializeAndTest( fooVector );
 
     return EXIT_SUCCESS;
 }

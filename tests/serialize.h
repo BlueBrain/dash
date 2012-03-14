@@ -25,6 +25,8 @@
 
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/binary_iarchive.hpp>
 
 template< class T >
 void textSave( const T& object, std::stringstream& os )
@@ -41,7 +43,21 @@ void textLoad( T& object, std::stringstream& is  )
 }
 
 template< class T >
-void serialize( const T& object, T& loadedObject )
+void binarySave( const T& object, std::stringstream& os )
+{
+    boost::archive::binary_oarchive oarchive( os );
+    oarchive << object;
+}
+
+template< class T >
+void binaryLoad( T& object, std::stringstream& is  )
+{
+    boost::archive::binary_iarchive iarchive( is );
+    iarchive >> object;
+}
+
+template< class T >
+void textSerialize( const T& object, T& loadedObject )
 {
     std::stringstream stream;
     textSave( object, stream );
@@ -49,12 +65,29 @@ void serialize( const T& object, T& loadedObject )
 }
 
 template< class T >
-void serializeAndTest( const T& object )
+void textSerializeAndTest( const T& object )
 {
     T loadedObject;
-    serialize( object, loadedObject );
+    textSerialize( object, loadedObject );
     TEST( object == loadedObject );
 }
+
+template< class T >
+void binarySerialize( const T& object, T& loadedObject )
+{
+    std::stringstream stream;
+    binarySave( object, stream );
+    binaryLoad( loadedObject, stream );
+}
+
+template< class T >
+void binarySerializeAndTest( const T& object )
+{
+    T loadedObject;
+    binarySerialize( object, loadedObject );
+    TEST( object == loadedObject );
+}
+
 
 struct Foo
 {

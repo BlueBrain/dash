@@ -27,6 +27,7 @@ namespace dash
 {
 
 SERIALIZABLETEXTARCHIVE( Attribute )
+SERIALIZABLEBINARYARCHIVE( Attribute )
 
 Attribute::Attribute()
 {
