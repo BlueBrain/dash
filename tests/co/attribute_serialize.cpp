@@ -29,37 +29,7 @@
 SERIALIZABLEANY( std::vector<float> )
 
 
-class AttributeDist : public co::Object
-{
-public:
-    AttributeDist()
-        : _attribute( new dash::Attribute )
-    {}
-
-    AttributeDist( dash::AttributePtr attr )
-        : _attribute( attr )
-    {}
-
-    const dash::AttributePtr getAttribute() const
-    {
-        return _attribute;
-    }
-
-protected:
-    virtual void getInstanceData( co::DataOStream& os )
-    {
-        dash::detail::serializeAny< co::DataOStreamArchive >( *_attribute, os );
-    }
-
-    virtual void applyInstanceData( co::DataIStream& is )
-    {
-        dash::detail::serializeAny< co::DataIStreamArchive >( *_attribute, is );
-    }
-
-private:
-    dash::AttributePtr _attribute;
-};
-
+typedef dash::cash::Distributable< dash::Attribute > AttributeDist;
 
 template< typename T >
 void testAttributeSerialization( co::LocalNodePtr server,
@@ -74,7 +44,7 @@ void testAttributeSerialization( co::LocalNodePtr server,
     TEST( client->mapObject( &remoteAttributeDist, attributeDist.getID( )));
 
     TEST( attribute->get<T>() ==
-          remoteAttributeDist.getAttribute()->get<T>( ));
+          remoteAttributeDist.getValue()->get<T>( ));
 
     client->unmapObject( &remoteAttributeDist );
     server->deregisterObject( &attributeDist );

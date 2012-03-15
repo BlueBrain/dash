@@ -22,6 +22,11 @@
 #define DASH_CO_SERIALIZATION_H
 
 #include <co/types.h>
+#include <co/object.h>
+#include <co/dataOStream.h>
+#include <co/dataIStream.h>
+#include <co/dataOStreamArchive.h>
+#include <co/dataIStreamArchive.h>
 
 #include <dash/detail/AnySerialization.h>
 
@@ -38,6 +43,41 @@ namespace dash
  */
 namespace cash
 {
+
+/** */
+template< class T >
+class Distributable : public co::Object
+{
+public:
+    typedef co::base::RefPtr< T > ValuePtr;
+
+    Distributable()
+        : value_( new T )
+    {}
+
+    Distributable( ValuePtr value )
+        : value_( value )
+    {}
+
+    ValuePtr getValue() const
+    {
+        return value_;
+    }
+
+protected:
+    virtual void getInstanceData( co::DataOStream& os )
+    {
+        dash::detail::serializeAny< co::DataOStreamArchive >( *value_, os );
+    }
+
+    virtual void applyInstanceData( co::DataIStream& is )
+    {
+        dash::detail::serializeAny< co::DataIStreamArchive >( *value_, is );
+    }
+
+private:
+    ValuePtr value_;
+};
 
 } // co
 } // dash
