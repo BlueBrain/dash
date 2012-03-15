@@ -21,6 +21,8 @@
 #ifndef DASHTEST_SERIALIZE_H
 #define DASHTEST_SERIALIZE_H
 
+#include <dash/detail/AnySerialization.h>
+
 #include <sstream>
 
 #include <boost/archive/text_oarchive.hpp>
@@ -32,32 +34,29 @@
 #include <boost/archive/binary_iarchive.hpp>
 #pragma warning( pop )
 
+
 template< class T >
 void textSave( const T& object, std::stringstream& os )
 {
-    boost::archive::text_oarchive oarchive( os );
-    oarchive << object;
+    dash::detail::serializeAny< boost::archive::text_oarchive >( object, os );
 }
 
 template< class T >
-void textLoad( T& object, std::stringstream& is  )
+void textLoad( T& object, std::stringstream& is )
 {
-    boost::archive::text_iarchive iarchive( is );
-    iarchive >> object;
+    dash::detail::serializeAny< boost::archive::text_iarchive >( object, is );
 }
 
 template< class T >
 void binarySave( const T& object, std::stringstream& os )
 {
-    boost::archive::binary_oarchive oarchive( os );
-    oarchive << object;
+    dash::detail::serializeAny< boost::archive::binary_oarchive >( object, os );
 }
 
 template< class T >
-void binaryLoad( T& object, std::stringstream& is  )
+void binaryLoad( T& object, std::stringstream& is )
 {
-    boost::archive::binary_iarchive iarchive( is );
-    iarchive >> object;
+    dash::detail::serializeAny< boost::archive::binary_iarchive >( object, is );
 }
 
 template< class T >
@@ -113,16 +112,17 @@ struct Foo
     bool b;
     std::string s;
 
-    template<class Archive>
-    void serialize(Archive & ar, const unsigned int version)
+    template< class Archive >
+    void serialize( Archive & ar, const unsigned int version )
     {
         ar & i;
         ar & f;
         ar & b;
         ar & s;
-    }
+    }    
 };
-SERIALIZABLEATTRIBUTE(Foo, "84eff694-8597-4fed-a2dd-c3e2960e1906");
+
+SERIALIZABLEANY( Foo )
+
 
 #endif // DASHTEST_SERIALIZE_H
-

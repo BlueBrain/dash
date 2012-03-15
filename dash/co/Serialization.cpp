@@ -18,21 +18,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef DASH_SERIALIZABLE_H
-#define DASH_SERIALIZABLE_H
+#include "Serialization.h"
 
-#include <boost/serialization/access.hpp>
-#include <boost/serialization/split_member.hpp>
+#include <dash/Attribute.h>
 
+#include <dash/detail/Attribute.h>
+#include <dash/detail/Serializable.h>
 
-/** Declares a class to be serializable wrt boost.serialization. */
-#define SERIALIZABLE()                                          \
-    friend class boost::serialization::access;                  \
-    template< class Archive >                                   \
-    void save( Archive& ar, const unsigned int version ) const; \
-    template< class Archive >                                   \
-    void load( Archive& ar, const unsigned int version );       \
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
+#include <co/dataOStreamArchive.h>
+#include <co/dataIStreamArchive.h>
 
 
-#endif // DASH_SERIALIZABLE_H
+namespace dash
+{
+
+SERIALIZABLEIMPL( Attribute, co::DataOStreamArchive, co::DataIStreamArchive )
+
+}

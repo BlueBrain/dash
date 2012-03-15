@@ -18,21 +18,28 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef DASH_SERIALIZABLE_H
-#define DASH_SERIALIZABLE_H
+#ifndef DASH_CO_SERIALIZATION_H
+#define DASH_CO_SERIALIZATION_H
 
-#include <boost/serialization/access.hpp>
-#include <boost/serialization/split_member.hpp>
+#include <co/types.h>
 
-
-/** Declares a class to be serializable wrt boost.serialization. */
-#define SERIALIZABLE()                                          \
-    friend class boost::serialization::access;                  \
-    template< class Archive >                                   \
-    void save( Archive& ar, const unsigned int version ) const; \
-    template< class Archive >                                   \
-    void load( Archive& ar, const unsigned int version );       \
-    BOOST_SERIALIZATION_SPLIT_MEMBER()
+#include <dash/detail/AnySerialization.h>
 
 
-#endif // DASH_SERIALIZABLE_H
+SERIALIZABLEANY( co::uint128_t )
+
+
+namespace dash
+{
+
+/**
+ * Namespace providing functionality to distributed dash object through the
+ * Collage library.
+ */
+namespace cash
+{
+
+} // co
+} // dash
+
+#endif
