@@ -65,10 +65,7 @@ if(APPLE)
   set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
 endif(APPLE)
 
-function(INSTALL_SYMLINK FROM TO WHERE)
-  install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${FROM} ${TO} WORKING_DIRECTORY \$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WHERE})" )
-endfunction()
-
+include(InstallSymlink)
 # add_subdirectory(examples)
 add_subdirectory(dash)
 add_subdirectory(tests)
