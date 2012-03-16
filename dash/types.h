@@ -31,11 +31,7 @@
 #include <co/base/uint128_t.h>
 
 #include <vector>
-#ifdef _MSC_VER
-#  include <memory>
-#else
-#  include <tr1/memory>
-#endif
+#include <boost/shared_ptr.hpp>
 
 namespace dash
 {
@@ -66,8 +62,8 @@ typedef Nodes::iterator NodesIter; //!< Iterator for Nodes
 namespace detail
 {
 class Commit;
-typedef std::tr1::shared_ptr< Commit > CommitPtr;
-typedef std::tr1::shared_ptr< const Commit > CommitConstPtr;
+typedef boost::shared_ptr< Commit > CommitPtr;
+typedef boost::shared_ptr< const Commit > CommitConstPtr;
 }
 /** @endcond */
 
