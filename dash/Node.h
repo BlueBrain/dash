@@ -25,6 +25,7 @@
 #include <dash/types.h>
 #include <dash/NodeVisitor.h>   // nested typedef
 #include <dash/VisitorResult.h> // return value
+#include <dash/Serializable.h>
 
 #include <dash/detail/AttributeIterator.h> // return value
 #include <dash/detail/ChildIterator.h>     // return value
@@ -75,6 +76,13 @@ public:
 
     /** Perform a shallow, parent-less copy. @version 0.1 */
     DASH_API Node& operator = ( const Node& from );
+
+    /** Check this Node on equality w/o traversing the children. @version 0.1 */
+    DASH_API bool operator == ( const Node& rhs ) const;
+
+    /** Check this Node on inequality w/o traversing the children. @version 0.1 */
+    DASH_API bool operator != ( const Node& rhs ) const
+        { return !(*this == rhs); }
 
     /**
      * Traverse this node tree using the given visitor.
@@ -165,6 +173,8 @@ public:
     //@}
 
 private:
+    SERIALIZABLE()
+
     // use raw pointer instead of NodePtr to avoid leak of detail::Node
     detail::Node* impl_;
 };

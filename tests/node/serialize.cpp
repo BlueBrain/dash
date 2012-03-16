@@ -18,23 +18,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Serialization.h"
+#include "test.h"
+#include "serialize.h"
+#include "node.h"
 
-#include <dash/Attribute.h>
 #include <dash/Node.h>
-
-#include <dash/detail/Attribute.h>
-#include <dash/detail/Node.h>
-#include <dash/detail/Serializable.h>
-
-#include <co/dataOStreamArchive.h>
-#include <co/dataIStreamArchive.h>
+#include <dash/Attribute.h>
 
 
-namespace dash
+int dash::test::main( int argc, char **argv )
 {
+    dash::NodePtr root = createSampleNode();
 
-SERIALIZABLEIMPL( Attribute, co::DataOStreamArchive, co::DataIStreamArchive )
-SERIALIZABLEIMPL( Node, co::DataOStreamArchive, co::DataIStreamArchive )
+    dash::NodePtr outRoot = new dash::Node;
 
+    textSerialize( *root, *outRoot );
+    TEST( areEqual( root, outRoot ));
+
+    binarySerialize( *root, *outRoot );
+    TEST( areEqual( root, outRoot ));
+
+    return EXIT_SUCCESS;
 }

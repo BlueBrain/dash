@@ -22,9 +22,14 @@
 
 #include "detail/ChildIterator.h"
 #include "detail/Node.h"
+#include "detail/Serializable.h"
 
 namespace dash
 {
+
+SERIALIZABLETEXTARCHIVE( Node )
+SERIALIZABLEBINARYARCHIVE( Node )
+
 Node::Node()
 {
     impl_ = new detail::Node( this );
@@ -50,6 +55,13 @@ Node& Node::operator = ( const Node& from )
         return *this;
     *impl_ = *from.impl_;
     return *this;
+}
+
+bool Node::operator == ( const Node& rhs ) const
+{
+    if( this == &rhs )
+        return true;
+    return *impl_ == *rhs.impl_;
 }
 
 namespace
