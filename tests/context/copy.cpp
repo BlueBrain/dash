@@ -86,8 +86,8 @@ int dash::test::main( int argc, char **argv )
 
         TEST( node->getNChildren() == 2 );
         TESTINFO( node->getRefCount() == 1, node->getRefCount( ));
-        // variable, parent, change, change ContextDeleter
-        TESTINFO( copyChild->getRefCount() == 4, copyChild->getRefCount( ));
+        // variable, parent, change
+        TESTINFO( copyChild->getRefCount() == 3, copyChild->getRefCount( ));
         TESTINFO( copyChild->getNParents() == 1, copyChild->getNParents( ));
         TESTINFO( mainCtx.getImpl().commit_->getImpl()->changes_->empty( ),
                   *(mainCtx.getImpl().commit_->getImpl()->changes_) );
@@ -110,8 +110,8 @@ int dash::test::main( int argc, char **argv )
         }
         TESTINFO( node->getRefCount() == 1, node->getRefCount( ));
 
-        // variable, auxCtx Change + ContextDeleter, two context child vectors
-        TESTINFO( copyChild->getRefCount() == 5, copyChild->getRefCount( ));
+        // variable, auxCtx Change, two context child vectors
+        TESTINFO( copyChild->getRefCount() == 4, copyChild->getRefCount( ));
         TESTINFO( copyChild->getNParents() == 1, copyChild->getNParents( ));
 
         auxCtx.unmap( node );
