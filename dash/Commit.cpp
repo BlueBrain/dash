@@ -20,10 +20,17 @@
 
 #include "Commit.h"
 
+#include <dash/Node.h>
 #include "detail/Commit.h"
+#include "detail/Change.h"
+#include "detail/Serializable.h"
 
 namespace dash
 {
+
+SERIALIZABLETEXTARCHIVE( Commit )
+SERIALIZABLEBINARYARCHIVE( Commit )
+
 Commit::Commit()
         : impl_( new detail::Commit )
 {}

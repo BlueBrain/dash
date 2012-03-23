@@ -23,6 +23,7 @@
 
 #include <dash/api.h>
 #include <dash/types.h>
+#include <dash/Serializable.h>
 
 namespace dash
 {
@@ -62,6 +63,8 @@ public:
     //@}
 
 private:
+    SERIALIZABLE()
+
     detail::CommitPtr impl_;
 };
 
