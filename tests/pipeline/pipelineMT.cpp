@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
  *                     Ahmet Bilgili
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -23,8 +23,8 @@
 #include <dash/Context.h>
 #include <dash/Attribute.h>
 
-#include <co/base/thread.h>
-#include <co/base/mtQueue.h>
+#include <lunchbox/thread.h>
+#include <lunchbox/mtQueue.h>
 
 #define MAX_QUEUE_SIZE  5
 #define MULT_CONST      2

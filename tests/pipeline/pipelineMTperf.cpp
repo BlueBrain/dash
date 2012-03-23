@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
  *                     Ahmet Bilgili
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -23,9 +23,9 @@
 #include <dash/Context.h>
 #include <dash/Attribute.h>
 
-#include <co/base/clock.h>
-#include <co/base/thread.h>
-#include <co/base/mtQueue.h>
+#include <lunchbox/clock.h>
+#include <lunchbox/thread.h>
+#include <lunchbox/mtQueue.h>
 #include <limits.h>
 
 #include <time.h>

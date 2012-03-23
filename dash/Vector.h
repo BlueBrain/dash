@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -21,10 +21,10 @@
 #ifndef DASH_VECTOR_H
 #define DASH_VECTOR_H
 
-#include <co/base/bitOperation.h> // used inline
-#include <co/base/debug.h> // used inline
-#include <co/base/scopedMutex.h> // member
-#include <co/base/spinLock.h> // member
+#include <lunchbox/bitOperation.h> // used inline
+#include <lunchbox/debug.h> // used inline
+#include <lunchbox/scopedMutex.h> // member
+#include <lunchbox/spinLock.h> // member
 #include <algorithm> // used inline
 
 #include <dash/Serializable.h>

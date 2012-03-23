@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -25,7 +25,7 @@
 #include <dash/types.h>
 #include <dash/Serializable.h>
 
-#include <co/base/referenced.h> // base class
+#include <lunchbox/referenced.h> // base class
 #include <dash/detail/Any.h> // used inline
 
 namespace dash

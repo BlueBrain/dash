@@ -30,9 +30,7 @@
 
 #include <dash/detail/AnySerialization.h>
 
-
 SERIALIZABLEANY( co::uint128_t )
-
 
 namespace dash
 {

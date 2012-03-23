@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -29,9 +29,9 @@
 #include <dash/detail/Context.h>
 #include <dash/detail/Node.h>
 
-#include <co/base/clock.h>
-#include <co/base/init.h>
-#include <co/base/thread.h>
+#include <lunchbox/clock.h>
+#include <lunchbox/init.h>
+#include <lunchbox/thread.h>
 
 #include <limits>
 

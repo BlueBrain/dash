@@ -36,10 +36,11 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 find_package(Boost 1.41 REQUIRED serialization)
 link_directories(${Boost_LIBRARY_DIRS})
-find_package(Collage 0.5.0 REQUIRED)
+find_package(Lunchbox 0.9.0 REQUIRED)
+#find_package(Collage 0.5.0)
 
 include_directories(BEFORE ${dash_SOURCE_DIR} ${CMAKE_BINARY_DIR})
-include_directories(${COLLAGE_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+include_directories(${LUNCHBOX_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 if(CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Winvalid-pch -Wnon-virtual-dtor -Wsign-promo -Wshadow -Winit-self -Wno-unknown-pragmas -Wno-unused-parameter -Wno-write-strings")

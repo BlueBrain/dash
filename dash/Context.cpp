@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -28,9 +28,9 @@
 #include "detail/Commit.h"
 #include "detail/Context.h"
 
-#include <co/base/init.h>
-#include <co/base/perThread.h>
-#include <co/version.h>
+#include <lunchbox/init.h>
+#include <lunchbox/perThread.h>
+#include <lunchbox/version.h>
 
 #ifdef _MSC_VER
 #  define THREAD_LOCAL( T, N ) __declspec( thread ) T* N = 0
@@ -81,8 +81,8 @@ Context& Context::getMain( const int argc, char** argv )
     co::base::ScopedFastWrite mutex( getInitLock_( ));
     if( !_mainContext )
     {
-        EQASSERT( co::Version::check( ));
-        if( !co::Version::check()  || !co::base::init( argc, argv ))
+        EQASSERT( lunchbox::Version::check( ));
+        if( !lunchbox::Version::check()  || !co::base::init( argc, argv ))
             EQERROR << "Collage initialization failed" << std::endl;
         EQINFO << "Initializing main dash::Context v" << Version::getString()
                << std::boolalpha << std::endl;
