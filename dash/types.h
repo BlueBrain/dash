@@ -35,7 +35,6 @@
 
 namespace dash
 {
-
 using lunchbox::uint128_t;
 using lunchbox::RefPtr;
 
