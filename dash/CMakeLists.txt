@@ -21,9 +21,15 @@ set(DASH_HEADERS # public, installed
 set(DASH_DETAIL_HEADERS # private, installed
   detail/Any.h
   detail/AnySerialization.h
+  detail/Attribute.h
   detail/AttributeIterator.h
   detail/ChildIterator.h
+  detail/Context.h
+  detail/ContextPtr.h
   detail/Iterator.h
+  detail/Node.h
+  detail/Serializable.h
+  detail/types.h
   detail/VectorIterator.h
 )
 
@@ -37,19 +43,13 @@ set(DASH_SOURCES
 
 set(DASH_DETAIL_SOURCES
   detail/AnySerialization.cpp
-  detail/Attribute.cpp
-  detail/Attribute.h
+  detail/Attribute.cpp  
   detail/Change.cpp
   detail/Change.h
   detail/Commit.cpp
   detail/Commit.h
-  detail/Context.cpp
-  detail/Context.h
-  detail/ContextPtr.h
+  detail/Context.cpp  
   detail/Node.cpp
-  detail/Node.h
-  detail/Serializable.h
-  detail/types.h
 )
 
 set(DASH_ALL ${DASH_HEADERS} ${DASH_SOURCES})
