@@ -39,9 +39,9 @@
 #define CHILDREN_PER_LEVEL 16
 
 const size_t nThreads_ = 4; // per level!
-co::base::a_ssize_t nOps_;
+lunchbox::a_ssize_t nOps_;
 
-class Builder : public co::base::Thread
+class Builder : public lunchbox::Thread
 {
 public:
     Builder() : level( LEVELS ) {}
@@ -96,13 +96,13 @@ public:
 int dash::test::main( int argc, char **argv )
 {
     dash::Context& context = dash::Context::getMain( argc, argv );
-    //co::base::sleep( 5000 );
+    //lunchbox::sleep( 5000 );
 
     Builder builder;
     builder.node = new dash::Node;
     nOps_ = 1;
 
-    co::base::Clock clock;
+    lunchbox::Clock clock;
     TEST( builder.start( ));
     TEST( builder.join( ));
     const float bTime = clock.getTimef();

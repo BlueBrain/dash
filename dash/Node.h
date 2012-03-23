@@ -47,7 +47,7 @@ namespace detail { class Node; }
  * Nodes are by default only visible in the Context they are constructed
  * in. They are made visible in other contexts using Context::map().
  */
-class Node : public co::base::Referenced
+class Node : public lunchbox::Referenced
 {
 public:
     /** Node tree visitor */

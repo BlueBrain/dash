@@ -43,7 +43,7 @@ namespace detail { class Attribute; }
  * Attributes are by default only visible in the Context they are constructed
  * in. They are made visible in other contexts using Context::map().
  */
-class Attribute : public co::base::Referenced
+class Attribute : public lunchbox::Referenced
 {
 public:
     DASH_API Attribute(); //!< Construct a new empty attribute. @version 0.1

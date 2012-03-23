@@ -36,7 +36,7 @@
 #  define THREAD_LOCAL( T, N ) __declspec( thread ) T* N = 0
 #elif defined __APPLE__
 #  define THREAD_LOCAL( T, N )                              \
-    co::base::PerThread< T, co::base::perThreadNoDelete > N
+    lunchbox::PerThread< T, lunchbox::perThreadNoDelete > N
 #else // gcc
 #  define THREAD_LOCAL( T, N ) __thread T* N = 0
 #endif
@@ -47,9 +47,9 @@ namespace
 {
     static Context* _mainContext = 0;
     THREAD_LOCAL( Context, _currentContext );
-    static co::base::SpinLock* getInitLock_()
+    static lunchbox::SpinLock* getInitLock_()
     {
-        static co::base::SpinLock lock;
+        static lunchbox::SpinLock lock;
         return &lock;
     }
 }
@@ -67,22 +67,22 @@ Context::~Context()
     delete impl_;
     EQASSERT( _currentContext != this );
 
-    co::base::ScopedFastWrite mutex( getInitLock_( ));
+    lunchbox::ScopedFastWrite mutex( getInitLock_( ));
     if( _mainContext == this )
     {
         _mainContext = 0;
-        if( !co::base::exit( ))
+        if( !lunchbox::exit( ))
             EQERROR << "Collage exit failed" << std::endl;
     }
 }
 
 Context& Context::getMain( const int argc, char** argv )
 {
-    co::base::ScopedFastWrite mutex( getInitLock_( ));
+    lunchbox::ScopedFastWrite mutex( getInitLock_( ));
     if( !_mainContext )
     {
         EQASSERT( lunchbox::Version::check( ));
-        if( !lunchbox::Version::check()  || !co::base::init( argc, argv ))
+        if( !lunchbox::Version::check()  || !lunchbox::init( argc, argv ))
             EQERROR << "Collage initialization failed" << std::endl;
         EQINFO << "Initializing main dash::Context v" << Version::getString()
                << std::boolalpha << std::endl;

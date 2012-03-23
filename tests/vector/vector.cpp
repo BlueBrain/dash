@@ -33,7 +33,7 @@
 
 #define LOOPSIZE  200000
 
-co::base::Clock _clock;
+lunchbox::Clock _clock;
 typedef dash::Vector< size_t > Vector_t;
 float rTime_;
 float wTime_;
@@ -41,10 +41,10 @@ float eTime_;
 float cTime_;
 float pTime_;
 
-co::base::Monitor< size_t > stage_;
+lunchbox::Monitor< size_t > stage_;
 #define STAGESIZE 10000;
 
-class Reader : public co::base::Thread
+class Reader : public lunchbox::Thread
 {
 public:
     Reader() {}
@@ -79,7 +79,7 @@ public:
     Vector_t* vector_;
 };
 
-class Writer : public co::base::Thread
+class Writer : public lunchbox::Thread
 {
 public:
     Writer() {}
@@ -110,7 +110,7 @@ public:
     Vector_t* vector_;
 };
 
-class Pusher : public co::base::Thread
+class Pusher : public lunchbox::Thread
 {
 public:
     Pusher() {}
@@ -138,7 +138,7 @@ public:
     Vector_t* vector_;
 };
 
-class Copier : public co::base::Thread
+class Copier : public lunchbox::Thread
 {
 public:
     Copier() {}
@@ -155,7 +155,7 @@ public:
     Vector_t* vector_;
 };
 
-class Eraser : public co::base::Thread
+class Eraser : public lunchbox::Thread
 {
 public:
     Eraser() {}
@@ -173,7 +173,7 @@ public:
     Vector_t* vector_;
 };
 
-class Flusher : public co::base::Thread
+class Flusher : public lunchbox::Thread
 {
 public:
     Flusher() {}
@@ -259,11 +259,11 @@ template< class V, class T > void _runSerialTest()
 
 int dash::test::main( int argc, char **argv )
 {
-    //co::base::sleep( 5000 );
+    //lunchbox::sleep( 5000 );
     dash::Context::getMain( argc, argv );
 
 #ifdef CO_USE_OPENMP
-    const size_t nThreads = co::base::OMP::getNThreads() * 3;
+    const size_t nThreads = lunchbox::OMP::getNThreads() * 3;
 #else
     const size_t nThreads = 16;
 #endif
@@ -286,7 +286,7 @@ int dash::test::main( int argc, char **argv )
         writers[l].start();
         pushers[l].start();
     }
-    co::base::sleep( 10 );
+    lunchbox::sleep( 10 );
 
     for( size_t i = 1; i <= nThreads; i = i<<1 )
         for( size_t j = 1; j <= nThreads; j = j<<1 )

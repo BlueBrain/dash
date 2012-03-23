@@ -59,7 +59,7 @@ template< class T, class V > class VectorIterator;
  */
 template< class T, int32_t nSlots = 32 > class Vector
 {
-    typedef co::base::ScopedFastWrite ScopedWrite;
+    typedef lunchbox::ScopedFastWrite ScopedWrite;
 
 public:
     /** @version 0.1.0 */
@@ -70,7 +70,7 @@ public:
         {
             EQASSERT( n != 0 );
             bzero( slots_, nSlots * sizeof( T* ));
-            const int32_t slots = co::base::getIndexOfLastBit( uint64_t( n ));
+            const int32_t slots = lunchbox::getIndexOfLastBit( uint64_t( n ));
             for( int32_t i = 0; i <= slots; ++i )
                 slots_[ i ] = new T[ 1<<i ];
         }
@@ -80,7 +80,7 @@ public:
         {
             EQASSERT( n != 0 );
             bzero( slots_, nSlots * sizeof( T* ));
-            const int32_t slots = co::base::getIndexOfLastBit( uint64_t( n ));
+            const int32_t slots = lunchbox::getIndexOfLastBit( uint64_t( n ));
             for( int32_t i = 0; i <= slots; ++i )
             {
                 const size_t sz = 1<<i;
@@ -178,7 +178,7 @@ public:
             // one beyond end is possible when called by erase
             EQASSERTINFO( size_ >= i, size_ << " < " << i );
             ++i;
-            const int32_t slot = co::base::getIndexOfLastBit( i );
+            const int32_t slot = lunchbox::getIndexOfLastBit( i );
             const size_t index = i ^ ( size_t( 1 )<<slot );
 
             EQASSERT( slots_[ slot ] );
@@ -190,7 +190,7 @@ public:
         {
             EQASSERTINFO( size_ > i, size_ << " <= " << i );
             ++i;
-            const int32_t slot = co::base::getIndexOfLastBit( i );
+            const int32_t slot = lunchbox::getIndexOfLastBit( i );
             const size_t index = i ^ ( size_t( 1 )<<slot );
 
             EQASSERT( slots_[ slot ] );
@@ -396,7 +396,7 @@ private:
 
     T* slots_[ nSlots ];
     size_t size_;
-    mutable co::base::SpinLock lock_;
+    mutable lunchbox::SpinLock lock_;
 
     template< int32_t fromSlots >
     void assign_( const Vector< T, fromSlots >& from )
@@ -425,7 +425,7 @@ private:
 
     void trim_()
         {
-            const int32_t nextSlot = co::base::getIndexOfLastBit( size_+1 ) + 1;
+            const int32_t nextSlot = lunchbox::getIndexOfLastBit( size_+1 ) + 1;
             if( nextSlot < nSlots && slots_[ nextSlot ] )
             {
                 delete [] slots_[ nextSlot ]; // delete next slot (keep a spare)
@@ -436,7 +436,7 @@ private:
     void push_back_unlocked_( const T& item )
         {
             const size_t i = size_ + 1;
-            const int32_t slot = co::base::getIndexOfLastBit( i );
+            const int32_t slot = lunchbox::getIndexOfLastBit( i );
             const size_t sz = ( size_t( 1 )<<slot );
             if( !slots_[ slot ] )
                 slots_[ slot ] = new T[ sz ];
@@ -451,7 +451,7 @@ private:
 template< class T > inline
 std::ostream& operator << ( std::ostream& os, const Vector< T >& v )
 {
-    os << co::base::className( &v ) << " size " << v.size() << " [ ";
+    os << lunchbox::className( &v ) << " size " << v.size() << " [ ";
     for( typename Vector< T >::const_iterator i = v.begin(); i != v.end(); ++i )
     {
         if( i.getPosition() > 255 )

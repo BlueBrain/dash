@@ -44,10 +44,10 @@ float _filterStopTime[FILTER_COUNT];
 float _consumerStartTime;
 float _consumerStopTime;
 
-co::base::Clock _clock;
-typedef co::base::MTQueue< dash::Commit, MAX_QUEUE_SIZE > CommitQueue;
+lunchbox::Clock _clock;
+typedef lunchbox::MTQueue< dash::Commit, MAX_QUEUE_SIZE > CommitQueue;
 
-class Producer : public co::base::Thread
+class Producer : public lunchbox::Thread
 {
 public:
     Producer( CommitQueue* output )
@@ -98,7 +98,7 @@ private:
     dash::AttributePtr attr_;
 };
 
-class Filter: public co::base::Thread
+class Filter: public lunchbox::Thread
 {
 public:
     Filter()
@@ -165,7 +165,7 @@ private:
 
 int Filter::sFilterNo_ = 0;
 
-class Consumer : public co::base::Thread
+class Consumer : public lunchbox::Thread
 {
 public:
     Consumer( CommitQueue* input )

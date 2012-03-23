@@ -37,7 +37,7 @@ struct Bar
 int dash::test::main( int argc, char **argv )
 {
     dash::Context::getMain( argc, argv );
-    //co::base::sleep( 5000 );
+    //lunchbox::sleep( 5000 );
 
     dash::AttributePtr attr1 = new dash::Attribute( std::string( "hello" ));
     TEST( attr1->get< const std::string >() == "hello" );

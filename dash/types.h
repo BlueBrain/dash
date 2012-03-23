@@ -36,8 +36,8 @@
 namespace dash
 {
 
-using co::base::uint128_t;
-using co::base::RefPtr;
+using lunchbox::uint128_t;
+using lunchbox::RefPtr;
 
 class Commit;
 class Context;
@@ -52,8 +52,8 @@ typedef Attributes::const_iterator AttributesCIter;
 typedef Attributes::iterator AttributesIter; //!< Iterator for Attributes
 
 class Node;
-typedef co::base::RefPtr< Node > NodePtr; //!< Node smart pointer
-typedef co::base::RefPtr< const Node > NodeConstPtr; //!< Node const pointer
+typedef lunchbox::RefPtr< Node > NodePtr; //!< Node smart pointer
+typedef lunchbox::RefPtr< const Node > NodeConstPtr; //!< Node const pointer
 typedef std::vector< NodePtr > Nodes; //!< Vector of NodePtr
 typedef Nodes::const_iterator NodesCIter; //!< Const iterator for Nodes
 typedef Nodes::iterator NodesIter; //!< Iterator for Nodes

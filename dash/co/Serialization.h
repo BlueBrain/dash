@@ -47,7 +47,7 @@ template< class T >
 class Distributable : public co::Object
 {
 public:
-    typedef co::base::RefPtr< T > ValuePtr;
+    typedef lunchbox::RefPtr< T > ValuePtr;
 
     Distributable()
         : value_( new T )

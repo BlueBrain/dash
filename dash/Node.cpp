@@ -67,8 +67,8 @@ bool Node::operator == ( const Node& rhs ) const
 namespace
 {
 template< class N, class A > inline
-VisitorResult accept_( N* node, NodeVisitor< co::base::RefPtr< N >,
-                                             co::base::RefPtr< A > >& visitor )
+VisitorResult accept_( N* node, NodeVisitor< lunchbox::RefPtr< N >,
+                                             lunchbox::RefPtr< A > >& visitor )
 {
     switch( visitor.visitDown( node ))
     {

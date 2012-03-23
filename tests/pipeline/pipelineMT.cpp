@@ -33,9 +33,9 @@
 #define ATTR_INIT_VALUE 20
 #define PROD_BEGIN_VAL  1
 
-typedef co::base::MTQueue<dash::Commit, MAX_QUEUE_SIZE> CommitQueue;
+typedef lunchbox::MTQueue<dash::Commit, MAX_QUEUE_SIZE> CommitQueue;
 
-class Producer : public co::base::Thread
+class Producer : public lunchbox::Thread
 {
 public:
     Producer(CommitQueue* output)
@@ -58,7 +58,7 @@ public:
             if( producedData == ITERATION_COUNT )
                 producedData = 0;
             *attr_ = producedData;
-            co::base::sleep( producedData );
+            lunchbox::sleep( producedData );
             const int attrProducedData =
                     static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
             TESTINFO(attrProducedData == producedData,
@@ -82,7 +82,7 @@ private:
     dash::AttributePtr attr_;
 };
 
-class Filter: public co::base::Thread
+class Filter: public lunchbox::Thread
 {
 public:
     Filter()
@@ -112,7 +112,7 @@ public:
             ++producerData;
             if( producerData == ITERATION_COUNT )
                 producerData = 0;
-            co::base::sleep( filterNo_ );
+            lunchbox::sleep( filterNo_ );
             dash::Commit commit = inputQ_->pop();
             context_.apply(commit);
             const int outData =
@@ -149,7 +149,7 @@ private:
 
 int Filter::sFilterNo_ = 0;
 
-class Consumer : public co::base::Thread
+class Consumer : public lunchbox::Thread
 {
 public:
     Consumer(CommitQueue* input)
