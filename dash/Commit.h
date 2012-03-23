@@ -46,6 +46,13 @@ public:
     /** Assign the changes from another commit. @version 0.1 */
     DASH_API Commit& operator = ( const Commit& from );
 
+    /** Check this Commit on equality. @version 0.1 */
+    DASH_API bool operator == ( const Commit& rhs ) const;
+
+    /** Check this Commit on equality. @version 0.1 */
+    DASH_API bool operator != ( const Commit& rhs ) const
+        { return !(*this == rhs); }
+
     /** @name Internal */
     //@{
     /** @internal Create a new, empty commit. */

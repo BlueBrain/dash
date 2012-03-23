@@ -38,4 +38,11 @@ Commit& Commit::operator = ( const Commit& from )
     return *this;
 }
 
+bool Commit::operator == ( const Commit& rhs ) const
+{
+    if( this == &rhs )
+        return true;
+    return *impl_ == *rhs.impl_;
+}
+
 }
