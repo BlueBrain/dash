@@ -512,9 +512,9 @@ inline void Vector< T, nSlots >::load( Archive& ar, const unsigned int version )
     size_t newSize;
     ar >> newSize;
     expand( newSize );
-    EQASSERT( size_ == newSize );
+    EQASSERT( size_ >= newSize );
 
-    for( size_t i = 0; i < size_; ++i )
+    for( size_t i = 0; i < newSize; ++i )
         ar >> operator[](i);
 }
 
