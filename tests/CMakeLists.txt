@@ -6,13 +6,13 @@ include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR})
 if(WIN32)
   get_filename_component(CO_DIR ${COLLAGE_LIBRARIES} PATH)
   set(CO_DIR "${CO_DIR}/../bin")
-  file(COPY "${CO_DIR}/Collage.dll" "${CO_DIR}/pthread.dll"
+  file(COPY "${CO_DIR}/pthread.dll"
        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug)
-  file(COPY "${CO_DIR}/Collage.dll" "${CO_DIR}/pthread.dll"
+  file(COPY "${CO_DIR}/pthread.dll"
        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release)
-  file(COPY "${CO_DIR}/Collage.dll" "${CO_DIR}/pthread.dll"
+  file(COPY "${CO_DIR}/pthread.dll"
        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/RelWithDebInfo)
-  file(COPY "${CO_DIR}/Collage.dll" "${CO_DIR}/pthread.dll"
+  file(COPY "${CO_DIR}/pthread.dll"
        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/MinSizeRel)
   # dont set output dir, tests want to be with DLLs on Windows - no rpath
 else()
@@ -26,28 +26,23 @@ foreach(FILE ${TEST_FILES})
   string(REGEX REPLACE ".cpp" "" NAME ${FILE})
   string(REGEX REPLACE "[./]" "_" NAME ${NAME})
 
-  if(COLLAGE_FOUND OR NOT ${NAME} MATCHES "co_.*")
-    source_group(\\ FILES ${FILE})
-    add_executable(${NAME} ${FILE})
-    set_target_properties(${NAME} PROPERTIES FOLDER "Tests")
+  source_group(\\ FILES ${FILE})
+  add_executable(${NAME} ${FILE})
+  set_target_properties(${NAME} PROPERTIES FOLDER "Tests")
 
-    target_link_libraries(${NAME} dash)
-    if(${NAME} MATCHES "co_.*")
-      target_link_libraries(${NAME} Collage)
-    endif()
+  target_link_libraries(${NAME} dash)
 
-    get_target_property(EXECUTABLE ${NAME} LOCATION)
-    STRING(REGEX REPLACE "\\$\\(.*\\)" "\${CTEST_CONFIGURATION_TYPE}"
-      EXECUTABLE "${EXECUTABLE}")
-    add_test(${NAME} ${EXECUTABLE})
-    set_target_properties(${NAME} PROPERTIES FOLDER "Tests")
-    if(APPLE)
-      set_property(TEST ${NAME} PROPERTY ENVIRONMENT
-        "DYLD_LIBRARY_PATH=${COLLAGE_LIBRARY_DIR}:$ENV{DYLD_LIBRARY_PATH}"
-        )
-    endif()
-    list(APPEND ALL_TESTS ${NAME})
+  get_target_property(EXECUTABLE ${NAME} LOCATION)
+  STRING(REGEX REPLACE "\\$\\(.*\\)" "\${CTEST_CONFIGURATION_TYPE}"
+    EXECUTABLE "${EXECUTABLE}")
+  add_test(${NAME} ${EXECUTABLE})
+  set_target_properties(${NAME} PROPERTIES FOLDER "Tests")
+  if(APPLE)
+    set_property(TEST ${NAME} PROPERTY ENVIRONMENT
+      "DYLD_LIBRARY_PATH=${COLLAGE_LIBRARY_DIR}:$ENV{DYLD_LIBRARY_PATH}"
+      )
   endif()
+  list(APPEND ALL_TESTS ${NAME})
 endforeach(FILE ${TEST_FILES})
 
 # workaround bug that tests won't get built

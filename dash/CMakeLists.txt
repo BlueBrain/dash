@@ -27,10 +27,6 @@ set(DASH_DETAIL_HEADERS # private, installed
   detail/VectorIterator.h
 )
 
-set(DASH_CO_HEADERS # public, installed
-  co/Serialization.h
-)
-
 set(DASH_SOURCES
   Attribute.cpp
   Context.cpp
@@ -56,26 +52,16 @@ set(DASH_DETAIL_SOURCES
   detail/types.h
 )
 
-set(DASH_CO_SOURCES
-  co/Serialization.cpp
-)
-
 set(DASH_ALL ${DASH_HEADERS} ${DASH_SOURCES})
 set(DASH_DETAIL_ALL ${DASH_DETAIL_HEADERS} ${DASH_DETAIL_SOURCES})
-if(COLLAGE_FOUND)
-  set(DASH_CO_ALL ${DASH_CO_HEADERS} ${DASH_CO_SOURCES})
-else()
-  set(DASH_CO_ALL)
-endif()
 
 source_group(\\ FILES CMakeLists.txt ${DASH_ALL})
 source_group(detail FILES ${DASH_DETAIL_ALL})
-source_group(co FILES ${DASH_CO_ALL})
 
 set(LIBRARY dash)
 set(LIB_INCLUDE ${LIBRARY}${VERSION_MAJOR})
 
-add_library(${LIBRARY} SHARED ${DASH_ALL} ${DASH_DETAIL_ALL} ${DASH_CO_ALL})
+add_library(${LIBRARY} SHARED ${DASH_ALL} ${DASH_DETAIL_ALL})
 target_link_libraries(${LIBRARY} ${LUNCHBOX_LIBRARIES} ${Boost_LIBRARIES})
 set_target_properties(${LIBRARY}
   PROPERTIES VERSION ${VERSION} SOVERSION ${VERSION_ABI}
@@ -86,8 +72,6 @@ install(FILES ${DASH_HEADERS}
         DESTINATION include/${LIB_INCLUDE} COMPONENT dev)
 install(FILES ${DASH_DETAIL_HEADERS}
         DESTINATION include/${LIB_INCLUDE}/detail COMPONENT dev)
-install(FILES ${DASH_CO_HEADERS}
-        DESTINATION include/${LIB_INCLUDE}/co COMPONENT dev)
 install(TARGETS ${LIBRARY}
         ARCHIVE DESTINATION lib COMPONENT dev
         RUNTIME DESTINATION bin COMPONENT lib
