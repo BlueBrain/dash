@@ -24,6 +24,7 @@
 #include <dash/Commit.h> // return type
 #include <dash/api.h>
 #include <dash/types.h>
+#include <dash/Serializable.h>
 
 namespace dash
 {
@@ -197,6 +198,8 @@ public:
     //@}
 
 private:
+    SERIALIZABLE()
+
     detail::Context* const impl_;
 
     Context( const Context& from ); //!< disable copy

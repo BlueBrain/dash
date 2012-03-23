@@ -27,6 +27,7 @@
 #include "detail/Attribute.h"
 #include "detail/Commit.h"
 #include "detail/Context.h"
+#include "detail/Serializable.h"
 
 #include <lunchbox/init.h>
 #include <lunchbox/perThread.h>
@@ -53,6 +54,9 @@ namespace
         return &lock;
     }
 }
+
+SERIALIZABLETEXTARCHIVE( Context )
+SERIALIZABLEBINARYARCHIVE( Context )
 
 Context::Context()
         : impl_( new detail::Context )

@@ -20,10 +20,17 @@
 
 #include "Commit.h"
 
+#include <dash/Node.h>
 #include "detail/Commit.h"
+#include "detail/Change.h"
+#include "detail/Serializable.h"
 
 namespace dash
 {
+
+SERIALIZABLETEXTARCHIVE( Commit )
+SERIALIZABLEBINARYARCHIVE( Commit )
+
 Commit::Commit()
         : impl_( new detail::Commit )
 {}
@@ -36,6 +43,13 @@ Commit& Commit::operator = ( const Commit& from )
 {
     impl_ = from.impl_;
     return *this;
+}
+
+bool Commit::operator == ( const Commit& rhs ) const
+{
+    if( this == &rhs )
+        return true;
+    return *impl_ == *rhs.impl_;
 }
 
 }
