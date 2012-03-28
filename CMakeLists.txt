@@ -43,6 +43,7 @@ endif()
 find_package(Boost 1.41 REQUIRED serialization)
 link_directories(${Boost_LIBRARY_DIRS})
 find_package(Lunchbox 0.9.0 REQUIRED)
+add_definitions(-DBOOST_ALL_NO_LIB) # Don't use 'pragma lib' on Windows
 
 include_directories(BEFORE ${dash_SOURCE_DIR} ${CMAKE_BINARY_DIR})
 include_directories(${LUNCHBOX_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
