@@ -12,8 +12,6 @@ set(DASH_HEADERS # public, installed
   Context.h
   Node.h
   NodeVisitor.h
-  Serializable.h
-  Vector.h
   "${CMAKE_CURRENT_BINARY_DIR}/Version.h"
   VisitorResult.h
 )
@@ -26,11 +24,9 @@ set(DASH_DETAIL_HEADERS # private, installed
   detail/ChildIterator.h
   detail/Context.h
   detail/ContextPtr.h
-  detail/Iterator.h
   detail/Node.h
   detail/Serializable.h
   detail/types.h
-  detail/VectorIterator.h
 )
 
 set(DASH_SOURCES
