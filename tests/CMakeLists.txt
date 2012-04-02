@@ -4,15 +4,15 @@
 include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR})
 
 if(WIN32)
-  get_filename_component(CO_DIR ${COLLAGE_LIBRARIES} PATH)
-  set(CO_DIR "${CO_DIR}/../bin")
-  file(COPY "${CO_DIR}/pthread.dll"
+  get_filename_component(LB_DIR ${LUNCHBOX_LIBRARIES} PATH)
+  set(LB_DIR "${LB_DIR}/../bin")
+  file(COPY "${LB_DIR}/pthread.dll"
        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug)
-  file(COPY "${CO_DIR}/pthread.dll"
+  file(COPY "${LB_DIR}/pthread.dll"
        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release)
-  file(COPY "${CO_DIR}/pthread.dll"
+  file(COPY "${LB_DIR}/pthread.dll"
        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/RelWithDebInfo)
-  file(COPY "${CO_DIR}/pthread.dll"
+  file(COPY "${LB_DIR}/pthread.dll"
        DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/MinSizeRel)
   # dont set output dir, tests want to be with DLLs on Windows - no rpath
 else()

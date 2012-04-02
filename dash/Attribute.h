@@ -23,7 +23,7 @@
 
 #include <dash/api.h>
 #include <dash/types.h>
-#include <dash/Serializable.h>
+#include <lunchbox/serializable.h>
 
 #include <lunchbox/referenced.h> // base class
 #include <dash/detail/Any.h> // used inline
@@ -92,7 +92,7 @@ public:
     //@}
 
 private:
-    SERIALIZABLE()
+    LB_SERIALIZABLE
 
     detail::Attribute* impl_;
 

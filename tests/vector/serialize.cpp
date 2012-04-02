@@ -21,30 +21,30 @@
 #include "test.h"
 #include "serialize.h"
 
-#include <dash/Vector.h>
+#include <lunchbox/lfVector.h>
 
 
 int dash::test::main( int argc, char **argv )
 {
-    dash::Vector< int > intVector;
+    lunchbox::LFVector< int > intVector;
     intVector.push_back( 0 );
     intVector.push_back( -7 );
     intVector.push_back( 42 );
     textSerializeAndTest( intVector );
 
-    dash::Vector< float > floatVector;
+    lunchbox::LFVector< float > floatVector;
     floatVector.push_back( 1.7f );
     floatVector.push_back( -8.2f );
     floatVector.push_back( 3.667f );
     textSerializeAndTest( floatVector );
 
-    dash::Vector< std::string > stringVector;
+    lunchbox::LFVector< std::string > stringVector;
     stringVector.push_back( "bla" );
     stringVector.push_back( "blub" );
     stringVector.push_back( "tralala" );
     textSerializeAndTest( stringVector );
 
-    dash::Vector< Foo > fooVector;
+    lunchbox::LFVector< Foo > fooVector;
     Foo foo1 = {42, 1.5f, false, "blablub"};
     Foo foo2 = {445, 41.2f, true, "foobar"};
     Foo foo3 = {-992, 0.56f, false, "12345qwert"};

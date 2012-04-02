@@ -38,19 +38,19 @@ Attribute::Attribute( const Attribute& from )
         : Referenced( from )
 {
     impl_ = new detail::Attribute( this, from.impl_ );
-    impl_->ref( CO_REFERENCED_PARAM );
+    impl_->ref( this );
 }
 
 void Attribute::init_()
 {
     impl_ = new detail::Attribute( this );
-    impl_->ref( CO_REFERENCED_PARAM );
+    impl_->ref( this );
 }
 
 Attribute::~Attribute()
 {
     impl_->orphan();
-    impl_->unref( CO_REFERENCED_PARAM );
+    impl_->unref( this );
 }
 
 Attribute& Attribute::operator = ( const Attribute& from )

@@ -37,10 +37,10 @@ namespace dash
 {
 using lunchbox::uint128_t;
 using lunchbox::RefPtr;
+using lunchbox::LFVector;
 
 class Commit;
 class Context;
-template< class, int32_t > class Vector;
 
 class Attribute;
 typedef RefPtr< Attribute > AttributePtr; //!< Attribute smart pointer

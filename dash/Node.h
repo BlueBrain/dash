@@ -25,7 +25,7 @@
 #include <dash/types.h>
 #include <dash/NodeVisitor.h>   // nested typedef
 #include <dash/VisitorResult.h> // return value
-#include <dash/Serializable.h>
+#include <lunchbox/serializable.h>
 
 #include <dash/detail/AttributeIterator.h> // return value
 #include <dash/detail/ChildIterator.h>     // return value
@@ -173,7 +173,7 @@ public:
     //@}
 
 private:
-    SERIALIZABLE()
+    LB_SERIALIZABLE
 
     // use raw pointer instead of NodePtr to avoid leak of detail::Node
     detail::Node* impl_;

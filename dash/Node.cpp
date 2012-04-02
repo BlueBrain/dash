@@ -33,20 +33,20 @@ SERIALIZABLEBINARYARCHIVE( Node )
 Node::Node()
 {
     impl_ = new detail::Node( this );
-    impl_->ref( CO_REFERENCED_PARAM );
+    impl_->ref( this );
 }
 
 Node::Node( const Node& from )
         : Referenced( from )
 {
     impl_ = new detail::Node( this, from.impl_ );
-    impl_->ref( CO_REFERENCED_PARAM );
+    impl_->ref( this );
 }
 
 Node::~Node()
 {
     impl_->orphan();
-    impl_->unref( CO_REFERENCED_PARAM );
+    impl_->unref( this );
 }
 
 Node& Node::operator = ( const Node& from )

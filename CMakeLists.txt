@@ -34,8 +34,16 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+if(MSVC)
+  option(Boost_USE_STATIC_LIBS "Use boost static libs" ON)
+endif()
+if(BOOST_ROOT)
+  set(Boost_NO_SYSTEM_PATHS TRUE)
+endif()
 find_package(Boost 1.41 REQUIRED serialization)
 link_directories(${Boost_LIBRARY_DIRS})
+add_definitions(-DBOOST_ALL_NO_LIB) # Don't use 'pragma lib' on Windows
+
 find_package(Lunchbox 0.9.0 REQUIRED)
 
 include_directories(BEFORE ${dash_SOURCE_DIR} ${CMAKE_BINARY_DIR})
@@ -57,14 +65,12 @@ if(APPLE)
   set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
 endif(APPLE)
 
-function(INSTALL_SYMLINK FROM TO WHERE)
-  install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${FROM} ${TO} WORKING_DIRECTORY \$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${WHERE})" )
-endfunction()
-
+include(InstallSymlink)
 # add_subdirectory(examples)
 add_subdirectory(dash)
 add_subdirectory(tests)
 add_subdirectory(doc)
 
 include(CTest)
+add_custom_target(package COMMENT "Packaging not done yet")
 # include(CPackConfig)
