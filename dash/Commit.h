@@ -21,9 +21,10 @@
 #ifndef DASH_COMMIT_H
 #define DASH_COMMIT_H
 
+#include <lunchbox/serializable.h>
+
 #include <dash/api.h>
 #include <dash/types.h>
-#include <dash/Serializable.h>
 
 namespace dash
 {
@@ -63,7 +64,7 @@ public:
     //@}
 
 private:
-    SERIALIZABLE()
+    LB_SERIALIZABLE
 
     detail::CommitPtr impl_;
 };
