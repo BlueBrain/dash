@@ -58,7 +58,7 @@ public:
     /** @name Internal */
     //@{
     /** @internal Create a new, empty commit. */
-    Commit();
+    DASH_API Commit();
     detail::CommitPtr getImpl() { return impl_; } //!< @internal
     detail::CommitConstPtr getImpl() const { return impl_; } //!< @internal
     //@}
