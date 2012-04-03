@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -52,7 +52,7 @@ public:
     DASH_API bool operator == ( const Commit& rhs ) const;
 
     /** Check this Commit on equality. @version 0.1 */
-    DASH_API bool operator != ( const Commit& rhs ) const
+    bool operator != ( const Commit& rhs ) const
         { return !(*this == rhs); }
 
     /** @name Internal */
