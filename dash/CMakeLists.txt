@@ -21,7 +21,9 @@ set(DASH_DETAIL_HEADERS # private, installed
   detail/AnySerialization.h
   detail/Attribute.h
   detail/AttributeIterator.h
+  detail/Change.h
   detail/ChildIterator.h
+  detail/Commit.h
   detail/Context.h
   detail/ContextPtr.h
   detail/Node.h
@@ -41,9 +43,7 @@ set(DASH_DETAIL_SOURCES
   detail/AnySerialization.cpp
   detail/Attribute.cpp  
   detail/Change.cpp
-  detail/Change.h
   detail/Commit.cpp
-  detail/Commit.h
   detail/Context.cpp  
   detail/Node.cpp
 )
