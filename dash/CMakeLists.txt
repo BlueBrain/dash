@@ -1,7 +1,7 @@
 
 # Copyright (c) 2011-2012 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
 
-configure_file("Version.h.in" "${CMAKE_CURRENT_BINARY_DIR}/Version.h" @ONLY)
+configure_file("Version.h.in" "${OUTPUT_INCLUDE_DIR}/Version.h" @ONLY)
 
 set(DASH_HEADERS # public, installed
   api.h
@@ -12,7 +12,7 @@ set(DASH_HEADERS # public, installed
   Context.h
   Node.h
   NodeVisitor.h
-  "${CMAKE_CURRENT_BINARY_DIR}/Version.h"
+  "${OUTPUT_INCLUDE_DIR}/Version.h"
   VisitorResult.h
 )
 
