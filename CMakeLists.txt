@@ -47,7 +47,8 @@ add_definitions(-DBOOST_ALL_NO_LIB) # Don't use 'pragma lib' on Windows
 find_package(Lunchbox 0.9.0 REQUIRED)
 
 include_directories(BEFORE ${dash_SOURCE_DIR} ${CMAKE_BINARY_DIR})
-include_directories(${LUNCHBOX_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+include_directories(${LUNCHBOX_INCLUDE_DIRS})
+include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 
 if(CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Winvalid-pch -Wnon-virtual-dtor -Wsign-promo -Wshadow -Winit-self -Wno-unknown-pragmas -Wno-unused-parameter -Wno-write-strings")
@@ -63,6 +64,8 @@ endif(LINUX)
 
 if(APPLE)
   set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
+  set(CMAKE_INCLUDE_SYSTEM_FLAG_C "-isystem ")
+  set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "-isystem ")
 endif(APPLE)
 
 include(InstallSymlink)
