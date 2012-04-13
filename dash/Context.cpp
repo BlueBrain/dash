@@ -60,19 +60,19 @@ Context::Context()
 
 Context::~Context()
 {
-    EQASSERT( _mainContext );
+    LBASSERT( _mainContext );
     if( _currentContext == this )
         _currentContext = 0;
 
     delete impl_;
-    EQASSERT( _currentContext != this );
+    LBASSERT( _currentContext != this );
 
     lunchbox::ScopedFastWrite mutex( getInitLock_( ));
     if( _mainContext == this )
     {
         _mainContext = 0;
         if( !lunchbox::exit( ))
-            EQERROR << "Collage exit failed" << std::endl;
+            LBERROR << "Collage exit failed" << std::endl;
     }
 }
 
@@ -81,18 +81,18 @@ Context& Context::getMain( const int argc, char** argv )
     lunchbox::ScopedFastWrite mutex( getInitLock_( ));
     if( !_mainContext )
     {
-        EQASSERT( lunchbox::Version::check( ));
+        LBASSERT( lunchbox::Version::check( ));
         if( !lunchbox::Version::check()  || !lunchbox::init( argc, argv ))
-            EQERROR << "Collage initialization failed" << std::endl;
-        EQINFO << "Initializing main dash::Context v" << Version::getString()
+            LBERROR << "Collage initialization failed" << std::endl;
+        LBINFO << "Initializing main dash::Context v" << Version::getString()
                << std::boolalpha << std::endl;
         _mainContext = new Context;
     }
     else if( argc > 0 )
     {
-        EQWARN << "Main context already initialized, ignoring command line "
+        LBWARN << "Main context already initialized, ignoring command line "
                << "arguments" << std::endl;
-        EQASSERT( argc == 0 );
+        LBASSERT( argc == 0 );
     }
     return *_mainContext;
 }
