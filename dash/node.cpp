@@ -18,11 +18,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Node.h"
+#include "node.h"
 
-#include "detail/ChildIterator.h"
-#include "detail/Node.h"
-#include "detail/Serializable.h"
+#include "detail/childIterator.h"
+#include "detail/node.h"
+#include "detail/serializable.h"
 
 namespace dash
 {

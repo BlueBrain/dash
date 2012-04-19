@@ -23,12 +23,12 @@
 
 #include <dash/api.h>
 #include <dash/types.h>
-#include <dash/NodeVisitor.h>   // nested typedef
-#include <dash/VisitorResult.h> // return value
+#include <dash/nodeVisitor.h>   // nested typedef
+#include <dash/visitorResult.h> // return value
 #include <lunchbox/serializable.h>
 
-#include <dash/detail/AttributeIterator.h> // return value
-#include <dash/detail/ChildIterator.h>     // return value
+#include <dash/detail/attributeIterator.h> // return value
+#include <dash/detail/childIterator.h>     // return value
 
 #include <lunchbox/referenced.h> // base class
 
@@ -100,7 +100,7 @@ public:
      */
     DASH_API VisitorResult accept( ConstVisitor& visitor ) const;
 
-    /** @name Node hierarchy */
+    /** @name node.hierarchy */
     //@{
     /** Establish a relationship between the two nodes. @version 0.1 */
     DASH_API void insert( NodePtr child );
@@ -108,7 +108,7 @@ public:
     /** Break the relationship between the two nodes. @version 0.1 */
     DASH_API void erase( NodePtr child );
 
-    /** @return true of the Node has parents, false otherwise. @version 0.1 */
+    /** @return true of the node.has parents, false otherwise. @version 0.1 */
     DASH_API bool hasParents() const;
 
     /** @return the current number of parents. @version 0.1 */

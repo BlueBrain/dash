@@ -20,9 +20,9 @@
 
 #include "test.h"
 
-#include <dash/Attribute.h>
-#include <dash/Context.h>
-#include <dash/Node.h>
+#include <dash/attribute.h>
+#include <dash/context.h>
+#include <dash/node.h>
 
 class Counter : public dash::Node::ConstVisitor
 {

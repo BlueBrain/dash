@@ -26,7 +26,7 @@
 #include <lunchbox/serializable.h>
 
 #include <lunchbox/referenced.h> // base class
-#include <dash/detail/Any.h> // used inline
+#include <dash/detail/any.h> // used inline
 
 namespace dash
 {

@@ -18,15 +18,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Context.h"
+#include "context.h"
 
-#include <dash/Attribute.h>
-#include <dash/Node.h>
+#include <dash/attribute.h>
+#include <dash/node.h>
 #include <dash/Version.h>
 
-#include "detail/Attribute.h"
-#include "detail/Commit.h"
-#include "detail/Context.h"
+#include "detail/attribute.h"
+#include "detail/commit.h"
+#include "detail/context.h"
 
 #include <lunchbox/init.h>
 #include <lunchbox/perThread.h>

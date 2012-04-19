@@ -21,7 +21,7 @@
 #ifndef DASHTEST_SERIALIZE_H
 #define DASHTEST_SERIALIZE_H
 
-#include <dash/detail/AnySerialization.h>
+#include <dash/detail/anySerialization.h>
 
 #include <sstream>
 

@@ -19,7 +19,7 @@
  */
 
 #include "test.h"
-#include <dash/Context.h>
+#include <dash/context.h>
 
 int dash::test::main( int argc, char **argv )
 {

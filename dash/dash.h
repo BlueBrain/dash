@@ -33,10 +33,10 @@
  * graph and hold attributes. Attributes store any data.
  */
 
-#include <dash/Attribute.h>
-#include <dash/Commit.h>
-#include <dash/Context.h>
-#include <dash/Node.h>
+#include <dash/attribute.h>
+#include <dash/commit.h>
+#include <dash/context.h>
+#include <dash/node.h>
 #include <lunchbox/base.h>
 
 #endif // DASH_DASH_H

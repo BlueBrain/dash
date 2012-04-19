@@ -20,14 +20,14 @@
 
 #include "test.h"
 
-#include <dash/Context.h>
-#include <dash/Node.h>
+#include <dash/context.h>
+#include <dash/node.h>
 
-#include <dash/detail/Attribute.h>
-#include <dash/detail/Change.h>
-#include <dash/detail/Commit.h>
-#include <dash/detail/Context.h>
-#include <dash/detail/Node.h>
+#include <dash/detail/attribute.h>
+#include <dash/detail/change.h>
+#include <dash/detail/commit.h>
+#include <dash/detail/context.h>
+#include <dash/detail/node.h>
 
 #include <lunchbox/clock.h>
 #include <lunchbox/init.h>

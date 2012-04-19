@@ -21,7 +21,7 @@
 #ifndef DASH_CONTEXT_H
 #define DASH_CONTEXT_H
 
-#include <dash/Commit.h> // return type
+#include <dash/commit.h> // return type
 #include <dash/api.h>
 #include <dash/types.h>
 

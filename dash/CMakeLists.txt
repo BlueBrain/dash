@@ -1,51 +1,51 @@
 
 # Copyright (c) 2011-2012 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
 
-configure_file("Version.h.in" "${OUTPUT_INCLUDE_DIR}/dash/Version.h" @ONLY)
+configure_file("version.in.h" "${OUTPUT_INCLUDE_DIR}/dash/version.h" @ONLY)
 
 set(DASH_HEADERS # public, installed
   api.h
   dash.h
   types.h
-  Attribute.h
-  Commit.h
-  Context.h
-  Node.h
-  NodeVisitor.h
-  "${OUTPUT_INCLUDE_DIR}/dash/Version.h"
-  VisitorResult.h
+  attribute.h
+  commit.h
+  context.h
+  node.h
+  nodeVisitor.h
+  "${OUTPUT_INCLUDE_DIR}/dash/version.h"
+  visitorResult.h
 )
 
 set(DASH_DETAIL_HEADERS # private, installed
-  detail/Any.h
-  detail/AnySerialization.h
-  detail/Attribute.h
-  detail/AttributeIterator.h
-  detail/Change.h
-  detail/ChildIterator.h
-  detail/Commit.h
-  detail/Context.h
-  detail/ContextPtr.h
-  detail/Node.h
-  detail/Serializable.h
+  detail/any.h
+  detail/anySerialization.h
+  detail/attribute.h
+  detail/attributeIterator.h
+  detail/change.h
+  detail/childIterator.h
+  detail/commit.h
+  detail/context.h
+  detail/contextPtr.h
+  detail/node.h
+  detail/serializable.h
   detail/types.h
 )
 
 set(DASH_SOURCES
-  Attribute.cpp
-  Context.cpp
-  Commit.cpp
-  Node.cpp
-  Version.cpp
+  attribute.cpp
+  context.cpp
+  commit.cpp
+  node.cpp
+  version.cpp
 )
 
 set(DASH_DETAIL_SOURCES
-  detail/AnySerialization.cpp
-  detail/Attribute.cpp  
-  detail/Change.cpp
-  detail/Commit.cpp
-  detail/Context.cpp  
-  detail/Node.cpp
+  detail/anySerialization.cpp
+  detail/attribute.cpp  
+  detail/change.cpp
+  detail/commit.cpp
+  detail/context.cpp  
+  detail/node.cpp
 )
 
 set(DASH_ALL ${DASH_HEADERS} ${DASH_SOURCES})

@@ -20,8 +20,8 @@
 
 #include "test.h"
 
-#include <dash/Context.h>
-#include <dash/Attribute.h>
+#include <dash/context.h>
+#include <dash/attribute.h>
 
 #define START_VALUE 100
 #define STEP1_VALUE 50

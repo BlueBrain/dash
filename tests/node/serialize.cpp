@@ -22,8 +22,8 @@
 #include "serialize.h"
 #include "node.h"
 
-#include <dash/Node.h>
-#include <dash/Attribute.h>
+#include <dash/node.h>
+#include <dash/attribute.h>
 
 
 int dash::test::main( int argc, char **argv )

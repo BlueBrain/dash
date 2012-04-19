@@ -20,15 +20,15 @@
 
 //#define DASH_TEST_NO_WATCHDOG
 #include "test.h"
-#include <dash/Attribute.h>
-#include <dash/Context.h>
-#include <dash/Node.h>
+#include <dash/attribute.h>
+#include <dash/context.h>
+#include <dash/node.h>
 
-#include <dash/detail/Attribute.h>
-#include <dash/detail/Change.h>
-#include <dash/detail/Commit.h>
-#include <dash/detail/Context.h>
-#include <dash/detail/Node.h>
+#include <dash/detail/attribute.h>
+#include <dash/detail/change.h>
+#include <dash/detail/commit.h>
+#include <dash/detail/context.h>
+#include <dash/detail/node.h>
 
 int dash::test::main( int argc, char **argv )
 {

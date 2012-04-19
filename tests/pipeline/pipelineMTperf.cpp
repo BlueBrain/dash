@@ -20,8 +20,8 @@
 
 #include "test.h"
 
-#include <dash/Context.h>
-#include <dash/Attribute.h>
+#include <dash/context.h>
+#include <dash/attribute.h>
 
 #include <lunchbox/clock.h>
 #include <lunchbox/thread.h>

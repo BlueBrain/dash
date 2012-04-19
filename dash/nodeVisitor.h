@@ -22,7 +22,7 @@
 #define DASH_NODEVISITOR_H
 
 #include <dash/types.h>
-#include <dash/VisitorResult.h> // return value
+#include <dash/visitorResult.h> // return value
 
 namespace dash
 {
