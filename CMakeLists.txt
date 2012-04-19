@@ -19,6 +19,7 @@ else()
 endif()
 
 include(Common)
+include(DoxygenSetup)
 
 find_package(Boost 1.41 REQUIRED serialization)
 link_directories(${Boost_LIBRARY_DIRS})
@@ -32,7 +33,7 @@ include(InstallSymlink)
 # add_subdirectory(examples)
 add_subdirectory(dash)
 add_subdirectory(tests)
-add_subdirectory(doc)
+include(DoxygenRule)
 
 include(CTest)
 add_custom_target(package COMMENT "Packaging not done yet")
