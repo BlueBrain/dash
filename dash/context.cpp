@@ -22,7 +22,7 @@
 
 #include <dash/attribute.h>
 #include <dash/node.h>
-#include <dash/Version.h>
+#include <dash/version.h>
 
 #include "detail/attribute.h"
 #include "detail/commit.h"
