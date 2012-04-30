@@ -33,7 +33,7 @@
 #define ATTR_INIT_VALUE 20
 #define PROD_BEGIN_VAL  1
 
-typedef lunchbox::MTQueue<dash::Commit, MAX_QUEUE_SIZE> CommitQueue;
+typedef lunchbox::MTQueue<dash::Commit> CommitQueue;
 
 class Producer : public lunchbox::Thread
 {
@@ -201,17 +201,19 @@ int dash::test::main( int argc, char **argv )
 {
     dash::Context& mainCtx = dash::Context::getMain( argc, argv );
     {
-        CommitQueue queue[ FILTER_COUNT + 1 ];
+        CommitQueue* queue[ FILTER_COUNT + 1 ];
+        for( size_t i = 0; i < FILTER_COUNT + 1; ++i )
+            queue[i] = new CommitQueue( MAX_QUEUE_SIZE );
 
         Filter filter[ FILTER_COUNT ];
 
-        Producer producer( &queue[0] );
+        Producer producer( queue[0] );
         for(int i = 0; i < FILTER_COUNT; ++i)
         {
-            filter[ i ].setInputQueue( &queue[ i ] );
-            filter[ i ].setOutputQueue( &queue[ i + 1 ] );
+            filter[ i ].setInputQueue( queue[ i ] );
+            filter[ i ].setOutputQueue( queue[ i + 1 ] );
         }
-        Consumer consumer( &queue[ FILTER_COUNT ] );
+        Consumer consumer( queue[ FILTER_COUNT ] );
 
         filter[0].setAttribute( producer.mapAttributeToContext( filter[ 0 ].getContext() ) );
         for(int i = 1; i < FILTER_COUNT; ++i)
@@ -227,6 +229,9 @@ int dash::test::main( int argc, char **argv )
         for(int i = 0; i < FILTER_COUNT; ++i)
                 filter[ i ].join();
         consumer.join();
+
+        for( size_t i = 0; i < FILTER_COUNT + 1; ++i )
+            delete queue[i];
     }
 
     mainCtx.commit();
