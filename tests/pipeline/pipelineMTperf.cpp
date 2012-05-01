@@ -45,7 +45,7 @@ float _consumerStartTime;
 float _consumerStopTime;
 
 lunchbox::Clock _clock;
-typedef lunchbox::MTQueue< dash::Commit > CommitQueue;
+typedef lunchbox::MTQueue< dash::Commit, MAX_QUEUE_SIZE > CommitQueue;
 
 class Producer : public lunchbox::Thread
 {
@@ -223,19 +223,17 @@ int dash::test::main( int argc, char **argv )
 {
     dash::Context& mainCtx = dash::Context::getMain( argc, argv );
     {
-        CommitQueue* queue[ FILTER_COUNT + 1 ];
-        for( size_t i = 0; i < FILTER_COUNT + 1; ++i )
-            queue[i] = new CommitQueue( MAX_QUEUE_SIZE );
+        CommitQueue queue[ FILTER_COUNT + 1 ];
 
         Filter filter[ FILTER_COUNT ];
 
-        Producer producer( queue[0] );
+        Producer producer( &queue[0] );
         for(int i = 0; i < FILTER_COUNT; ++i)
         {
-            filter[ i ].setInputQueue( queue[ i ] );
-            filter[ i ].setOutputQueue( queue[ i + 1 ] );
+            filter[ i ].setInputQueue( &queue[ i ] );
+            filter[ i ].setOutputQueue( &queue[ i + 1 ] );
         }
-        Consumer consumer( queue[ FILTER_COUNT ] );
+        Consumer consumer( &queue[ FILTER_COUNT ] );
 
         filter[0].setAttribute( producer.mapAttributeToContext( filter[ 0 ].getContext() ) );
         for( int i = 1; i < FILTER_COUNT; ++i )
@@ -263,9 +261,6 @@ int dash::test::main( int argc, char **argv )
                   << float(ITERATION_COUNT) /(_consumerStopTime - _consumerStartTime)
                   << " apply/ms, Stop time:   "
                   << std::setw(11) <<  _consumerStopTime << " ms" << std::endl;
-
-        for( size_t i = 0; i < FILTER_COUNT + 1; ++i )
-            delete queue[i];
     }
 
     mainCtx.commit();
