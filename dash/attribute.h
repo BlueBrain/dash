@@ -70,6 +70,10 @@ public:
     DASH_API bool operator != ( const Attribute& rhs ) const
         { return !(*this == rhs); }
 
+    /** Set a new value to this Attribute. @version 0.1 */
+    template< class T > void set( const T& value )
+        { set_( detail::Any( value )); }
+
     /** @return the stored value. @throws boost::bad_any_cast. @version 0.1 */
     template< class T > T get() { return detail::any_cast< T >( get_( )); }
 
