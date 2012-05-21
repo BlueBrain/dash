@@ -32,21 +32,13 @@
 #include <lunchbox/perThread.h>
 #include <lunchbox/version.h>
 
-#ifdef _MSC_VER
-#  define THREAD_LOCAL( T, N ) __declspec( thread ) T* N = 0
-#elif defined __APPLE__
-#  define THREAD_LOCAL( T, N )                              \
-    lunchbox::PerThread< T, lunchbox::perThreadNoDelete > N
-#else // gcc
-#  define THREAD_LOCAL( T, N ) __thread T* N = 0
-#endif
 
 namespace dash
 {
 namespace
 {
     static Context* _mainContext = 0;
-    THREAD_LOCAL( Context, _currentContext );
+    lunchbox::PerThread< Context, lunchbox::perThreadNoDelete > _currentContext;
     static lunchbox::SpinLock* getInitLock_()
     {
         static lunchbox::SpinLock lock;
