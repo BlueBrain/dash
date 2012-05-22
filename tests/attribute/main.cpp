@@ -58,7 +58,7 @@ int dash::test::main( int argc, char **argv )
         foo.i = 42;
         TEST( fooRef.i == 17 );
 
-        attr1->get< Foo& >();
+        attr1->getMutable< Foo& >();
     }
     return EXIT_SUCCESS;
 }

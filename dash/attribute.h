@@ -75,19 +75,24 @@ public:
         { set_( detail::Any( value )); }
 
     /** @return the stored value. @throws boost::bad_any_cast. @version 0.1 */
-    template< class T > T get() { return detail::any_cast< T >( get_( )); }
+    template< class T > T getMutable()
+        { return detail::any_cast< T >( get_( )); }
+
+    /** @return the stored value without checking the type. @version 0.1 */
+    template< class T > T getMutableUnsafe()
+        { return detail::unsafe_any_cast< T >( get_( )); }
 
     /** @return the stored value. @throws boost::bad_any_cast. @version 0.1 */
     template< class T > const T get() const
         { return detail::any_cast< const T >( get_( )); }
 
     /** @return the stored value without checking the type. @version 0.1 */
-    template< class T > T getUnsafe()
-        { return detail::unsafe_any_cast< T >( get_( )); }
+    template< class T > const T getUnsafe()
+        { return detail::unsafe_any_cast< const T >( get_( )); }
 
     /** @return the stored value without checking the type. @version 0.1 */
     template< class T > const T getUnsafe() const
-        { return detail::unsafe_any_cast< T >( get_( )); }
+        { return detail::unsafe_any_cast< const T >( get_( )); }
 
     /** @name Internal */
     //@{
@@ -101,7 +106,6 @@ private:
     detail::Attribute* impl_;
 
     DASH_API void init_();
-
     DASH_API Attribute& set_( const detail::Any& value );
     DASH_API detail::Any& get_();
     DASH_API const detail::Any& get_() const;
