@@ -1,6 +1,6 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
- *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
+/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
+ *                          Stefan.Eilemann@epfl.ch
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
  *
@@ -21,26 +21,20 @@
 #ifndef DASH_API_H
 #define DASH_API_H
 
+#include <lunchbox/api.h>
+
 /**
  * @file dash/api.h
  *
  * Defines shared library symbol visibility macros.
  */
 
-#if defined(_MSC_VER) || defined(__declspec)
-#  define DASH_DLLEXPORT __declspec(dllexport)
-#  define DASH_DLLIMPORT __declspec(dllimport)
-#else // _MSC_VER
-#  define DASH_DLLEXPORT
-#  define DASH_DLLIMPORT
-#endif // _MSC_VER
-
 #if defined(DASH_STATIC)
 #  define DASH_API
 #elif defined(DASH_SHARED)
-#  define DASH_API DASH_DLLEXPORT
+#  define DASH_API LB_DLLEXPORT
 #else
-#  define DASH_API DASH_DLLIMPORT
+#  define DASH_API LB_DLLIMPORT
 #endif
 
 #endif // DASH_API_H
