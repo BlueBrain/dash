@@ -61,7 +61,7 @@ if(NOT MSVC)
 endif()
 
 add_library(${LIBRARY} SHARED ${DASH_ALL} ${DASH_DETAIL_ALL})
-target_link_libraries(${LIBRARY} ${LUNCHBOX_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(${LIBRARY} ${LUNCHBOX_LIBRARIES} pthread ${Boost_LIBRARIES})
 set_target_properties(${LIBRARY}
   PROPERTIES VERSION ${VERSION} SOVERSION ${VERSION_ABI}
   COMPILE_DEFINITIONS DASH_SHARED

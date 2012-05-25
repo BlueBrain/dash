@@ -29,6 +29,7 @@
 #include "detail/context.h"
 
 #include <lunchbox/init.h>
+#include <pthread.h>
 #include <lunchbox/perThread.h>
 #include <lunchbox/version.h>
 
@@ -37,8 +38,9 @@ namespace dash
 {
 namespace
 {
+    void noDelete( Context* ) {}
     static Context* _mainContext = 0;
-    lunchbox::PerThread< Context, lunchbox::perThreadNoDelete > _currentContext;
+    lunchbox::PerThread< Context, noDelete > _currentContext;
     static lunchbox::SpinLock* getInitLock_()
     {
         static lunchbox::SpinLock lock;

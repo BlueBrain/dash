@@ -84,7 +84,7 @@ public:
 
     /** @return the stored value. @throws boost::bad_any_cast. @version 0.1 */
     template< class T > const T get() const
-        { return detail::any_cast< const T >( get_( )); }
+        { return detail::any_cast< T >( get_( )); }
 
     /** @return the stored value without checking the type. @version 0.1 */
     template< class T > const T getUnsafe()
