@@ -60,5 +60,10 @@ int dash::test::main( int argc, char **argv )
 
         attr1->getMutable< Foo& >();
     }
+
+    *attr1 = static_cast< const Foo* >( &foo );
+    const Foo* fooPtr = attr1->get< const Foo* >();
+    TESTINFO( fooPtr->i == 42, fooPtr->i );
+
     return EXIT_SUCCESS;
 }
