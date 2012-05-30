@@ -25,7 +25,7 @@
 #include <dash/attribute.h>
 
 
-bool areEqual( dash::NodeConstPtr lhs, dash::NodeConstPtr rhs )
+bool areEqual( dash::ConstNodePtr lhs, dash::ConstNodePtr rhs )
 {
     if( *lhs != *rhs )
         return false;

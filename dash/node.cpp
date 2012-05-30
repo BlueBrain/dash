@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -144,7 +144,7 @@ NodePtr Node::getChild( const size_t i )
     return impl_->getChild( i );
 }
 
-NodeConstPtr Node::getChild( const size_t i ) const
+ConstNodePtr Node::getChild( const size_t i ) const
 {
     return impl_->getChild( i );
 }
@@ -190,7 +190,7 @@ AttributePtr Node::getAttribute( const size_t i )
     return impl_->getAttribute( i );
 }
 
-AttributeConstPtr Node::getAttribute( const size_t i ) const
+ConstAttributePtr Node::getAttribute( const size_t i ) const
 {
     return impl_->getAttribute( i );
 }

@@ -54,7 +54,7 @@ public:
     typedef NodeVisitor< NodePtr, AttributePtr > Visitor;
 
     /** Const node tree visitor */
-    typedef NodeVisitor< NodeConstPtr, AttributeConstPtr > ConstVisitor;
+    typedef NodeVisitor< ConstNodePtr, ConstAttributePtr > ConstVisitor;
 
     /** An iterator over the attribute vector. */
     typedef detail::AttributeIterator< Node, Attribute > AttributeIterator;
@@ -121,7 +121,7 @@ public:
     DASH_API NodePtr getChild( const size_t i );
 
     /** @return the child at the given position. @version 0.1 */
-    DASH_API NodeConstPtr getChild( const size_t i ) const;
+    DASH_API ConstNodePtr getChild( const size_t i ) const;
 
     /** @return an iterator pointing to the start of the children. @version 0.1*/
     DASH_API ConstChildIterator childrenBegin() const;
@@ -151,7 +151,7 @@ public:
     DASH_API AttributePtr getAttribute( const size_t i );
 
     /** @return the const attribute at the given position. @version 0.1 */
-    DASH_API AttributeConstPtr getAttribute( const size_t i ) const;
+    DASH_API ConstAttributePtr getAttribute( const size_t i ) const;
 
     /** @return iterator pointing to the first attribute. @version 0.1*/
     DASH_API ConstAttributeIterator attributesBegin() const;

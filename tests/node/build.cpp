@@ -88,7 +88,7 @@ public:
     Counter() : nNodes( 0 ) {}
     virtual ~Counter() {}
 
-    virtual dash::VisitorResult visitDown( dash::NodeConstPtr node )
+    virtual dash::VisitorResult visitDown( dash::ConstNodePtr node )
         { ++nNodes; return dash::ACCEPT_CONTINUE; }
     size_t nNodes;
 };

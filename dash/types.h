@@ -44,7 +44,7 @@ class Context;
 
 class Attribute;
 typedef RefPtr< Attribute > AttributePtr; //!< Attribute smart pointer
-typedef RefPtr< const Attribute > AttributeConstPtr; //!< Attribute const pointer
+typedef RefPtr< const Attribute > ConstAttributePtr; //!< Attribute const pointer
 typedef std::vector< AttributePtr > Attributes; //!< Vector of AttributePtr
 /** Const iterator for Attributes */
 typedef Attributes::const_iterator AttributesCIter;
@@ -52,7 +52,7 @@ typedef Attributes::iterator AttributesIter; //!< Iterator for Attributes
 
 class Node;
 typedef lunchbox::RefPtr< Node > NodePtr; //!< Node smart pointer
-typedef lunchbox::RefPtr< const Node > NodeConstPtr; //!< Node const pointer
+typedef lunchbox::RefPtr< const Node > ConstNodePtr; //!< Node const pointer
 typedef std::vector< NodePtr > Nodes; //!< Vector of NodePtr
 typedef Nodes::const_iterator NodesCIter; //!< Const iterator for Nodes
 typedef Nodes::iterator NodesIter; //!< Iterator for Nodes
@@ -62,7 +62,7 @@ namespace detail
 {
 class Commit;
 typedef boost::shared_ptr< Commit > CommitPtr;
-typedef boost::shared_ptr< const Commit > CommitConstPtr;
+typedef boost::shared_ptr< const Commit > ConstCommitPtr;
 }
 /** @endcond */
 

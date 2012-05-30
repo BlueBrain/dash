@@ -44,17 +44,17 @@ int dash::test::main( int argc, char **argv )
     currentVal = STEP1_VALUE;
     *attr = currentVal;
 
-    int value = static_cast< dash::AttributeConstPtr >( attr )->get<int>();
+    int value = static_cast< dash::ConstAttributePtr >( attr )->get<int>();
     TESTINFO( value == currentVal, value << "!=" << currentVal);
 
     Commit commit = mainCtx.commit();
 
     ctx.setCurrent();
-    value = static_cast< dash::AttributeConstPtr >( attr )->get<int>();
+    value = static_cast< dash::ConstAttributePtr >( attr )->get<int>();
     TESTINFO( value == previousValue, value << "!=" << previousValue );
 
     ctx.apply(commit);
-    value = static_cast< dash::AttributeConstPtr >( attr )->get<int>();
+    value = static_cast< dash::ConstAttributePtr >( attr )->get<int>();
     TESTINFO( value == currentVal, value << "!=" << currentVal);
 
     previousValue = currentVal;
@@ -64,19 +64,19 @@ int dash::test::main( int argc, char **argv )
     mainCtx.setCurrent();
     *attr = currentVal;
 
-    value = static_cast< dash::AttributeConstPtr >( attr )->get<int>();
+    value = static_cast< dash::ConstAttributePtr >( attr )->get<int>();
     TESTINFO( value == currentVal, value << "!=" << currentVal);
 
     commit = mainCtx.commit();
 
     ctx.setCurrent();
 
-    value = static_cast< dash::AttributeConstPtr >( attr )->get<int>();
+    value = static_cast< dash::ConstAttributePtr >( attr )->get<int>();
     TESTINFO( value == previousValue, value  << "!=" << previousValue);
 
     ctx.apply(commit);
 
-    value = static_cast< dash::AttributeConstPtr >( attr )->get<int>();
+    value = static_cast< dash::ConstAttributePtr >( attr )->get<int>();
     TESTINFO( value == currentVal, value << "!=" << currentVal);
 
     ctx.commit();   // consume remaining changes

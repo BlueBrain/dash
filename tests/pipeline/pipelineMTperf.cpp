@@ -73,7 +73,7 @@ public:
                 producedData = 0;
             *attr_ = producedData;
             const int attrProducedData =
-                    static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
+                    static_cast< dash::ConstAttributePtr >( attr_ )->get<int>();
             TESTINFO( attrProducedData == producedData,
                       producedData << "!=" << attrProducedData );
             dash::Commit commit = context_.commit();
@@ -129,7 +129,7 @@ public:
             dash::Commit commit = inputQ_->pop();
             context_.apply(commit);
             const int outData =
-                    static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
+                    static_cast< dash::ConstAttributePtr >( attr_ )->get<int>();
             TESTINFO( outData == consumeMultiplier_ * producerData,
                       outData << "!=" << consumeMultiplier_ * producerData );
             *attr_ = MULT_CONST * outData;
@@ -197,7 +197,7 @@ public:
             dash::Commit iCommit = inputQ_->pop();
             context_.apply( iCommit );
             const int consumedData =
-                    static_cast< dash::AttributeConstPtr >( attr_ )->get<int>();
+                    static_cast< dash::ConstAttributePtr >( attr_ )->get<int>();
             TESTINFO( consumedData == targetConsumedData,
                       consumedData << "!=" << targetConsumedData );
             if(consumedData == 0)

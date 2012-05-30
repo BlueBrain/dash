@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -29,17 +29,17 @@ class Counter : public dash::Node::ConstVisitor
 public:
     Counter() : down( 0 ), leaf( 0 ), up( 0 ) {}
     virtual ~Counter(){}
-    virtual dash::VisitorResult visitDown( dash::NodeConstPtr node )
+    virtual dash::VisitorResult visitDown( dash::ConstNodePtr node )
         {
             ++down;
             return dash::ACCEPT_CONTINUE;
         }
-    virtual dash::VisitorResult visit( dash::AttributeConstPtr attribute )
+    virtual dash::VisitorResult visit( dash::ConstAttributePtr attribute )
         {
             ++leaf;
             return dash::ACCEPT_CONTINUE;
         }
-    virtual dash::VisitorResult visitUp( dash::NodeConstPtr node )
+    virtual dash::VisitorResult visitUp( dash::ConstNodePtr node )
         {
             ++up;
             return dash::ACCEPT_CONTINUE;
