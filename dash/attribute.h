@@ -74,7 +74,11 @@ public:
     template< class T > void set( const T& value )
         { set_( detail::Any( value )); }
 
-    /** @return the stored value. @throws boost::bad_any_cast. @version 0.1 */
+    /**
+     * @return the stored value.
+     * @throws dash::detail::bad_any_cast.
+     * @version 0.1
+     */
     template< class T > T getMutable()
         { return detail::any_cast< T >( get_( )); }
 
@@ -82,7 +86,11 @@ public:
     template< class T > T getMutableUnsafe()
         { return detail::unsafe_any_cast< T >( get_( )); }
 
-    /** @return the stored value. @throws boost::bad_any_cast. @version 0.1 */
+    /**
+     * @return the stored value.
+     * @throws dash::detail::bad_any_cast.
+     * @version 0.1
+     */
     template< class T > const T get() const
         { return detail::any_cast< T >( get_( )); }
 
