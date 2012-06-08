@@ -56,9 +56,6 @@ source_group(detail FILES ${DASH_DETAIL_ALL})
 
 set(LIBRARY dash)
 set(LIB_INCLUDE ${LIBRARY})
-if(NOT MSVC)
-  set(LIB_INCLUDE ${LIB_INCLUDE}${VERSION_MAJOR})
-endif()
 
 add_library(${LIBRARY} SHARED ${DASH_ALL} ${DASH_DETAIL_ALL})
 target_link_libraries(${LIBRARY} ${LUNCHBOX_LIBRARIES} pthread ${Boost_LIBRARIES})
@@ -67,14 +64,10 @@ set_target_properties(${LIBRARY}
   COMPILE_DEFINITIONS DASH_SHARED
 )
 
-install(FILES ${DASH_HEADERS}
-        DESTINATION include/${LIB_INCLUDE} COMPONENT dev)
-install(FILES ${DASH_DETAIL_HEADERS}
-        DESTINATION include/${LIB_INCLUDE}/detail COMPONENT dev)
+install(FILES ${DASH_HEADERS} DESTINATION include/${LIBRARY} COMPONENT dev)
+install(FILES ${DASH_DETAIL_HEADERS} DESTINATION include/${LIBRARY}/detail
+        COMPONENT dev)
 install(TARGETS ${LIBRARY}
         ARCHIVE DESTINATION lib COMPONENT dev
         RUNTIME DESTINATION bin COMPONENT lib
         LIBRARY DESTINATION lib COMPONENT lib)
-if(NOT MSVC)
-  install_symlink("include/${LIB_INCLUDE}" "include/${LIBRARY}" dev)
-endif()
