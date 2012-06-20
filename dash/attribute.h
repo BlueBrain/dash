@@ -1,18 +1,18 @@
 
 /* Copyright (c) 2011-2012, EFPL/Blue Brain Project
- *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
+ *                          Stefan.Eilemann@epfl.ch
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
  * by the Free Software Foundation.
- *  
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -80,11 +80,11 @@ public:
      * @version 0.1
      */
     template< class T > T getMutable()
-        { return detail::any_cast< T >( get_( )); }
+        { return detail::any_cast< T >( getMutable_( )); }
 
     /** @return the stored value without checking the type. @version 0.1 */
     template< class T > T getMutableUnsafe()
-        { return detail::unsafe_any_cast< T >( get_( )); }
+        { return detail::unsafe_any_cast< T >( getMutable_( )); }
 
     /**
      * @return the stored value.
@@ -93,10 +93,6 @@ public:
      */
     template< class T > const T get() const
         { return detail::any_cast< T >( get_( )); }
-
-    /** @return the stored value without checking the type. @version 0.1 */
-    template< class T > const T getUnsafe()
-        { return detail::unsafe_any_cast< const T >( get_( )); }
 
     /** @return the stored value without checking the type. @version 0.1 */
     template< class T > const T getUnsafe() const
@@ -115,7 +111,7 @@ private:
 
     DASH_API void init_();
     DASH_API Attribute& set_( const detail::Any& value );
-    DASH_API detail::Any& get_();
+    DASH_API detail::Any& getMutable_();
     DASH_API const detail::Any& get_() const;
 };
 
