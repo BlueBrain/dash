@@ -1,6 +1,8 @@
 
 # Copyright (c) 2011-2012 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
 
+# Change this number when adding tests to force a CMake run: 0
+
 include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR})
 
 if(WIN32)
