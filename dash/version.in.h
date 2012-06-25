@@ -1,18 +1,18 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
- *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
+/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
+ *                          Stefan.Eilemann@epfl.ch
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
  * by the Free Software Foundation.
- *  
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -33,6 +33,9 @@ namespace dash
 
     /** The current patch level. */
 #   define DASH_VERSION_PATCH @VERSION_PATCH@
+
+    /** The Lunchbox version used for linking. */
+#   define DASH_LUNCHBOX_VERSION @LUNCHBOX_VERSION@
 
 /** True if the current version is newer than the given one. */
 #   define DASH_VERSION_GT( MAJOR, MINOR, PATCH )                      \
