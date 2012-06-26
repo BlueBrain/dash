@@ -17,7 +17,7 @@ DASH fulfils the following requirements:
 * High-Performance
     * Lock-free read access
     * Data update from thread A to B shall be a simple pointer swaps
-* Distributable (Not yet implemented)
+* Distributable (see https://github.com/BlueBrain/codash)
     * Data update from node A to B shall only send change delta
     * Data discovery shall be transparent
 * DAG structure
