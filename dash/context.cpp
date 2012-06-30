@@ -101,9 +101,15 @@ Context& Context::setCurrent()
 Context& Context::getCurrent()
 {
     // thread-local, therefore threadsafe
-    if( !_currentContext )
-        _currentContext = &getMain();
-    return *_currentContext;
+    // Do not restructure code without making sure you don't end up with
+    // multiple pthread_getspecific calls (git blame this comment)
+    Context* context = _currentContext.get();
+    if( context )
+        return *context;
+
+    context = &getMain();
+    _currentContext = context;
+    return *context;
 }
 
 void Context::map( dash::NodePtr node, const Context& to )

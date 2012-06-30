@@ -1,7 +1,7 @@
 
 # Copyright (c) 2011-2012 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
 
-# Change this number when adding tests to force a CMake run: 0
+# Change this number when adding tests to force a CMake run: 1
 
 include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -29,7 +29,7 @@ foreach(FILE ${TEST_FILES})
   string(REGEX REPLACE "[./]" "_" NAME ${NAME})
 
   source_group(\\ FILES ${FILE})
-  add_executable(${NAME} ${FILE})
+  add_executable(${NAME} ${FILE} common.cxx)
   set_target_properties(${NAME} PROPERTIES FOLDER "Tests")
 
   target_link_libraries(${NAME} dash)
