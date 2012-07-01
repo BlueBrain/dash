@@ -22,22 +22,22 @@
 
 #include <dash/context.h>
 #include <dash/attribute.h>
-//#include <co/co.h>
 
 struct Foo
 {
     int i;
-};
 
-struct Bar
-{
-    float f;
+    bool operator == ( const Foo& rhs ) const
+    {
+        if( this == &rhs )
+            return true;
+        return i == rhs.i;
+    }
 };
 
 int dash::test::main( int argc, char **argv )
 {
     dash::Context::getMain( argc, argv );
-    //lunchbox::sleep( 5000 );
 
     dash::AttributePtr attr1 = new dash::Attribute( std::string( "hello" ));
     TEST( attr1->get< const std::string >() == "hello" );
@@ -51,7 +51,6 @@ int dash::test::main( int argc, char **argv )
 
     {
         dash::Context auxCtx;
-        //auxCtx.setCurrent();
         const Foo& fooRef = attr1->get< const Foo& >();
         TEST( fooRef.i == 17 );
         
