@@ -40,7 +40,6 @@ set(DASH_SOURCES
 )
 
 set(DASH_DETAIL_SOURCES
-  detail/anySerialization.cpp
   detail/attribute.cpp  
   detail/change.cpp
   detail/commit.cpp
