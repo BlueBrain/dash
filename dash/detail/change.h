@@ -52,7 +52,7 @@ struct Change
     Change() : type( NONE ) {}
     Change( const Type t, NodePtr n, dash::NodePtr c );
     Change( const Type t, NodePtr n, dash::AttributePtr a );
-    Change( dash::AttributePtr a, boost::shared_ptr<detail::Any> value );
+    Change( dash::AttributePtr a, boost::shared_ptr< lunchbox::Any > value );
 
     bool operator == ( const Change& rhs ) const;
     bool operator != ( const Change& rhs ) const { return !(*this == rhs); }
@@ -62,7 +62,7 @@ struct Change
     dash::NodePtr child;
 
     dash::AttributePtr attribute;
-    boost::shared_ptr< detail::Any > value;
+    boost::shared_ptr< lunchbox::Any > value;
 
 private:
     LB_SERIALIZABLE

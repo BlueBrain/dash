@@ -26,7 +26,7 @@
 #include <lunchbox/serializable.h>
 
 #include <lunchbox/referenced.h> // base class
-#include <dash/detail/any.h> // used inline
+#include <lunchbox/any.h> // used inline
 
 namespace dash
 {
@@ -61,7 +61,7 @@ public:
 
     /** Assign a value to this Attribute. @version 0.1 */
     template< class T > Attribute& operator = ( const T& rhs )
-        { return set_( detail::Any( rhs )); }
+        { return set_( lunchbox::Any( rhs )); }
 
     /** Check this Attribute on equality. @version 0.1 */
     DASH_API bool operator == ( const Attribute& rhs ) const;
@@ -72,31 +72,31 @@ public:
 
     /** Set a new value to this Attribute. @version 0.1 */
     template< class T > void set( const T& value )
-        { set_( detail::Any( value )); }
+        { set_( lunchbox::Any( value )); }
 
     /**
      * @return the stored value.
-     * @throws dash::detail::bad_any_cast.
+     * @throws lunchbox::bad_any_cast.
      * @version 0.1
      */
     template< class T > T getMutable()
-        { return detail::any_cast< T >( getMutable_( )); }
+        { return lunchbox::any_cast< T >( getMutable_( )); }
 
     /** @return the stored value without checking the type. @version 0.1 */
     template< class T > T getMutableUnsafe()
-        { return detail::unsafe_any_cast< T >( getMutable_( )); }
+        { return lunchbox::unsafe_any_cast< T >( getMutable_( )); }
 
     /**
      * @return the stored value.
-     * @throws dash::detail::bad_any_cast.
+     * @throws lunchbox::bad_any_cast.
      * @version 0.1
      */
     template< class T > const T get() const
-        { return detail::any_cast< T >( get_( )); }
+        { return lunchbox::any_cast< T >( get_( )); }
 
     /** @return the stored value without checking the type. @version 0.1 */
     template< class T > const T getUnsafe() const
-        { return detail::unsafe_any_cast< const T >( get_( )); }
+        { return lunchbox::unsafe_any_cast< const T >( get_( )); }
 
     /** @name Internal */
     //@{
@@ -110,9 +110,9 @@ private:
     detail::Attribute* impl_;
 
     DASH_API void init_();
-    DASH_API Attribute& set_( const detail::Any& value );
-    DASH_API detail::Any& getMutable_();
-    DASH_API const detail::Any& get_() const;
+    DASH_API Attribute& set_( const lunchbox::Any& value );
+    DASH_API lunchbox::Any& getMutable_();
+    DASH_API const lunchbox::Any& get_() const;
 };
 
 }

@@ -68,18 +68,18 @@ bool Attribute::operator == ( const Attribute& rhs ) const
     return *impl_ == *rhs.impl_;
 }
 
-Attribute& Attribute::set_( const detail::Any& value )
+Attribute& Attribute::set_( const lunchbox::Any& value )
 {
     impl_->set( value );
     return *this;
 }
 
-detail::Any& Attribute::getMutable_()
+lunchbox::Any& Attribute::getMutable_()
 {
     return impl_->getMutable();
 }
 
-const detail::Any& Attribute::get_() const
+const lunchbox::Any& Attribute::get_() const
 {
     return impl_->get();
 }

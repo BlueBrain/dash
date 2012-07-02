@@ -22,7 +22,7 @@
 #define DASH_DETAIL_TYPES_H
 
 #include <dash/types.h>
-#include <dash/detail/any.h>
+#include <lunchbox/any.h>
 #include <lunchbox/lfVector.h>
 #include <vector>
 
@@ -66,7 +66,7 @@ typedef Attributes::iterator AttributesIter;
 typedef Attributes::const_iterator AttributesCIter;
 typedef ContextPtr< dash::Attributes > AttributesCtxPtr;
 
-typedef ContextPtr< detail::Any > AnyCtxPtr;
+typedef ContextPtr< lunchbox::Any > AnyCtxPtr;
 }
 }
 

@@ -17,8 +17,6 @@ set(DASH_HEADERS # public, installed
 )
 
 set(DASH_DETAIL_HEADERS # private, installed
-  detail/any.h
-  detail/anySerialization.h
   detail/attribute.h
   detail/attributeIterator.h
   detail/change.h

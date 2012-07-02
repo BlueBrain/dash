@@ -43,7 +43,7 @@ Change::Change( const Type t, NodePtr p, dash::AttributePtr a )
 {
 }
 
-Change::Change( dash::AttributePtr a, boost::shared_ptr< detail::Any > v )
+Change::Change( dash::AttributePtr a, boost::shared_ptr< lunchbox::Any > v )
         : type( ATTRIBUTE_CHANGED )
         , attribute( a )
         , value( v )

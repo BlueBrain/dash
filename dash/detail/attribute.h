@@ -48,9 +48,9 @@ public:
     void map( const Context& from, const Context& to );
     void unmap( Context& context );
 
-    void set( const detail::Any& value ) { value_.getMutable() = value; }
-    detail::Any& getMutable() { return value_.getMutable(); }
-    const detail::Any& get() const { return *value_; }
+    void set( const lunchbox::Any& value ) { value_.getMutable() = value; }
+    lunchbox::Any& getMutable() { return value_.getMutable(); }
+    const lunchbox::Any& get() const { return *value_; }
 
     dash::Attribute* getAttribute() { return attribute_; }
     const dash::Attribute* getAttribute() const { return attribute_; }
@@ -77,7 +77,7 @@ inline void Attribute::save( Archive& ar, const unsigned int version ) const
 template< class Archive >
 inline void Attribute::load( Archive& ar, const unsigned int version )
 {
-    boost::shared_ptr< detail::Any > anyValue( new detail::Any );
+    boost::shared_ptr< lunchbox::Any > anyValue( new lunchbox::Any );
     ar >> *anyValue;
     value_.set( anyValue );
 }

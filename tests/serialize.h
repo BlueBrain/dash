@@ -21,7 +21,7 @@
 #ifndef DASHTEST_SERIALIZE_H
 #define DASHTEST_SERIALIZE_H
 
-#include <dash/detail/anySerialization.h>
+#include <lunchbox/anySerialization.h>
 
 #include <sstream>
 
@@ -38,25 +38,25 @@
 template< class T >
 void textSave( const T& object, std::ostream& os )
 {
-    dash::detail::serializeAny< boost::archive::text_oarchive >( object, os );
+    lunchbox::serializeAny< boost::archive::text_oarchive >( object, os );
 }
 
 template< class T >
 void textLoad( T& object, std::istream& is )
 {
-    dash::detail::serializeAny< boost::archive::text_iarchive >( object, is );
+    lunchbox::serializeAny< boost::archive::text_iarchive >( object, is );
 }
 
 template< class T >
 void binarySave( const T& object, std::ostream& os )
 {
-    dash::detail::serializeAny< boost::archive::binary_oarchive >( object, os );
+    lunchbox::serializeAny< boost::archive::binary_oarchive >( object, os );
 }
 
 template< class T >
 void binaryLoad( T& object, std::istream& is )
 {
-    dash::detail::serializeAny< boost::archive::binary_iarchive >( object, is );
+    lunchbox::serializeAny< boost::archive::binary_iarchive >( object, is );
 }
 
 template< class T >
