@@ -129,7 +129,7 @@ public:
         }
 
 private:
-    typedef LFVector< Value > Values;
+    typedef LFVector< Value, 32 > Values;
     Values values_;
     changed_t cb_;
 
