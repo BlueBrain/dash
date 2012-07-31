@@ -86,7 +86,7 @@ public:
     /** Set up a new slot for the to context using the from context data. */
     void map( const Context& from, const Context& to )
         {
-            const int32_t toSlot = to.getSlot();
+            const size_t toSlot = to.getSlot();
             values_.expand( toSlot + 1 );
             values_[ toSlot ] = values_[ from.getSlot() ];
         }
@@ -103,7 +103,7 @@ public:
     void setup( const Context& context = Context::getCurrent(),
                 Value defaultValue = Value( new T ))
         {
-            const int32_t slot = context.getSlot();
+            const size_t slot = context.getSlot();
             values_.expand( slot + 1 );
             if( !values_[ slot ].get( ))
                 values_[ slot ] = defaultValue;
@@ -111,7 +111,7 @@ public:
 
     void apply( Value value, Context& context = Context::getCurrent( ))
         {
-            const int32_t slot = context.getSlot();
+            const size_t slot = context.getSlot();
             if( value == values_[ slot ] )
                 return;
 
@@ -123,7 +123,7 @@ public:
     /** @internal */
     void set( Value value, Context& context = Context::getCurrent( ))
         {
-            const int32_t slot = context.getSlot();
+            const size_t slot = context.getSlot();
             values_.expand( slot + 1 );
             values_[ slot ] = value;
         }

@@ -36,12 +36,12 @@ namespace detail
 
 namespace
 {
-lunchbox::a_int32_t numSlots_;
-LFVector< int32_t, 32 > freeSlots_;
+lunchbox::a_ssize_t numSlots_;
+LFVector< size_t, 32 > freeSlots_;
 
-static int32_t allocSlot_()
+static size_t allocSlot_()
 {
-    int32_t slot = 0;
+    size_t slot = 0;
     if( freeSlots_.pop_back( slot ))
         return slot;
     return ((++numSlots_) - 1);
