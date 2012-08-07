@@ -20,16 +20,9 @@ endif()
 
 include(Common)
 include(DoxygenSetup)
-
-find_package(Boost 1.41 REQUIRED serialization)
-link_directories(${Boost_LIBRARY_DIRS})
-include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
-
-find_package(Lunchbox 1.3.5 REQUIRED)
-link_directories(${LUNCHBOX_LIBRARY_DIRS})
-include_directories(${LUNCHBOX_INCLUDE_DIRS})
-
+include(FindPackages)
 include(InstallSymlink)
+
 # add_subdirectory(examples)
 add_subdirectory(dash)
 add_subdirectory(tests)
