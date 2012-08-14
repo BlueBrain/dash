@@ -40,7 +40,7 @@ namespace
 {
     void noDelete( Context* ) {}
     static Context* _mainContext = 0;
-    lunchbox::PerThread< Context, noDelete > _currentContext;
+    lunchbox::PerThread< Context, &noDelete > _currentContext;
     static lunchbox::SpinLock* getInitLock_()
     {
         static lunchbox::SpinLock lock;
