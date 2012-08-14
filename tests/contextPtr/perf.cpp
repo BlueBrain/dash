@@ -33,8 +33,13 @@
 
 #include <limits>
 
+#ifdef __xlC__
+const size_t nThreads_ = 8;
+const size_t nLoops_ = 10000000;
+#else
 const size_t nThreads_ = 4;
 const size_t nLoops_ = 100000000;
+#endif
 
 typedef dash::detail::ContextPtr< plain::Node > NodeCtxPtr;
 NodeCtxPtr dashNode;
