@@ -119,6 +119,10 @@ public:
 
 int dash::test::main( int argc, char **argv )
 {
+#ifndef NDEBUG
+    // perf test takes too long & and makes no sense in debug builds
+    return EXIT_SUCCESS;
+#else
     lunchbox::Clock clock;
 
     dashNode.setup();
@@ -228,4 +232,5 @@ int dash::test::main( int argc, char **argv )
               << "write " << dashWriteTime << "    " << plainWriteTime
               << std::endl;
     return EXIT_SUCCESS;
+#endif
 }
