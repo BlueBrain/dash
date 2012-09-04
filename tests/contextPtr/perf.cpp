@@ -33,12 +33,17 @@
 
 #include <limits>
 
-#ifdef __xlC__
+#ifdef NDEBUG
+#  ifdef __xlC__
 const size_t nThreads_ = 8;
 const size_t nLoops_ = 10000000;
-#else
+#  else
 const size_t nThreads_ = 4;
 const size_t nLoops_ = 100000000;
+#  endif
+#else
+const size_t nThreads_ = 4;
+const size_t nLoops_ = 100000;
 #endif
 
 typedef dash::detail::ContextPtr< plain::Node > NodeCtxPtr;
@@ -119,10 +124,6 @@ public:
 
 int dash::test::main( int argc, char **argv )
 {
-#ifndef NDEBUG
-    // perf test takes too long & and makes no sense in debug builds
-    return EXIT_SUCCESS;
-#else
     lunchbox::Clock clock;
 
     dashNode.setup();
@@ -232,5 +233,4 @@ int dash::test::main( int argc, char **argv )
               << "write " << dashWriteTime << "    " << plainWriteTime
               << std::endl;
     return EXIT_SUCCESS;
-#endif
 }
