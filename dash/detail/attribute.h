@@ -79,7 +79,7 @@ inline void Attribute::load( Archive& ar, const unsigned int version )
 {
     boost::shared_ptr< lunchbox::Any > anyValue( new lunchbox::Any );
     ar >> *anyValue;
-    value_.set( anyValue );
+    value_.apply( anyValue );
 }
 
 }

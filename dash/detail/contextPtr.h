@@ -120,14 +120,6 @@ public:
                 cb_( context, value );
         }
 
-    /** @internal */
-    void set( Value value, Context& context = Context::getCurrent( ))
-        {
-            const size_t slot = context.getSlot();
-            values_.expand( slot + 1 );
-            values_[ slot ] = value;
-        }
-
 private:
     typedef LFVector< Value, 32 > Values;
     Values values_;
