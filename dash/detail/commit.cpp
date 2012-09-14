@@ -1,18 +1,18 @@
 
 /* Copyright (c) 2011-2012, EFPL/Blue Brain Project
- *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
+ *                     Stefan Eilemann <stefan.eilemann@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
  * by the Free Software Foundation.
- *  
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -32,7 +32,7 @@ namespace detail
 {
 
 Commit::Commit()
-     : changes_( new Changes )
+     : changes_()
      , context_()
 {
 }
@@ -46,12 +46,12 @@ bool Commit::operator == ( const Commit& rhs ) const
     if( this == &rhs )
         return true;
 
-    if( changes_->size() != rhs.changes_->size( ))
+    if( changes_.size() != rhs.changes_.size( ))
         return false;
 
-    ChangesCIter it = changes_->begin();
-    ChangesCIter rhsIt = rhs.changes_->begin();
-    for( ; it != changes_->end() && rhsIt != rhs.changes_->end();
+    ChangesCIter it = changes_.begin();
+    ChangesCIter rhsIt = rhs.changes_.begin();
+    for( ; it != changes_.end() && rhsIt != rhs.changes_.end();
          ++it, ++rhsIt )
     {
         if( *it != *rhsIt )
@@ -73,12 +73,12 @@ void Commit::add( const Change& change )
     else if( change.type == Change::ATTRIBUTE_INSERT )
         dash::Context::getCurrent().map( change.attribute, *context_ );
 
-    changes_->push_back( change );
+    changes_.push_back( change );
 }
 
 void Commit::apply() const
 {
-    for( ChangesIter i = changes_->begin(); i != changes_->end(); ++i )
+    for( ChangesIter i = changes_.begin(); i != changes_.end(); ++i )
     {
         Change& change = *i;
         switch( change.type )

@@ -30,14 +30,16 @@ SERIALIZABLETEXTARCHIVE( Attribute, SERIALIZABLEREF )
 SERIALIZABLEBINARYARCHIVE( Attribute, SERIALIZABLEREF )
 
 Attribute::Attribute()
+    : Referenced()
+    , impl_( new detail::Attribute( this ))
 {
-    init_();
+    impl_->ref( this );
 }
 
 Attribute::Attribute( const Attribute& from )
         : Referenced( from )
+        , impl_( new detail::Attribute( this, from.impl_ ))
 {
-    impl_ = new detail::Attribute( this, from.impl_ );
     impl_->ref( this );
 }
 

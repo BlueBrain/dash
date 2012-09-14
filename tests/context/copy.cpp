@@ -1,18 +1,18 @@
 
 /* Copyright (c) 2011, EFPL/Blue Brain Project
- *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
+ *                     Stefan Eilemann <stefan.eilemann@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
  * by the Free Software Foundation.
- *  
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -58,28 +58,28 @@ int dash::test::main( int argc, char **argv )
     dash::NodePtr mainChild = new dash::Node;
     node->insert( mainChild );
     TEST( node->getNChildren() == 1 );
-    TESTINFO( node->getRefCount() == 1, node->getRefCount( ));  
+    TESTINFO( node->getRefCount() == 1, node->getRefCount( ));
     TESTINFO( mainChild->getRefCount() == 2, mainChild->getRefCount( ));
     TESTINFO( mainChild->getNParents() == 1, mainChild->getNParents( ));
-    TESTINFO( mainCtx.getImpl().commit_->getImpl()->changes_->empty( ),
-              *(mainCtx.getImpl().commit_->getImpl()->changes_) );
+    TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
+              mainCtx.getImpl().commit_.getImpl()->changes_ );
 
     {
         dash::Context auxCtx;
         TEST( auxCtx.getImpl().getSlot() == 1 );
-        TESTINFO( mainCtx.getImpl().commit_->getImpl()->changes_->empty( ),
-                  *(mainCtx.getImpl().commit_->getImpl()->changes_) );
+        TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
+                  mainCtx.getImpl().commit_.getImpl()->changes_ );
 
         mainCtx.map( node, auxCtx );
         auxCtx.apply( mainCtx.commit( ));
-        TESTINFO( mainCtx.getImpl().commit_->getImpl()->changes_->empty( ),
-                  *(mainCtx.getImpl().commit_->getImpl()->changes_) );
+        TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
+                  mainCtx.getImpl().commit_.getImpl()->changes_ );
 
         auxCtx.setCurrent();
         TEST( &dash::Context::getCurrent() == &auxCtx );
         TEST( node->getNChildren() == 1 );
-        TESTINFO( mainCtx.getImpl().commit_->getImpl()->changes_->empty( ),
-                  *(mainCtx.getImpl().commit_->getImpl()->changes_) );
+        TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
+                  mainCtx.getImpl().commit_.getImpl()->changes_ );
 
         dash::NodePtr copyChild = new dash::Node;
         node->insert( copyChild );
@@ -89,20 +89,20 @@ int dash::test::main( int argc, char **argv )
         // variable, parent, change
         TESTINFO( copyChild->getRefCount() == 3, copyChild->getRefCount( ));
         TESTINFO( copyChild->getNParents() == 1, copyChild->getNParents( ));
-        TESTINFO( mainCtx.getImpl().commit_->getImpl()->changes_->empty( ),
-                  *(mainCtx.getImpl().commit_->getImpl()->changes_) );
+        TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
+                  mainCtx.getImpl().commit_.getImpl()->changes_ );
 
         {
             const dash::Commit commit = auxCtx.commit();
-            dash::detail::ChangesPtr changes = commit.getImpl()->changes_;
-            TESTINFO( mainCtx.getImpl().commit_->getImpl()->changes_->empty( ),
-                      *(mainCtx.getImpl().commit_->getImpl()->changes_) );
-            TESTINFO( changes->size() == 1, *changes );
+            const dash::detail::Changes& changes = commit.getImpl()->changes_;
+            TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
+                      mainCtx.getImpl().commit_.getImpl()->changes_ );
+            TESTINFO( changes.size() == 1, changes );
             TESTINFO( node->getRefCount() == 1, node->getRefCount( ));
 
             mainCtx.apply( commit );
-            changes = mainCtx.getImpl().commit_->getImpl()->changes_;
-            TESTINFO( changes->size() == 1, *changes );
+            const dash::detail::Changes& changes2 = mainCtx.getImpl().commit_.getImpl()->changes_;
+            TESTINFO( changes2.size() == 1, changes2 );
 
             mainCtx.setCurrent();
             TESTINFO( copyChild->getNParents() == 1, copyChild->getNParents( ));
@@ -126,8 +126,8 @@ int dash::test::main( int argc, char **argv )
 
         {
             const dash::Commit commit = mainCtx.commit();
-            dash::detail::ChangesPtr changes = commit.getImpl()->changes_;
-            TESTINFO( changes->size() == 2, *changes );
+            const dash::detail::Changes& changes = commit.getImpl()->changes_;
+            TESTINFO( changes.size() == 2, changes );
         }
         TESTINFO( mainChild->getRefCount() == 1, mainChild->getRefCount( ));
         TESTINFO( copyChild->getNParents() == 1, copyChild->getNParents( ));
@@ -136,14 +136,14 @@ int dash::test::main( int argc, char **argv )
         TESTINFO( node->getNChildren() == 1, node->getNChildren( ));
         TESTINFO( copyChild->getRefCount() == 2, copyChild->getRefCount( ));
 
-        dash::detail::ChangesPtr changes = 
-            mainCtx.getImpl().commit_->getImpl()->changes_;
-        TESTINFO( changes->size() == 0, *changes );
+        const dash::detail::Changes& changes =
+            mainCtx.getImpl().commit_.getImpl()->changes_;
+        TESTINFO( changes.size() == 0, changes );
     }
 
-    dash::detail::ChangesPtr changes =
-        mainCtx.getImpl().commit_->getImpl()->changes_;
-    TESTINFO( changes->size() == 0, *changes );
+    const dash::detail::Changes& changes =
+        mainCtx.getImpl().commit_.getImpl()->changes_;
+    TESTINFO( changes.size() == 0, changes );
     {
         dash::Context auxCtx;
         TEST( auxCtx.getImpl().getSlot() == 1 );
