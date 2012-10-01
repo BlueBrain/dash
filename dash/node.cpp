@@ -32,15 +32,20 @@ SERIALIZABLEBINARYARCHIVE( Node, SERIALIZABLEREF )
 
 Node::Node()
     : Referenced()
+#pragma warning( push )
+#pragma warning( disable: 4355 )
     , impl_( new detail::Node( this ))
-
+#pragma warning( pop )
 {
     impl_->ref( this );
 }
 
 Node::Node( const Node& from )
         : Referenced( from )
+#pragma warning( push )
+#pragma warning( disable: 4355 )
         , impl_( new detail::Node( this, from.impl_ ))
+#pragma warning( pop )
 {
     impl_->ref( this );
 }

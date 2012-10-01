@@ -31,14 +31,20 @@ SERIALIZABLEBINARYARCHIVE( Attribute, SERIALIZABLEREF )
 
 Attribute::Attribute()
     : Referenced()
+#pragma warning( push )
+#pragma warning( disable: 4355 )
     , impl_( new detail::Attribute( this ))
+#pragma warning( pop )
 {
     impl_->ref( this );
 }
 
 Attribute::Attribute( const Attribute& from )
         : Referenced( from )
+#pragma warning( push )
+#pragma warning( disable: 4355 )
         , impl_( new detail::Attribute( this, from.impl_ ))
+#pragma warning( pop )
 {
     impl_->ref( this );
 }
