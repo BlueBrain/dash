@@ -29,6 +29,7 @@
 
 #include <dash/detail/attributeIterator.h> // return value
 #include <dash/detail/childIterator.h>     // return value
+#include <dash/detail/parentIterator.h>     // return value
 
 #include <lunchbox/referenced.h> // base class
 
@@ -55,6 +56,11 @@ public:
 
     /** Const node tree visitor */
     typedef NodeVisitor< ConstNodePtr, ConstAttributePtr > ConstVisitor;
+
+    /** An iterator over the parent vector. */
+    typedef detail::ParentIterator< Node > ParentIterator;
+    /** A const iterator over the parent vector. */
+    typedef detail::ParentIterator< const Node > ConstParentIterator;
 
     /** An iterator over the attribute vector. */
     typedef detail::AttributeIterator< Node, Attribute > AttributeIterator;
@@ -113,6 +119,24 @@ public:
 
     /** @return the current number of parents. @version 0.1 */
     DASH_API size_t getNParents() const;
+
+    /** @return the parent at the given position. @version 0.x */
+    DASH_API Node* getParent( const size_t i );
+
+    /** @return the parent at the given position. @version 0.x */
+    DASH_API ConstNode* getParent( const size_t i ) const;
+
+    /** @return an iterator pointing to the start of the children. @version 0.1*/
+    DASH_API ConstParentIterator parentsBegin() const;
+
+    /** @return an iterator pointing to the end of the children. @version 0.1*/
+    DASH_API ConstParentIterator parentsEnd() const;
+
+    /** @return an iterator pointing to the start of the children. @version 0.1*/
+    DASH_API ParentIterator parentsBegin();
+
+    /** @return an iterator pointing to the end of the children. @version 0.1*/
+    DASH_API ParentIterator parentsEnd();
 
     /** @return the current number of children. @version 0.1 */
     DASH_API size_t getNChildren() const;

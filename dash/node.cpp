@@ -141,6 +141,36 @@ size_t Node::getNParents() const
     return impl_->getNParents();
 }
 
+Node* Node::getParent( const size_t i )
+{
+    return impl_->getParent( i );
+}
+
+ConstNode* Node::getParent( const size_t i ) const
+{
+    return impl_->getParent( i );
+}
+
+Node::ConstParentIterator Node::parentsBegin() const
+{
+    return ConstParentIterator( this, 0 );
+}
+
+Node::ConstParentIterator Node::parentsEnd() const
+{
+    return ConstParentIterator( this, getNParents( ));
+}
+
+Node::ParentIterator Node::parentsBegin()
+{
+    return ParentIterator( this, 0 );
+}
+
+Node::ParentIterator Node::parentsEnd()
+{
+    return ParentIterator( this, getNParents( ));
+}
+
 size_t Node::getNChildren() const
 {
     return impl_->getNChildren();

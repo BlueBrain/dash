@@ -27,6 +27,7 @@ set(DASH_DETAIL_HEADERS # private, installed
   detail/node.h
   detail/serializable.h
   detail/types.h
+  detail/parentIterator.h
 )
 
 set(DASH_SOURCES
