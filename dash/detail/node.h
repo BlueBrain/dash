@@ -67,9 +67,9 @@ public:
         { return (*children_)[ i ]; }
 
     dash::Node* getParent( const size_t i )
-        { return ((*static_cast< const Node * >( this )->parents_)[ i ])->getNode( ); }
-    dash::ConstNode* getParent( const size_t i ) const
-        { return ((*parents_)[ i ])->getNode( ); }
+    { return ((*static_cast< const Node * >( this )->parents_)[i])->getNode(); }
+    const dash::Node* getParent( const size_t i ) const
+        { return ((*parents_)[ i ])->getNode(); }
 
     void insert( dash::NodePtr child );
     bool erase( dash::NodePtr child );

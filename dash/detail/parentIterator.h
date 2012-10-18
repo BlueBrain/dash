@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
+/* Copyright (c) 2012, EFPL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -39,12 +39,11 @@ public:
     template< class U >
     ParentIterator( const ParentIterator< U >& from ) : Super( from ) {}
 
-    T* operator*() const { return Super::container_->getParent( Super::i_ )->getNode( ); }
+    T* operator*() const { return Super::container_->getParent( Super::i_ )->getNode(); }
     T* operator[]( const size_t& n ) const
-        { return Super::container_->getParent( Super::i_ + n )->getNode( ); }
+        { return Super::container_->getParent( Super::i_ + n )->getNode(); }
 
 private:
-    //template< class, int32_t > friend class Child; // Child::erase
 };
 
 }

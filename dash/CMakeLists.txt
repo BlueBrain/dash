@@ -25,9 +25,9 @@ set(DASH_DETAIL_HEADERS # private, installed
   detail/context.h
   detail/contextPtr.h
   detail/node.h
+  detail/parentIterator.h
   detail/serializable.h
   detail/types.h
-  detail/parentIterator.h
 )
 
 set(DASH_SOURCES

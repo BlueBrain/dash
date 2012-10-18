@@ -56,7 +56,6 @@ typedef lunchbox::RefPtr< const Node > ConstNodePtr; //!< Node const pointer
 typedef std::vector< NodePtr > Nodes; //!< Vector of NodePtr
 typedef Nodes::const_iterator NodesCIter; //!< Const iterator for Nodes
 typedef Nodes::iterator NodesIter; //!< Iterator for Nodes
-typedef const Node ConstNode;
 
 /** @cond INTERNAL */
 namespace detail

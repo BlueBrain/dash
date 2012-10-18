@@ -146,7 +146,7 @@ Node* Node::getParent( const size_t i )
     return impl_->getParent( i );
 }
 
-ConstNode* Node::getParent( const size_t i ) const
+const Node* Node::getParent( const size_t i ) const
 {
     return impl_->getParent( i );
 }
