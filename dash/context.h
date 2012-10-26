@@ -36,12 +36,13 @@ namespace detail { class Context; }
  * different context and multiple threads may use the same context.
  *
  * Read and write access to Node and Attribute from multiple contexts is
- * thread-safe, access from multiple threads to a concrete Node or Attribute
- * instance is not thread-safe. Writes are only visible to the current
- * context. They are propagated to child contexts using Context::commit() and
- * applied to a concrete child context using Context::sync(). The commit and
- * sync operation are thread-safe with any operation in another context, but not
- * thread-safe with operations on the same context.
+ * thread-safe. Access from multiple threads using the same context to a
+ * concrete Node or Attribute instance is not thread-safe. Writes are only
+ * visible to the current context. They are propagated to child contexts using
+ * Context::commit() and applied to a concrete child context using
+ * Context::sync(). The commit and sync operation are thread-safe with any
+ * operation in another context, but not thread-safe with operations on the same
+ * context.
  */
 class Context
 {
