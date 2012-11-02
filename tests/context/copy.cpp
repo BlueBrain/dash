@@ -18,7 +18,6 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-//#define DASH_TEST_NO_WATCHDOG
 #include "test.h"
 #include <dash/attribute.h>
 #include <dash/context.h>
@@ -28,6 +27,7 @@
 #include <dash/detail/change.h>
 #include <dash/detail/commit.h>
 #include <dash/detail/context.h>
+#include <dash/detail/contextChange.h>
 #include <dash/detail/node.h>
 
 int dash::test::main( int argc, char **argv )
@@ -61,25 +61,25 @@ int dash::test::main( int argc, char **argv )
     TESTINFO( node->getRefCount() == 1, node->getRefCount( ));
     TESTINFO( mainChild->getRefCount() == 2, mainChild->getRefCount( ));
     TESTINFO( mainChild->getNParents() == 1, mainChild->getNParents( ));
-    TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
-              mainCtx.getImpl().commit_.getImpl()->changes_ );
+    TESTINFO( mainCtx.getImpl().commit_.contextChanges_.empty(),
+              mainCtx.getImpl().commit_.contextChanges_ );
 
     {
         dash::Context auxCtx;
         TEST( auxCtx.getImpl().getSlot() == 1 );
-        TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
-                  mainCtx.getImpl().commit_.getImpl()->changes_ );
+        TESTINFO( mainCtx.getImpl().commit_.contextChanges_.empty(),
+                  mainCtx.getImpl().commit_.contextChanges_ );
 
         mainCtx.map( node, auxCtx );
         auxCtx.apply( mainCtx.commit( ));
-        TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
-                  mainCtx.getImpl().commit_.getImpl()->changes_ );
+        TESTINFO( mainCtx.getImpl().commit_.contextChanges_.empty(),
+                  mainCtx.getImpl().commit_.contextChanges_ );
 
         auxCtx.setCurrent();
         TEST( &dash::Context::getCurrent() == &auxCtx );
         TEST( node->getNChildren() == 1 );
-        TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
-                  mainCtx.getImpl().commit_.getImpl()->changes_ );
+        TESTINFO( mainCtx.getImpl().commit_.contextChanges_.empty(),
+                  mainCtx.getImpl().commit_.contextChanges_ );
 
         dash::NodePtr copyChild = new dash::Node;
         node->insert( copyChild );
@@ -89,19 +89,19 @@ int dash::test::main( int argc, char **argv )
         // variable, parent, change
         TESTINFO( copyChild->getRefCount() == 3, copyChild->getRefCount( ));
         TESTINFO( copyChild->getNParents() == 1, copyChild->getNParents( ));
-        TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
-                  mainCtx.getImpl().commit_.getImpl()->changes_ );
+        TESTINFO( mainCtx.getImpl().commit_.contextChanges_.empty(),
+                  mainCtx.getImpl().commit_.contextChanges_ );
 
         {
             const dash::Commit commit = auxCtx.commit();
-            const dash::detail::Changes& changes = commit.getImpl()->changes_;
-            TESTINFO( mainCtx.getImpl().commit_.getImpl()->changes_.empty(),
-                      mainCtx.getImpl().commit_.getImpl()->changes_ );
+            const dash::detail::CommitChanges& changes = commit.getImpl()->changes_;
+            TESTINFO( mainCtx.getImpl().commit_.contextChanges_.empty(),
+                      mainCtx.getImpl().commit_.contextChanges_ );
             TESTINFO( changes.size() == 1, changes );
             TESTINFO( node->getRefCount() == 1, node->getRefCount( ));
 
             mainCtx.apply( commit );
-            const dash::detail::Changes& changes2 = mainCtx.getImpl().commit_.getImpl()->changes_;
+            const dash::detail::ContextChanges& changes2 = mainCtx.getImpl().commit_.contextChanges_;
             TESTINFO( changes2.size() == 1, changes2 );
 
             mainCtx.setCurrent();
@@ -126,7 +126,7 @@ int dash::test::main( int argc, char **argv )
 
         {
             const dash::Commit commit = mainCtx.commit();
-            const dash::detail::Changes& changes = commit.getImpl()->changes_;
+            const dash::detail::CommitChanges& changes = commit.getImpl()->changes_;
             TESTINFO( changes.size() == 2, changes );
         }
         TESTINFO( mainChild->getRefCount() == 1, mainChild->getRefCount( ));
@@ -136,13 +136,13 @@ int dash::test::main( int argc, char **argv )
         TESTINFO( node->getNChildren() == 1, node->getNChildren( ));
         TESTINFO( copyChild->getRefCount() == 2, copyChild->getRefCount( ));
 
-        const dash::detail::Changes& changes =
-            mainCtx.getImpl().commit_.getImpl()->changes_;
+        const dash::detail::ContextChanges& changes =
+            mainCtx.getImpl().commit_.contextChanges_;
         TESTINFO( changes.size() == 0, changes );
     }
 
-    const dash::detail::Changes& changes =
-        mainCtx.getImpl().commit_.getImpl()->changes_;
+    const dash::detail::ContextChanges& changes =
+        mainCtx.getImpl().commit_.contextChanges_;
     TESTINFO( changes.size() == 0, changes );
     {
         dash::Context auxCtx;

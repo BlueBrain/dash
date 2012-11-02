@@ -37,12 +37,17 @@ int main( int argc, char **argv ); //!< @internal
 namespace detail
 {
 
+class ContextCommit;
+
 template< class T > class ContextPtr;
 
-struct Change;
-typedef LFVector< Change, 32 > Changes;
-typedef Changes::iterator ChangesIter;
-typedef Changes::const_iterator ChangesCIter;
+class CommitChange;
+typedef LFVector< CommitChange, 32 > CommitChanges;
+typedef CommitChanges::iterator ChangesIter;
+typedef CommitChanges::const_iterator ChangesCIter;
+
+class ContextChange;
+typedef LFVector< ContextChange, 32 > ContextChanges;
 
 class Node;
 typedef lunchbox::RefPtr< Node > NodePtr;
