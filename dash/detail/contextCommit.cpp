@@ -37,14 +37,23 @@ ContextCommit::ContextCommit()
 {
 }
 
+ContextCommit::ContextCommit( const ContextCommit& rhs )
+    : contextChanges_( rhs.contextChanges_ )
+    , context_( rhs.context_)
+{
+}
+
 ContextCommit::~ContextCommit()
 {
 }
 
-ContextCommit& ContextCommit::operator = ( const ContextCommit& from )
+ContextCommit& ContextCommit::operator = ( const ContextCommit& rhs )
 {
-    contextChanges_ = ContextChanges();
-    context_.reset();
+    if( this != &rhs )
+    {
+        contextChanges_ = rhs.contextChanges_;
+        context_ = rhs.context_;
+    }
     return *this;
 }
 

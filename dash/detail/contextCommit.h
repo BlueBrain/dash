@@ -32,10 +32,10 @@ namespace detail
 class ContextCommit
 {
 public:
-     ContextCommit();
-     ~ContextCommit();
-
-    ContextCommit& operator = ( const ContextCommit& from );
+    ContextCommit();
+    ~ContextCommit();
+    ContextCommit( const ContextCommit& rhs );
+    ContextCommit& operator = ( const ContextCommit& rhs );
 
     void add( const ContextChange& change );
 
@@ -50,8 +50,6 @@ private:
     ContextChanges contextChanges_;
 
     boost::shared_ptr< dash::Context > context_;
-
-    ContextCommit( const ContextCommit& from ); // disable copy
 };
 
 std::ostream& operator << ( std::ostream& os, const ContextCommit& commit );
