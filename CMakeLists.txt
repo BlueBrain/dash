@@ -28,5 +28,4 @@ add_subdirectory(tests)
 include(DoxygenRule)
 
 include(CTest)
-add_custom_target(package COMMENT "Packaging not done yet")
-# include(CPackConfig)
+include(CPackConfig)

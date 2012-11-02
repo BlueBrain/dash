@@ -1,5 +1,5 @@
 #!gmake
-.PHONY: debug release clean clobber package install debuginst releaseinst tests
+.PHONY: debug release clean clobber install debuginst releaseinst tests
 
 
 ifeq ($(wildcard Makefile), Makefile)
@@ -45,12 +45,12 @@ debug: Debug/Makefile
 
 Debug/Makefile:
 	@mkdir -p Debug
-	@cd Debug; cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX:PATH=install
+	@cd Debug; cmake .. -DCMAKE_BUILD_TYPE=Debug
 
 release: Release/Makefile
 	@$(MAKE) -C Release
 
 Release/Makefile:
 	@mkdir -p Release
-	@cd Release; cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=install
+	@cd Release; cmake .. -DCMAKE_BUILD_TYPE=Release
 
