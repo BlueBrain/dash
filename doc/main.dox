@@ -2,6 +2,7 @@
 /**
 @mainpage DASH API Documentation
 
+@image html logo-250.png
 @verbinclude "../README.md"
 
 @section toc Further Information
