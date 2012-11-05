@@ -52,7 +52,7 @@ Commit& Commit::operator = ( const ContextCommit& rhs )
     for( ContextChanges::const_iterator it = rhs.contextChanges_.begin();
          it != rhs.contextChanges_.end(); ++it )
     {
-        changes_.push_back_unlocked( *it );
+        changes_.push_back( *it, false );
     }
     return *this;
 }
