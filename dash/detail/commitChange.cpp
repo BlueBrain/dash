@@ -37,7 +37,7 @@ CommitChange::CommitChange( const ContextChange& rhs )
 
 bool CommitChange::operator == ( const CommitChange& rhs ) const
 {
-    if( this == &rhs || Change::operator ==( rhs ) )
+    if( this == &rhs || Change::operator ==( rhs ))
         return true;
 
     return !value || !rhs.value || *value == *rhs.value;

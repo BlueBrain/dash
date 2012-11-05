@@ -25,7 +25,6 @@ set(DASH_DETAIL_HEADERS # private, installed
   detail/commitChange.h
   detail/context.h
   detail/contextCommit.h
-  detail/contextChange.h
   detail/contextPtr.h
   detail/node.h
   detail/parentIterator.h
@@ -47,8 +46,9 @@ set(DASH_DETAIL_SOURCES
   detail/commit.cpp
   detail/commitChange.cpp
   detail/context.cpp
-  detail/contextCommit.cpp
   detail/contextChange.cpp
+  detail/contextChange.h
+  detail/contextCommit.cpp
   detail/node.cpp
 )
 

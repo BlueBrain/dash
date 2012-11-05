@@ -21,9 +21,9 @@
 #include "commit.h"
 
 #include "attribute.h"
-#include "contextCommit.h"
 #include "commitChange.h"
 #include "contextChange.h"
+#include "contextCommit.h"
 #include "node.h"
 
 #include <dash/context.h>
@@ -48,7 +48,7 @@ Commit& Commit::operator = ( const ContextCommit& rhs )
 {
     LBASSERT( changes_.empty( ));
     context_ = rhs.context_;
-    CommitChanges::ScopedWrite mutex( changes_.getWriteLock( ));
+
     for( ContextChanges::const_iterator it = rhs.contextChanges_.begin();
          it != rhs.contextChanges_.end(); ++it )
     {

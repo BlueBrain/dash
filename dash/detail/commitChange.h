@@ -51,12 +51,6 @@ private:
     LB_SERIALIZABLE
 };
 
-inline std::ostream& operator << ( std::ostream& os,
-                                   const CommitChange& change )
-{
-    return os << static_cast< const Change& >( change );
-}
-
 template< class Archive >
 inline void CommitChange::save( Archive& ar, const unsigned int version ) const
 {

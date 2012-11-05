@@ -49,12 +49,6 @@ public:
     boost::weak_ptr< lunchbox::Any > value;
 };
 
-inline std::ostream& operator << ( std::ostream& os,
-                                   const ContextChange& change )
-{
-    return os << static_cast< const Change& >( change );
-}
-
 }
 }
 

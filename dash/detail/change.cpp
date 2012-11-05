@@ -19,7 +19,6 @@
  */
 
 #include "change.h"
-#include "contextChange.h"
 
 #include <dash/node.h>
 
