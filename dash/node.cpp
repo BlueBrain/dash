@@ -141,12 +141,12 @@ size_t Node::getNParents() const
     return impl_->getNParents();
 }
 
-Node* Node::getParent( const size_t i )
+NodePtr Node::getParent( const size_t i )
 {
     return impl_->getParent( i );
 }
 
-const Node* Node::getParent( const size_t i ) const
+const NodePtr Node::getParent( const size_t i ) const
 {
     return impl_->getParent( i );
 }

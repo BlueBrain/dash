@@ -121,10 +121,10 @@ public:
     DASH_API size_t getNParents() const;
 
     /** @return the parent at the given position. @version 0.1 */
-    DASH_API Node* getParent( const size_t i );
+    DASH_API NodePtr getParent( const size_t i );
 
     /** @return the parent at the given position. @version 0.1 */
-    DASH_API const Node* getParent( const size_t i ) const;
+    DASH_API const NodePtr getParent( const size_t i ) const;
 
     /** @return an iterator pointing to the start of the parents. @version 0.1*/
     DASH_API ConstParentIterator parentsBegin() const;
