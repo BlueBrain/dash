@@ -22,9 +22,9 @@
 #define DASH_DETAIL_CONTEXT_H
 
 #include "types.h"
+#include "contextCommit.h"
 
 #include <dash/api.h>
-#include <dash/commit.h>
 #include <lunchbox/lfVector.h> // member
 #include <lunchbox/types.h>
 
@@ -51,10 +51,7 @@ public:
     void map( AttributePtr attribute, const Context& to );
     void unmap( AttributePtr attribute );
 
-    CommitPtr getCommit();
-    ConstCommitPtr getCommit() const;
-
-    void addChange( const Change& change );
+    void addChange( const ContextChange& change );
     dash::Commit commit();
     void apply( ConstCommitPtr commit );
 
@@ -62,7 +59,7 @@ private:
     friend int test::main( int argc, char **argv );
 
     const size_t slot_; //!< lookup index for data of this Context
-    dash::Commit commit_; //!< pending changes
+    ContextCommit commit_; //!< pending changes
 
     Context( const Context& from ); // disable copy
     Context& operator = ( const Context& from ); // disable assignment

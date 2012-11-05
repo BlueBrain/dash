@@ -1,6 +1,6 @@
 
 /* Copyright (c) 2011-2012, EFPL/Blue Brain Project
- *                          Stefan.Eilemann@epfl.ch
+ *                     Daniel Nachbaur <daniel.nachbaur@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
  *
@@ -18,23 +18,30 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef DASH_DASH_H
-#define DASH_DASH_H
+#include "commitChange.h"
+#include "contextChange.h"
 
-/**
- * @namespace dash
- * @brief Data Access and Sharing
- *
- * The dash library uses a per-thread Context to provide an isolated view on the
- * data stored in Node and Attribute. Nodes form a directed acyclyc graph and
- * hold attributes. Attributes store any data. Modifications are migrated
- * between contexts using a Commit.
- */
-
-#include <dash/attribute.h>
-#include <dash/commit.h>
-#include <dash/context.h>
 #include <dash/node.h>
-#include <lunchbox/lunchbox.h>
 
-#endif // DASH_DASH_H
+
+namespace dash
+{
+namespace detail
+{
+
+CommitChange::CommitChange( const ContextChange& rhs )
+    : Change( rhs )
+{
+    value = rhs.value.lock();
+}
+
+bool CommitChange::operator == ( const CommitChange& rhs ) const
+{
+    if( this == &rhs || Change::operator ==( rhs ))
+        return true;
+
+    return !value || !rhs.value || *value == *rhs.value;
+}
+
+}
+}

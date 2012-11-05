@@ -53,7 +53,7 @@ int dash::test::main( int argc, char **argv )
         TEST( attr1->get< const DataType& >()[0] == 10000 );
     }
 
-    TEST( mainCtx.getImpl().commit_.getImpl()->changes_.size() == 1 );
+    TEST( mainCtx.getImpl().commit_.contextChanges_.size() == 1 );
     mainCtx.commit();
     delete &mainCtx;
 

@@ -1,6 +1,6 @@
 
 /* Copyright (c) 2011-2012, EFPL/Blue Brain Project
- *                          Stefan.Eilemann@epfl.ch
+ *                     Daniel Nachbaur <daniel.nachbaur@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
  *
@@ -18,23 +18,41 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef DASH_DASH_H
-#define DASH_DASH_H
+#include "contextChange.h"
 
-/**
- * @namespace dash
- * @brief Data Access and Sharing
- *
- * The dash library uses a per-thread Context to provide an isolated view on the
- * data stored in Node and Attribute. Nodes form a directed acyclyc graph and
- * hold attributes. Attributes store any data. Modifications are migrated
- * between contexts using a Commit.
- */
-
-#include <dash/attribute.h>
-#include <dash/commit.h>
-#include <dash/context.h>
 #include <dash/node.h>
-#include <lunchbox/lunchbox.h>
 
-#endif // DASH_DASH_H
+
+namespace dash
+{
+namespace detail
+{
+
+ContextChange::ContextChange( const Type t, NodePtr n, dash::NodePtr c )
+    : Change( t, n, c )
+{
+}
+
+ContextChange::ContextChange( const Type t, NodePtr n, dash::AttributePtr a )
+    : Change( t, n, a )
+{
+}
+
+ContextChange::ContextChange( dash::AttributePtr a,
+                              boost::weak_ptr< lunchbox::Any > v )
+    : Change( a )
+    , value( v )
+{
+}
+
+bool ContextChange::operator == ( const ContextChange& rhs ) const
+{
+    if( this == &rhs || Change::operator ==( rhs ))
+        return true;
+
+    return value.expired() || rhs.value.expired() ||
+           *value.lock() == *rhs.value.lock();
+}
+
+}
+}

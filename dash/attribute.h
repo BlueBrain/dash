@@ -36,9 +36,9 @@ namespace detail { class Attribute; }
  * An attribute of a dash Node.
  *
  * Attributes store data in the DAG formed by nodes. All data access to an
- * Attribute is thread-safe as long as it happens with different
- * contexts. Modifying an Attribute is not visible to other contexts until a
- * Commit is applied to the Context.
+ * Attribute is thread-safe as long as it happens from different contexts.
+ * Modifying an Attribute is not visible to other contexts until a Commit is
+ * applied to the Context.
  *
  * Attributes are by default only visible in the Context they are constructed
  * in. They are made visible in other contexts using Context::map().
@@ -56,7 +56,7 @@ public:
 
     DASH_API virtual ~Attribute(); //!< Destruct this attribute. @version 0.1
 
-    /** Perform a shallow, parent-less copy. @version 0.1 */
+    /** Perform a shallow, parent-less assignment. @version 0.1 */
     DASH_API Attribute& operator = ( const Attribute& from );
 
     /** Assign a value to this Attribute. @version 0.1 */
@@ -75,7 +75,7 @@ public:
         { set_( lunchbox::Any( value )); }
 
     /**
-     * @return the stored value.
+     * @return the stored value for modification.
      * @throws lunchbox::bad_any_cast.
      * @version 0.1
      */

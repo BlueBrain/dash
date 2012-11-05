@@ -21,9 +21,12 @@
 #include "commit.h"
 
 #include "attribute.h"
-#include "change.h"
+#include "commitChange.h"
+#include "contextChange.h"
+#include "contextCommit.h"
 #include "node.h"
 
+#include <dash/context.h>
 #include <dash/node.h>
 
 namespace dash
@@ -39,6 +42,19 @@ Commit::Commit()
 
 Commit::~Commit()
 {
+}
+
+Commit& Commit::operator = ( const ContextCommit& rhs )
+{
+    LBASSERT( changes_.empty( ));
+    context_ = rhs.context_;
+
+    for( ContextChanges::const_iterator it = rhs.contextChanges_.begin();
+         it != rhs.contextChanges_.end(); ++it )
+    {
+        changes_.push_back( *it, false );
+    }
+    return *this;
 }
 
 bool Commit::operator == ( const Commit& rhs ) const
@@ -61,26 +77,11 @@ bool Commit::operator == ( const Commit& rhs ) const
     return true;
 }
 
-void Commit::add( const Change& change )
-{
-    LBASSERT( Context::getNumSlots() > 1 );
-
-    if( !context_ )
-        context_.reset( new dash::Context );
-
-    if( change.type == Change::NODE_INSERT )
-        dash::Context::getCurrent().map( change.child, *context_ );
-    else if( change.type == Change::ATTRIBUTE_INSERT )
-        dash::Context::getCurrent().map( change.attribute, *context_ );
-
-    changes_.push_back( change );
-}
-
 void Commit::apply() const
 {
     for( ChangesIter i = changes_.begin(); i != changes_.end(); ++i )
     {
-        Change& change = *i;
+        CommitChange& change = *i;
         switch( change.type )
         {
           case Change::NODE_INSERT:

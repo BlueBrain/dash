@@ -21,7 +21,8 @@
 #include "attribute.h"
 
 #include "types.h"
-#include "change.h"
+#include "commitChange.h"
+#include "contextChange.h"
 #include "node.h"
 
 #include <dash/attribute.h>
@@ -71,7 +72,7 @@ bool Attribute::operator == ( const Attribute& rhs ) const
 
 void Attribute::notifyValueChanged_( Context& context, AnyCtxPtr::Value value )
 {
-    Change change( attribute_, value );
+    ContextChange change( attribute_, value );
     context.addChange( change );
 }
 
@@ -85,7 +86,7 @@ void Attribute::unmap( Context& context )
     value_.unmap( context );
 }
 
-void Attribute::apply( const Change& change )
+void Attribute::apply( const CommitChange& change )
 {
     LBASSERT( change.type == Change::ATTRIBUTE_CHANGED );
     value_.apply( change.value );

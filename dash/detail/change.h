@@ -1,18 +1,18 @@
 
 /* Copyright (c) 2011-2012, EFPL/Blue Brain Project
- *                     Stefan Eilemann <stefan.eilemann@epfl.ch> 
+ *                     Stefan Eilemann <stefan.eilemann@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
  * by the Free Software Foundation.
- *  
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -25,20 +25,19 @@
 #include "types.h"
 
 #include <dash/api.h>
-#include <dash/context.h>
 
-#include <lunchbox/serializable.h>
+#include <ostream>
 
-#include <iostream>
 
 namespace dash
 {
 namespace detail
 {
 
-/** A modification in a context. */
-struct Change
+/** A base class for changes. */
+class Change
 {
+public:
     enum Type
     {
         NONE,
@@ -50,9 +49,10 @@ struct Change
     };
 
     Change() : type( NONE ) {}
+    Change( dash::AttributePtr a );
     Change( const Type t, NodePtr n, dash::NodePtr c );
     Change( const Type t, NodePtr n, dash::AttributePtr a );
-    Change( dash::AttributePtr a, boost::shared_ptr< lunchbox::Any > value );
+    Change( const Change& rhs );
 
     bool operator == ( const Change& rhs ) const;
     bool operator != ( const Change& rhs ) const { return !(*this == rhs); }
@@ -60,36 +60,14 @@ struct Change
     Type type;
     NodePtr node;
     dash::NodePtr child;
-
     dash::AttributePtr attribute;
-    boost::shared_ptr< lunchbox::Any > value;
-
-private:
-    LB_SERIALIZABLE
 };
 
 DASH_API std::ostream& operator << ( std::ostream& os, const Change& change );
-DASH_API std::ostream& operator << ( std::ostream& os, const Change::Type& type);
+DASH_API std::ostream& operator << ( std::ostream& os,
+                                     const Change::Type& type );
 
-template< class Archive >
-inline void Change::save( Archive& ar, const unsigned int version ) const
-{
-    ar << type;
-    ar << node;
-    ar << child;
-    ar << attribute;
-    ar << value;
-}
 
-template< class Archive >
-inline void Change::load( Archive& ar, const unsigned int version )
-{
-    ar >> type;
-    ar >> node;
-    ar >> child;
-    ar >> attribute;
-    ar >> value;
-}
 
 }
 }

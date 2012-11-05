@@ -22,6 +22,7 @@
 
 #include "attribute.h"
 #include "change.h"
+#include "contextChange.h"
 #include "context.h"
 #include "types.h"
 #include "../node.h"
@@ -131,7 +132,7 @@ bool Node::isMapped( const Context& context ) const
 
 void Node::insert( dash::NodePtr child )
 {
-    Change change( Change::NODE_INSERT, this, child );
+    ContextChange change( Change::NODE_INSERT, this, child );
     Context::getCurrent().addChange( change );
     children_.getMutable().push_back( child );
     child->getImpl()->parents_.getMutable().push_back( this );
@@ -144,7 +145,7 @@ bool Node::erase( dash::NodePtr child )
     if( i == children_.getMutable().end( ))
         return false;
 
-    Change change( Change::NODE_ERASE, this, child );
+    ContextChange change( Change::NODE_ERASE, this, child );
     Context::getCurrent().addChange( change );
 
     NodePtr childImpl = child->getImpl();
@@ -161,7 +162,7 @@ bool Node::erase( dash::NodePtr child )
 
 void Node::insert( dash::AttributePtr attribute )
 {
-    Change change( Change::ATTRIBUTE_INSERT, this, attribute );
+    ContextChange change( Change::ATTRIBUTE_INSERT, this, attribute );
     Context::getCurrent().addChange( change );
     attributes_.getMutable().push_back( attribute );
 }
@@ -173,7 +174,7 @@ bool Node::erase( dash::AttributePtr attribute )
     if( i == attributes_.getMutable().end( ))
         return false;
 
-    Change change( Change::ATTRIBUTE_ERASE, this, attribute );
+    ContextChange change( Change::ATTRIBUTE_ERASE, this, attribute );
     Context::getCurrent().addChange( change );
 
     attributes_.getMutable().erase( i );

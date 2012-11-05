@@ -103,7 +103,7 @@ Context::Context()
 
 Context::~Context()
 {
-    LBASSERTINFO( getCommit()->empty(), "Destroyed context has active changes");
+    LBASSERTINFO( commit_.empty(), "Destroyed context has active changes");
 
     freeSlots_.push_back( slot_ );
     if( slot_ == 0 ) // main context dtor
@@ -128,10 +128,10 @@ size_t Context::getNumSlots()
 
 void Context::map( dash::NodePtr node, const Context& to )
 {
-    if( !getCommit()->empty( ))
+    if( !commit_.empty( ))
     {
         std::stringstream out;
-        out << "Source dash::context.has pending changes: " << getCommit()
+        out << "Source dash::context.has pending changes: " << commit_
             << ", called from " << lunchbox::backtrace;
         throw std::runtime_error( out.str( ));
     }
@@ -156,28 +156,19 @@ void Context::unmap( AttributePtr attribute )
     attribute->unmap( *this );
 }
 
-CommitPtr Context::getCommit()
-{
-    return commit_.getImpl();
-}
-
-ConstCommitPtr Context::getCommit() const
-{
-    return commit_.getImpl();
-}
-
-void Context::addChange( const Change& change )
+void Context::addChange( const ContextChange& change )
 {
     if( numSlots_ > 1 ) // OPT: Single context does not need to record changes
-        getCommit()->add( change );
+        commit_.add( change );
 }
 
 dash::Commit Context::commit()
 {
     LB_TS_SCOPED( thread_ );
 
-    dash::Commit current = commit_;
-    commit_ = dash::Commit();
+    dash::Commit current;
+    *current.getImpl() = commit_;
+    commit_ = ContextCommit();
     return current;
 }
 

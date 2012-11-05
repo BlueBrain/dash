@@ -21,7 +21,7 @@
 #ifndef DASH_DETAIL_COMMIT_H
 #define DASH_DETAIL_COMMIT_H
 
-#include "change.h"
+#include "commitChange.h"
 
 #include <dash/api.h>
 #include <lunchbox/lfVector.h> // member
@@ -41,12 +41,13 @@ public:
     DASH_API Commit();
     DASH_API ~Commit();
 
+    Commit& operator = ( const ContextCommit& from );
+
     bool operator == ( const Commit& rhs ) const;
     bool operator != ( const Commit& rhs ) const { return !(*this == rhs); }
 
     bool empty() const { return changes_.empty(); }
 
-    void add( const Change& change );
     void apply() const;
 
 private:
@@ -55,7 +56,7 @@ private:
     friend int test::main( int argc, char **argv );
     friend std::ostream& operator << ( std::ostream& os, const Commit& commit );
 
-    mutable Changes changes_;
+    mutable CommitChanges changes_;
 
     boost::shared_ptr< dash::Context > context_;
 

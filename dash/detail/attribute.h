@@ -55,7 +55,7 @@ public:
     dash::Attribute* getAttribute() { return attribute_; }
     const dash::Attribute* getAttribute() const { return attribute_; }
 
-    void apply( const Change& change );
+    void apply( const CommitChange& change );
 
 private:
     LB_SERIALIZABLE

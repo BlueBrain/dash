@@ -125,7 +125,7 @@ int dash::test::main( int argc, char **argv )
     builder.node = 0;
     {
         dash::Commit commit = context.commit();
-        const dash::detail::Changes& changes = commit.getImpl()->changes_;
+        const dash::detail::CommitChanges& changes = commit.getImpl()->changes_;
         TESTINFO( changes.empty(), changes );
     }
 
