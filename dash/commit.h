@@ -33,8 +33,7 @@ namespace dash
  * A set of changes emitted by a Context.
  *
  * Each Context::commit() generates a new set of changes containing all data
- * modified since the last commit. This Commit can be applied to another
- * Context.
+ * modified since the last commit. This Commit is applied to other contexts.
  */
 class Commit
 {

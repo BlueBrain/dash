@@ -33,7 +33,9 @@ namespace detail { class Context; }
  * The contextual view on the data.
  *
  * The Context provides an isolated view on data. Each thread can have a
- * different context and multiple threads may use the same context.
+ * different context and multiple threads may use the same context. Each Context
+ * provides one distributed memory view for all data stored in nodes and
+ * attributes.
  *
  * Read and write access to Node and Attribute from multiple contexts is
  * thread-safe. Access from multiple threads using the same context to a
@@ -94,7 +96,7 @@ public:
      * One context may be current in multiple threads. Concurrent access to a
      * single context is not thread-safe.
      *
-     * @return the previous context.
+     * @return the previous current context.
      * @version 0.1
      */
     DASH_API Context& setCurrent();
@@ -114,12 +116,12 @@ public:
     /** @name Data visibility */
     //@{
     /**
-     * Map the given node and all children from this context to the to context.
+     * Map the given node and all children from this context to the 'to' context.
      *
-     * Traverses the node tree and synchronizes the view from the from context
-     * to this context. The from context need to have no pending changes, that
-     * is, it should be fully committed. Not thread-safe with any other
-     * operation on this or the from context.
+     * Traverses the node tree and synchronizes the view from the this context
+     * to the 'to' context. The from context need to have no pending changes,
+     * that is, it should be fully committed. Not thread-safe with any other
+     * operation on this context.
      *
      * @param node the tree to map.
      * @param to the context to make the node visible in.
@@ -143,10 +145,9 @@ public:
     /**
      * Map the given attribute from this context to the 'to' context.
      *
-     * Synchronizes the view from the from context to this context. The from
-     * context need to have no pending changes, that is, it should be fully
-     * committed. Not thread-safe with any other operation on this or the from
-     * context.
+     * Synchronizes the view from this context to the 'to' context. This context
+     * need to have no pending changes, that is, it should be fully
+     * committed. Not thread-safe with any other operation on this context.
      *
      * @param attribute the tree to map.
      * @param to the context to make the attribute visible in.

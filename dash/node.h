@@ -25,13 +25,13 @@
 #include <dash/types.h>
 #include <dash/nodeVisitor.h>   // nested typedef
 #include <dash/visitorResult.h> // return value
-#include <lunchbox/serializable.h>
 
 #include <dash/detail/attributeIterator.h> // return value
 #include <dash/detail/childIterator.h>     // return value
 #include <dash/detail/parentIterator.h>    // return value
 
 #include <lunchbox/referenced.h> // base class
+#include <lunchbox/serializable.h>
 
 namespace dash
 {
@@ -62,16 +62,16 @@ public:
     /** A const iterator over the parent vector. */
     typedef detail::ParentIterator< const Node > ConstParentIterator;
 
+    /** An iterator over the child vector. */
+    typedef detail::ChildIterator< Node > ChildIterator;
+    /** A const iterator over the child vector. */
+    typedef detail::ChildIterator< const Node > ConstChildIterator;
+
     /** An iterator over the attribute vector. */
     typedef detail::AttributeIterator< Node, Attribute > AttributeIterator;
     /** A const iterator over the attribute vector. */
     typedef detail::AttributeIterator< const Node,
                                        const Attribute > ConstAttributeIterator;
-
-    /** An iterator over the child vector. */
-    typedef detail::ChildIterator< Node > ChildIterator;
-    /** A const iterator over the child vector. */
-    typedef detail::ChildIterator< const Node > ConstChildIterator;
 
     DASH_API Node(); //!< Construct a new empty node. @version 0.1
 
@@ -80,13 +80,13 @@ public:
 
     DASH_API virtual ~Node(); //!< Destruct this node. @version 0.1
 
-    /** Perform a shallow, parent-less copy. @version 0.1 */
+    /** Perform a shallow, parent-less assignment. @version 0.1 */
     DASH_API Node& operator = ( const Node& from );
 
     /** Check this Node on equality w/o traversing the children. @version 0.1 */
     DASH_API bool operator == ( const Node& rhs ) const;
 
-    /** Check this Node on inequality w/o traversing the children. @version 0.1 */
+    /** Check this Node on inequality w/o traversing the children. @version 0.1*/
     DASH_API bool operator != ( const Node& rhs ) const
         { return !(*this == rhs); }
 
@@ -106,7 +106,7 @@ public:
      */
     DASH_API VisitorResult accept( ConstVisitor& visitor ) const;
 
-    /** @name node.hierarchy */
+    /** @name Node hierarchy */
     //@{
     /** Establish a relationship between the two nodes. @version 0.1 */
     DASH_API void insert( NodePtr child );
@@ -114,7 +114,7 @@ public:
     /** Break the relationship between the two nodes. @version 0.1 */
     DASH_API void erase( NodePtr child );
 
-    /** @return true of the node.has parents, false otherwise. @version 0.1 */
+    /** @return true of the node has parents, false otherwise. @version 0.1 */
     DASH_API bool hasParents() const;
 
     /** @return the current number of parents. @version 0.1 */

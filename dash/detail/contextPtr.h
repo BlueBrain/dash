@@ -43,11 +43,6 @@ public:
     ContextPtr()
             : values_( Context::getCurrent().getNumSlots(), Value( ))
         {}
-#if 0
-    ContextPtr( const T& item )
-            : values_( Context::getCurrent().getNumSlots(), Value(new T( item )))
-        {}
-#endif
 
     ~ContextPtr() {}
 
