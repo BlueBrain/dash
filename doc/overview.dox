@@ -7,102 +7,18 @@
 The dash object hierarchy provides two classes to create directed acyclic graphs
 (DAG) of objects, Node and Attribute. The Node forms the DAG by having parent
 and child nodes and holds data through attributes. An Attribute stores a value
-of boost::any or similar construct. This tree structure was chosen over a flat
-object hierarchy to allow automatic mapping of object hierarchies on remote
-nodes.
+of boost::any-like construct. This tree structure is chosen over a flat object
+hierarchy to allow automatic mapping of object hierarchies on other context, or
+in the case of codash, other nodes.
 
 The core of the data storage relies on lock-free vectors and atomic variables to
-store pointer tables and per-item context counts. The ContextData is a template
-class managing the access and duplication of the context-specific data using the
-pseudo-code from the previous section.
+store pointer tables and per-item context counts. The internal ContextPtr is a
+template class managing the access and copy-on-write of the context-specific
+data.
 
 DASH does not provide a way to name children or attributes. The application is
 responsible for tracking the index or pointer of each child or attribute if it
 needs to distinguish the type of the item.
 
 @image html dashUML.png "DASH UML Diagram"
-
-@section issues Issues
-@subsection issue1 1. Which context tracks which data?
-
-<strong>Resolved:</strong> Nodes and attributes are visible in the context they
-are created in. In all other contexts, node trees have to be explicitly
-mapped. Nodes inserted through a change are automatically mapped.
-
-Often a context is only interested in parts of its parent context data, that is,
-a context update can drop certain data. This optimizes memory usage. Remote
-synchronization makes selective mapping and update a requirement for performance
-reasons.
-
-@sa @ref issue4
-
-@subsection issue2 2. Serializing boost::any
-
-...is not possible out of the box.
-
-- Option 1: Roll our own variant of boost::any with serialization support
-- Option 2: Mirror boost::any ValueHolder approach in Attribute for serialization
-
-@subsection issue3 3. Data distribution using Collage
-
-- How to create a local context from a remote contexts
-- How to link remote contexts
-
-@subsection issue4 4. How are inserted nodes handled when the change is applied to a new context?
-
-In general:
-- If the parent or child node is not mapped, the change is ignored.
-
-@subsubsection issue41 Option 1: Snapshot at insert time
-
-- The child node receives the view at the time of the insertion in the
-  originating context when the insert change is applied.
-- The insert-preserving change delays the reference increase until commit? No:
-  object may be modified already.
-
-Pros: Intuitive behaviour
-
-Cons:
-
-- Expensive O(NxM) operation: for each insert change N, need to create a
-  snapshot change for M objects in the inserted tree. The snapshot is created
-  using a per-change context to which inserted objects are mapped until the
-  change is disposed.
-
-- No erase unmapping: When a subtree is removed from its last parent through a
-  change, it cannot automatically by unmapped from the context since the
-  application may have a reference. A notification callback may be used to let
-  the application decide.
-
-@subsubsection issue42 Option 2: Propagate at insert time
-
-- If the parent node is mapped and the child context has no view of the object,
-  the child contect view is initialized at insert time
-
-Prerequisite: To contexts have to be known at insert time. If change is applied
-to a different context, the insert operation is either ignored (no mapping
-exists) of the child is inserted with a different mapping (insert mapping is
-different from existing mapping).
-
-To context can be known through a context graph or through the mapping of parent
-nodes.
-
-Pros: Simple and fast implementation
-
-Cons:
-- Does conflict with existing changes to the same object on the current context
-- Limits change direction
-- Unintuitive when receiving changes for the same object from multiple contexts
-
-Not usable due to Con #1.
-
-@subsubsection issue43 Option 3: Ignore unmapped objects
-
-Pros:
-- Simple, predictable API
-- May be extended by application towards @ref issue41 trough exposing Change
-  hooks?
-
-Cons: App has to map new (child) nodes, otherwise insert operations are ignored.
-
 */
