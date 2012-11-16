@@ -14,7 +14,7 @@ set(RELEASE_VERSION 1) # OFF or ABI version
 
 include(Common)
 include(FindPackages)
-include(InstallSymlink)
+include(GitTargets)
 
 # add_subdirectory(examples)
 add_subdirectory(dash)
