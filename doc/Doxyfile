@@ -657,6 +657,7 @@ WARN_LOGFILE           =
 
 INPUT                  = @dash_SOURCE_DIR@/dash \
                          @dash_SOURCE_DIR@/doc \
+                         @dash_SOURCE_DIR@/README.md \
                          @CMAKE_BINARY_DIR@/dash
 
 # This tag can be used to specify the character encoding of the source files

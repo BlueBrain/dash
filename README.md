@@ -1,4 +1,5 @@
-# DASH
+DASH {#mainpage}
+====
 
 ## Description
 
