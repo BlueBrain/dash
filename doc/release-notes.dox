@@ -1,5 +1,5 @@
 /**
-@page Release_Notes Release Notes
+@page Release_Notes DASH 1.0 Release Notes
 @section TABLE_OF_CONTENTS Table of Contents
 -# @ref Introduction
 -# @ref New_in_this_release
@@ -40,18 +40,11 @@ copy-on-write data protection
 @subsection Optimizations Optimizations
 - Initial release, no optimizations
 
-@subsection Examples Examples
-- Examples
-
-@subsection Tools Tools
-- Tools
-
 @subsection API_Changes API Changes
 - Initial release, no API Changes
 
 @subsection Documentation Documentation
 - API Documentation at http://bluebrain.github.com/
-- TODO: Presentions on github.
 
 @subsection Bug_Fixes Bug Fixes
 - Initial release, no bug fixes
