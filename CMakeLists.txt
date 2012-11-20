@@ -3,6 +3,7 @@
 
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(dash)
+set(CMAKE_MACPORTS_NAME libdash)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
 list(APPEND CMAKE_PREFIX_PATH ${SystemDrive}:/cygwin/bin)
