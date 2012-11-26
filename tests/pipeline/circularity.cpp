@@ -68,7 +68,7 @@ class TestThread: public lunchbox::Thread
 {
 public:
     TestThread()
-        :inputQ_(NULL), outputQ_(NULL)
+        :inputQ_( 0 ), outputQ_( 0 )
     {
     }
 
@@ -149,41 +149,41 @@ int dash::test::main( int argc, char **argv )
         mainCtx.commit( );
 
         // child0NodePtr
-        dash::AttributePtr attrib00 = new dash::Attribute( ATTR_INIT_VALUE + 0 );
+        dash::AttributePtr attrib00 = new dash::Attribute( ATTR_INIT_VALUE+0 );
         child0NodePtr->insert( attrib00 );
         mainCtx.commit( );
 
         // child1NodePtr
-        dash::AttributePtr attrib10 = new dash::Attribute( ATTR_INIT_VALUE + 1 );
-        dash::AttributePtr attrib11 = new dash::Attribute( ATTR_INIT_VALUE + 2 );
+        dash::AttributePtr attrib10 = new dash::Attribute( ATTR_INIT_VALUE+1 );
+        dash::AttributePtr attrib11 = new dash::Attribute( ATTR_INIT_VALUE+2 );
         child1NodePtr->insert( attrib10 );
         mainCtx.commit( );
         child1NodePtr->insert( attrib11 );
         mainCtx.commit( );
 
         // For the child00NodePtr
-        dash::AttributePtr attrib000 = new dash::Attribute( ATTR_INIT_VALUE + 3 );
-        dash::AttributePtr attrib001 = new dash::Attribute( ATTR_INIT_VALUE + 4 );
+        dash::AttributePtr attrib000 = new dash::Attribute( ATTR_INIT_VALUE+3 );
+        dash::AttributePtr attrib001 = new dash::Attribute( ATTR_INIT_VALUE+4 );
         child00NodePtr->insert( attrib000 );
         mainCtx.commit( );
         child00NodePtr->insert( attrib001 );
         mainCtx.commit( );
 
         // For the child01NodePtr
-        dash::AttributePtr attrib010 = new dash::Attribute( ATTR_INIT_VALUE + 5 );
+        dash::AttributePtr attrib010 = new dash::Attribute( ATTR_INIT_VALUE+5 );
         child01NodePtr->insert( attrib010 );
         mainCtx.commit( );
 
         // For the child10NodePtr
-        dash::AttributePtr attrib100 = new dash::Attribute( ATTR_INIT_VALUE + 6 );
-        dash::AttributePtr attrib101 = new dash::Attribute( ATTR_INIT_VALUE + 7 );
+        dash::AttributePtr attrib100 = new dash::Attribute( ATTR_INIT_VALUE+6 );
+        dash::AttributePtr attrib101 = new dash::Attribute( ATTR_INIT_VALUE+7 );
         child10NodePtr->insert( attrib100 );
         mainCtx.commit( );
         child10NodePtr->insert( attrib101 );
         mainCtx.commit( );
 
         // For the child11NodePtr
-        dash::AttributePtr attrib110 = new dash::Attribute( ATTR_INIT_VALUE + 8 );
+        dash::AttributePtr attrib110 = new dash::Attribute( ATTR_INIT_VALUE+8 );
         child11NodePtr->insert( attrib110 );
         mainCtx.commit( );
 
@@ -219,43 +219,53 @@ int dash::test::main( int argc, char **argv )
         for(int i = 0; i < THREAD_COUNT; ++i)
             threads[ i ].join();
 
-        const int totalIncrement = INCREMENT_CONST * ( ITERATION_COUNT - 1 ) * ( THREAD_COUNT + 1 ) + INCREMENT_CONST;
+        const int totalIncrement = INCREMENT_CONST * ( ITERATION_COUNT - 1 ) *
+                                   ( THREAD_COUNT + 1 ) + INCREMENT_CONST;
 
         int receivedValue = attrib00->get< int >( );
         int expectedValue = ATTR_EXIT_VALUE;
-        TESTINFO( receivedValue == expectedValue, receivedValue << "!=" << expectedValue);
+        TESTINFO( receivedValue == expectedValue,
+                  receivedValue << "!=" << expectedValue);
 
         receivedValue = attrib10->get< int >( );
         expectedValue = ATTR_INIT_VALUE + 1 + totalIncrement;
-        TESTINFO( receivedValue == expectedValue, receivedValue << "!=" << expectedValue);
+        TESTINFO( receivedValue == expectedValue,
+                  receivedValue << "!=" << expectedValue);
 
         receivedValue = attrib11->get< int >( );
         expectedValue = ATTR_INIT_VALUE + 2 + totalIncrement;
-        TESTINFO( receivedValue == expectedValue, receivedValue << "!=" << expectedValue);
+        TESTINFO( receivedValue == expectedValue,
+                  receivedValue << "!=" << expectedValue);
 
         receivedValue = attrib000->get< int >( );
         expectedValue = ATTR_INIT_VALUE + 3 + totalIncrement;
-        TESTINFO( receivedValue == expectedValue, receivedValue << "!=" << expectedValue);
+        TESTINFO( receivedValue == expectedValue,
+                  receivedValue << "!=" << expectedValue);
 
         receivedValue = attrib001->get< int >( );
         expectedValue = ATTR_INIT_VALUE + 4 + totalIncrement;
-        TESTINFO( receivedValue == expectedValue, receivedValue << "!=" << expectedValue);
+        TESTINFO( receivedValue == expectedValue,
+                  receivedValue << "!=" << expectedValue);
 
         receivedValue = attrib010->get< int >( );
         expectedValue = ATTR_INIT_VALUE + 5 + totalIncrement;
-        TESTINFO( receivedValue == expectedValue, receivedValue << "!=" << expectedValue);
+        TESTINFO( receivedValue == expectedValue,
+                  receivedValue << "!=" << expectedValue);
 
         receivedValue = attrib100->get< int >( );
         expectedValue = ATTR_INIT_VALUE + 6 + totalIncrement;
-        TESTINFO( receivedValue == expectedValue, receivedValue << "!=" << expectedValue);
+        TESTINFO( receivedValue == expectedValue,
+                  receivedValue << "!=" << expectedValue);
 
         receivedValue = attrib101->get< int >( );
         expectedValue = ATTR_INIT_VALUE + 7 + totalIncrement;
-        TESTINFO( receivedValue == expectedValue, receivedValue << "!=" << expectedValue);
+        TESTINFO( receivedValue == expectedValue,
+                  receivedValue << "!=" << expectedValue);
 
         receivedValue = attrib110->get< int >( );
         expectedValue = ATTR_INIT_VALUE + 8 + totalIncrement;
-        TESTINFO( receivedValue == expectedValue, receivedValue << "!=" << expectedValue);
+        TESTINFO( receivedValue == expectedValue
+                  , receivedValue << "!=" << expectedValue);
     }
 
     mainCtx.commit();
