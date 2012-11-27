@@ -32,6 +32,7 @@ DASH fulfils the following requirements:
 
 * [Source Code](https://github.com/BlueBrain/dash/tags)
 * [Ubuntu Packages Repository](https://launchpad.net/~eilemann/+archive/equalizer/)
+* [Binary Packages](https://github.com/BlueBrain/dash/downloads)
 * [API Documentation](http://bluebrain.github.com/)
 
 ## Support
