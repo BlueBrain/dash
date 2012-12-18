@@ -3,7 +3,7 @@
 include(System)
 set(FIND_PACKAGES_FOUND ${SYSTEM} ${FIND_PACKAGES_FOUND_EXTRA})
 
-find_package(Lunchbox 1.5.0 REQUIRED)
+find_package(Lunchbox 1.7.0 REQUIRED)
 if(Lunchbox_FOUND)
   set(Lunchbox_name Lunchbox)
 elseif(LUNCHBOX_FOUND)
