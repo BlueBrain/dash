@@ -15,8 +15,9 @@ set(RELEASE_VERSION OFF) # OFF or ABI version
 set(LAST_RELEASE 1.0.0)
 
 include(Common)
-include(FindPackages)
 include(GitTargets)
+include(FindPackages)
+set(DASH_TRANSIENT_LIBRARIES Lunchbox)
 
 # add_subdirectory(examples)
 add_subdirectory(dash)
@@ -30,3 +31,4 @@ include(DoxygenRule)
 
 include(CTest)
 include(CPackConfig)
+include(PackageConfig)
