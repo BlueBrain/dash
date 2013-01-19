@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
+/* Copyright (c) 2011, EPFL/Blue Brain Project
  *                     Ahmet Bilgili
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
