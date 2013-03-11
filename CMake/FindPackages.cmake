@@ -30,6 +30,8 @@ if(Boost_name)
 endif()
 
 
+set(DASH_DEPENDS Lunchbox;Boost)
+
 # Write defines.h and options.cmake
 if(NOT FIND_PACKAGES_INCLUDE)
   set(FIND_PACKAGES_INCLUDE

@@ -17,7 +17,7 @@ set(LAST_RELEASE 1.0.0)
 include(Common)
 include(GitTargets)
 include(FindPackages)
-set(DASH_TRANSIENT_LIBRARIES Lunchbox)
+set(DASH_DEPENDENT_LIBRARIES Lunchbox)
 
 # add_subdirectory(examples)
 add_subdirectory(dash)
