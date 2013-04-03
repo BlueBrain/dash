@@ -29,7 +29,6 @@
 #include "detail/context.h"
 
 #include <lunchbox/init.h>
-#include <pthread.h>
 #include <lunchbox/perThread.h>
 #include <lunchbox/version.h>
 
