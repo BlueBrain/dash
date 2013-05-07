@@ -108,8 +108,8 @@ void Commit::apply() const
                   change.node->insert( change.attribute );
               }
               else
-                  LBINFO << "Ignoring Node::insert change, parent not mapped"
-                         << std::endl;
+                  LBINFO << "Ignoring Attribute::insert change, parent not "
+                         << "mapped" << std::endl;
               break;
 
           case Change::ATTRIBUTE_ERASE:
