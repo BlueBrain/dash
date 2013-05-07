@@ -3,7 +3,7 @@
 include(System)
 list(APPEND FIND_PACKAGES_DEFINES ${SYSTEM})
 
-find_package(Lunchbox 1.7.1 REQUIRED)
+find_package(Lunchbox 1.7.5 REQUIRED)
 if(Lunchbox_FOUND)
   set(Lunchbox_name Lunchbox)
 endif()
@@ -13,7 +13,9 @@ endif()
 if(Lunchbox_name)
   list(APPEND FIND_PACKAGES_DEFINES DASH_USE_LUNCHBOX)
   link_directories(${${Lunchbox_name}_LIBRARY_DIRS})
-  include_directories(${${Lunchbox_name}_INCLUDE_DIRS})
+  if(NOT "${${Lunchbox_name}_INCLUDE_DIRS}" MATCHES "-NOTFOUND")
+    include_directories(${${Lunchbox_name}_INCLUDE_DIRS})
+  endif()
 endif()
 
 find_package(Boost 1.41.0 REQUIRED serialization)
@@ -26,9 +28,13 @@ endif()
 if(Boost_name)
   list(APPEND FIND_PACKAGES_DEFINES DASH_USE_BOOST)
   link_directories(${${Boost_name}_LIBRARY_DIRS})
-  include_directories(SYSTEM ${${Boost_name}_INCLUDE_DIRS})
+  if(NOT "SYSTEM ${${Boost_name}_INCLUDE_DIRS}" MATCHES "-NOTFOUND")
+    include_directories(SYSTEM ${${Boost_name}_INCLUDE_DIRS})
+  endif()
 endif()
 
+
+set(DASH_BUILD_DEBS libavahi-compat-libdnssd-dev;libboost-regex-dev;libboost-serialization-dev;libhwloc-dev)
 
 set(DASH_DEPENDS Lunchbox;Boost)
 
