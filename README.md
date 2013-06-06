@@ -1,4 +1,5 @@
-# DASH
+DASH {#mainpage}
+====
 
 ## Description
 
@@ -23,3 +24,8 @@ DASH fulfils the following requirements:
 * DAG structure
     * Access and distribution can handle a full graph
     * Selective distribution possible (partial data range, partial features)
+
+## Downloads
+
+* [Source Code](https://github.com/BlueBrain/dash/tags)
+* [Ubuntu Packages Repository](https://launchpad.net/~eilemann/+archive/equalizer/)
