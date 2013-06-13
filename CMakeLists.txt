@@ -9,7 +9,7 @@ list(APPEND CMAKE_PREFIX_PATH ${SystemDrive}:/cygwin/bin)
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "0")
-set(VERSION_PATCH "0")
+set(VERSION_PATCH "1")
 set(RELEASE_VERSION 1) # OFF or ABI version
 
 include(Common)
