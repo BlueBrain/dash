@@ -1,6 +1,4 @@
-DASH                  {#mainpage}
-====
-
+# DASH
 ## Description
 
 DASH provides generic, efficient multi-threaded data access. It allows
@@ -40,3 +38,23 @@ DASH fulfils the following requirements:
 Open an [issue](https://github.com/BlueBrain/dash/issues/new) if you
 need help, have a question, want to provide feedback or need
 advice. We'll try to resolve them in a timely manner.
+
+## Building from source
+### Linux, Mac OS X
+
+```
+  git clone https://github.com/Eyescale/Buildyard.git
+  cd Buildyard
+  git clone https://github.com/BlueBrain/config.git config.bluebrain
+  make dash
+```
+
+### Windows
+```
+  git clone https://github.com/Eyescale/Buildyard.git
+  cd Buildyard
+  git clone https://github.com/BlueBrain/config.git config.bluebrain
+  [Use CMake UI to configure]
+  [Open Buildyard.sln]
+  [Build 00_Main - dash]
+```
