@@ -40,7 +40,7 @@ if(EXISTS ${CMAKE_SOURCE_DIR}/CMake/FindPackagesPost.cmake)
   include(${CMAKE_SOURCE_DIR}/CMake/FindPackagesPost.cmake)
 endif()
 
-set(DASH_BUILD_DEBS libavahi-compat-libdnssd-dev;libboost-regex-dev;libboost-serialization-dev;libhwloc-dev;libjpeg-turbo8-dev;libturbojpeg)
+set(DASH_BUILD_DEBS cmake;git;git-svn;libavahi-compat-libdnssd-dev;libboost-regex-dev;libboost-serialization-dev;libhwloc-dev;libjpeg-turbo8-dev;libturbojpeg;pkg-config;subversion)
 
 set(DASH_DEPENDS Lunchbox;Boost)
 
