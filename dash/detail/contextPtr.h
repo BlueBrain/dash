@@ -92,7 +92,7 @@ public:
 
     /** @return true if the pointer has been mapped to the given context. */
     bool isMapped( const Context& context ) const
-        { return values_[ context.getSlot() ]; }
+        { return values_[ context.getSlot() ].get(); }
 
     /** Ensure the existence of a slot for the context, using a default value. */
     void setup( const Context& context = Context::getCurrent(),
