@@ -122,7 +122,7 @@ public:
         }
 };
 
-int dash::test::main( int argc, char **argv )
+int dash::test::main( int , char ** )
 {
     lunchbox::Clock clock;
 

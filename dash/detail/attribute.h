@@ -69,13 +69,13 @@ private:
 
 
 template< class Archive >
-inline void Attribute::save( Archive& ar, const unsigned int version ) const
+inline void Attribute::save( Archive& ar, const unsigned int ) const
 {
     ar << value_.get();
 }
 
 template< class Archive >
-inline void Attribute::load( Archive& ar, const unsigned int version )
+inline void Attribute::load( Archive& ar, const unsigned int )
 {
     boost::shared_ptr< lunchbox::Any > anyValue( new lunchbox::Any );
     ar >> *anyValue;
