@@ -52,7 +52,7 @@ private:
 };
 
 template< class Archive >
-inline void CommitChange::save( Archive& ar, const unsigned int version ) const
+inline void CommitChange::save( Archive& ar, const unsigned int ) const
 {
     ar << type;
     ar << node;
@@ -62,7 +62,7 @@ inline void CommitChange::save( Archive& ar, const unsigned int version ) const
 }
 
 template< class Archive >
-inline void CommitChange::load( Archive& ar, const unsigned int version )
+inline void CommitChange::load( Archive& ar, const unsigned int )
 {
     ar >> type;
     ar >> node;

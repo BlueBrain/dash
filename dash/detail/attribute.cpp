@@ -43,7 +43,7 @@ Attribute::Attribute( dash::Attribute* attribute )
         boost::bind( &Attribute::notifyValueChanged_, this, _1, _2 ));
 }
 
-Attribute::Attribute( dash::Attribute* attribute, AttributePtr from )
+Attribute::Attribute( dash::Attribute* attribute, AttributePtr /*from*/ )
         : attribute_( attribute )
 {
 }
