@@ -70,13 +70,13 @@ inline std::ostream& operator << ( std::ostream& os, const Commit& commit )
 }
 
 template< class Archive >
-inline void Commit::save( Archive& ar, const unsigned int version ) const
+inline void Commit::save( Archive& ar, const unsigned int ) const
 {
     ar << changes_;
 }
 
 template< class Archive >
-inline void Commit::load( Archive& ar, const unsigned int version )
+inline void Commit::load( Archive& ar, const unsigned int )
 {
     ar >> changes_;
 }

@@ -103,7 +103,7 @@ private:
 };
 
 template< class Archive >
-inline void Node::save( Archive& ar, const unsigned int version ) const
+inline void Node::save( Archive& ar, const unsigned int ) const
 {
     ar << node_;
     ar << parents_.get();
@@ -112,7 +112,7 @@ inline void Node::save( Archive& ar, const unsigned int version ) const
 }
 
 template< class Archive >
-inline void Node::load( Archive& ar, const unsigned int version )
+inline void Node::load( Archive& ar, const unsigned int )
 {
     ar >> node_;
     boost::shared_ptr< Parents > parents( new Parents );
