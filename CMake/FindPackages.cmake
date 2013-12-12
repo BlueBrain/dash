@@ -6,15 +6,15 @@ find_package(PkgConfig)
 
 set(ENV{PKG_CONFIG_PATH} "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig:$ENV{PKG_CONFIG_PATH}")
 if(PKG_CONFIG_EXECUTABLE)
-  find_package(Lunchbox 1.8.1)
+  find_package(Lunchbox 1.9.0)
   if((NOT Lunchbox_FOUND) AND (NOT LUNCHBOX_FOUND))
-    pkg_check_modules(Lunchbox Lunchbox>=1.8.1)
+    pkg_check_modules(Lunchbox Lunchbox>=1.9.0)
   endif()
   if((NOT Lunchbox_FOUND) AND (NOT LUNCHBOX_FOUND))
     message(FATAL_ERROR "Could not find Lunchbox")
   endif()
 else()
-  find_package(Lunchbox 1.8.1  REQUIRED)
+  find_package(Lunchbox 1.9.0  REQUIRED)
 endif()
 
 if(PKG_CONFIG_EXECUTABLE)
@@ -66,7 +66,7 @@ if(Boost_name)
   endif()
 endif()
 
-set(DASH_BUILD_DEBS autoconf;automake;cmake;doxygen;git;git-review;git-svn;lcov;libavahi-compat-libdnssd-dev;libboost-regex-dev;libboost-serialization-dev;libhwloc-dev;ninja-build;pkg-config;subversion)
+set(DASH_BUILD_DEBS autoconf;automake;cmake;doxygen;git;git-review;git-svn;lcov;libavahi-compat-libdnssd-dev;libboost-regex-dev;libboost-serialization-dev;libhwloc-dev;libjpeg-turbo8-dev;libturbojpeg;ninja-build;pkg-config;subversion)
 
 set(DASH_DEPENDS Lunchbox;Boost)
 
