@@ -69,7 +69,7 @@ file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/pkg/${CMAKE_PROJECT_NAME}Config.cmake.in
   "      find_library(\${_component}_libraryname ${CMAKE_PROJECT_NAME}_\${_component} NO_DEFAULT_PATH\n"
   "        PATHS \${${CMAKE_PROJECT_NAME}_PREFIX_DIR} PATH_SUFFIXES lib ${PYTHON_LIBRARY_PREFIX})\n"
   "\n"
-  "      if(\${_component}_libraryname MATCHES "\${_component}_libraryname-NOTFOUND")\n"
+  "      if(\${_component}_libraryname MATCHES \"\${_component}_libraryname-NOTFOUND\")\n"
   "        if(${CMAKE_PROJECT_NAME}_FIND_REQUIRED_\${_component})\n"
   "          set(_fail \"Component library \${_component} not found\")\n"
   "          message(FATAL_ERROR \"   ${CMAKE_PROJECT_NAME}_\${_component} \"\n"
@@ -88,12 +88,12 @@ file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/pkg/${CMAKE_PROJECT_NAME}Config.cmake.in
   "    endforeach()\n"
   "  else()\n"
 # if no component was specified, find all produced libraries
-  "    set(${UPPER_PROJECT_NAME}_LIBRARY_NAMES "@LIBRARY_NAMES@")\n"
+  "    set(${UPPER_PROJECT_NAME}_LIBRARY_NAMES \"@LIBRARY_NAMES@\")\n"
   "    foreach(_libraryname \${${UPPER_PROJECT_NAME}_LIBRARY_NAMES})\n"
   "      string(TOUPPER \${_libraryname} _LIBRARYNAME)\n"
   "      find_library(\${_LIBRARYNAME}_LIBRARY \${_libraryname} NO_DEFAULT_PATH\n"
   "                   PATHS \${${CMAKE_PROJECT_NAME}_PREFIX_DIR} PATH_SUFFIXES lib ${PYTHON_LIBRARY_PREFIX})\n"
-  "      if(\${_LIBRARYNAME}_LIBRARY MATCHES "\${_LIBRARYNAME}_LIBRARY-NOTFOUND")\n"
+  "      if(\${_LIBRARYNAME}_LIBRARY MATCHES \"\${_LIBRARYNAME}_LIBRARY-NOTFOUND\")\n"
   "        set(_fail \"\${_libraryname} not found\")\n"
   "        if(_out)\n"
   "          message(\${_output_type} \"   Missing the ${CMAKE_PROJECT_NAME} \"\n"
@@ -172,12 +172,13 @@ set(DEPENDENTS
   "endif()\n\n"
 )
 foreach(_dependent ${${UPPER_PROJECT_NAME}_DEPENDENT_LIBRARIES})
-  if(${_dependent}_FOUND)
-    set(${_dependent}_name ${_dependent})
-  endif()
   string(TOUPPER ${_dependent} _DEPENDENT)
-  if(${_DEPENDENT}_FOUND)
-    set(${_dependent}_name ${_DEPENDENT})
+  if(NOT ${_dependent}_name)
+    if(${_DEPENDENT}_FOUND)
+      set(${_dependent}_name ${_DEPENDENT})
+    elseif(${_dependent}_FOUND)
+      set(${_dependent}_name ${_dependent})
+    endif()
   endif()
   if(NOT ${_dependent}_name)
     message(FATAL_ERROR "Dependent library ${_dependent} was not properly resolved")
@@ -198,10 +199,10 @@ foreach(_dependent ${${UPPER_PROJECT_NAME}_DEPENDENT_LIBRARIES})
     "set(_library_backups \${${${_dependent}_name}_LIBRARIES})\n"
     "find_package(${_dependent} ${_FIND_VERSION} \${_req} \${_quiet})\n"
     "if(${${_dependent}_name}_FOUND)\n"
-    "list(APPEND ${${_dependent}_name}_LIBRARIES \${_library_backups})\n"
-    "if(${${_dependent}_name}_LIBRARIES)\n"
-    "  list(REMOVE_DUPLICATES ${${_dependent}_name}_LIBRARIES)\n"
-    "endif()\n"
+    "  list(APPEND ${${_dependent}_name}_LIBRARIES \${_library_backups})\n"
+    "  if(${${_dependent}_name}_LIBRARIES)\n"
+    "    list(REMOVE_DUPLICATES ${${_dependent}_name}_LIBRARIES)\n"
+    "  endif()\n"
     )
   if(_FIND_VERSION)
     list(APPEND DEPENDENTS
@@ -215,7 +216,7 @@ foreach(_dependent ${${UPPER_PROJECT_NAME}_DEPENDENT_LIBRARIES})
     "  list(APPEND ${UPPER_PROJECT_NAME}_LIBRARIES \${${${_dependent}_name}_LIBRARIES})\n"
     "  list(APPEND ${UPPER_PROJECT_NAME}_INCLUDE_DIRS \${${${_dependent}_name}_INCLUDE_DIRS})\n"
     "else()\n"
-    "  set(_fail TRUE)\n"
+    "  set(_fail \"${_dependent} not found\")\n"
     "endif()\n\n")
 endforeach()
 string(REGEX REPLACE ";" " " DEPENDENTS ${DEPENDENTS})
