@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
  *                     Daniel Nachbaur <daniel.nachbaur@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -52,7 +52,7 @@ private:
 };
 
 template< class Archive >
-inline void CommitChange::save( Archive& ar, const unsigned int version ) const
+inline void CommitChange::save( Archive& ar, const unsigned int ) const
 {
     ar << type;
     ar << node;
@@ -62,7 +62,7 @@ inline void CommitChange::save( Archive& ar, const unsigned int version ) const
 }
 
 template< class Archive >
-inline void CommitChange::load( Archive& ar, const unsigned int version )
+inline void CommitChange::load( Archive& ar, const unsigned int )
 {
     ar >> type;
     ar >> node;

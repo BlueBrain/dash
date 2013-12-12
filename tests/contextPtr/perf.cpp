@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
  *                          Stefan.Eilemann@epfl.ch
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -122,7 +122,7 @@ public:
         }
 };
 
-int dash::test::main( int argc, char **argv )
+int dash::test::main( int , char ** )
 {
     lunchbox::Clock clock;
 

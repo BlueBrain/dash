@@ -1,23 +1,11 @@
 
 # Copyright (c) 2011-2012 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
 
-# Change this number when adding tests to force a CMake run: 1
+# Change this number when adding tests to force a CMake run: 2
 
 include_directories(BEFORE ${CMAKE_CURRENT_SOURCE_DIR})
 
-if(WIN32)
-  get_filename_component(LB_DIR ${LUNCHBOX_LIBRARIES} PATH)
-  set(LB_DIR "${LB_DIR}/../bin")
-  file(COPY "${LB_DIR}/pthread.dll"
-       DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Debug)
-  file(COPY "${LB_DIR}/pthread.dll"
-       DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Release)
-  file(COPY "${LB_DIR}/pthread.dll"
-       DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/RelWithDebInfo)
-  file(COPY "${LB_DIR}/pthread.dll"
-       DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/MinSizeRel)
-  # dont set output dir, tests want to be with DLLs on Windows - no rpath
-else()
+if(NOT WIN32)
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${dash_BINARY_DIR}/tests)
 endif()
 

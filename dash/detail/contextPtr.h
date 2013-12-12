@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
  *                          Stefan.Eilemann@epfl.ch
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -92,7 +92,7 @@ public:
 
     /** @return true if the pointer has been mapped to the given context. */
     bool isMapped( const Context& context ) const
-        { return values_[ context.getSlot() ]; }
+        { return values_[ context.getSlot() ].get(); }
 
     /** Ensure the existence of a slot for the context, using a default value. */
     void setup( const Context& context = Context::getCurrent(),

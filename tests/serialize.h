@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2012, EFPL/Blue Brain Project
+/* Copyright (c) 2012, EPFL/Blue Brain Project
  *                     Daniel Nachbaur <daniel.nachbaur@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -113,13 +113,13 @@ struct Foo
     std::string s;
 
     template< class Archive >
-    void serialize( Archive & ar, const unsigned int version )
+    void serialize( Archive & ar, const unsigned int )
     {
         ar & i;
         ar & f;
         ar & b;
         ar & s;
-    }    
+    }
 };
 
 SERIALIZABLEANY( Foo )

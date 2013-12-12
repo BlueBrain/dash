@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -70,13 +70,13 @@ inline std::ostream& operator << ( std::ostream& os, const Commit& commit )
 }
 
 template< class Archive >
-inline void Commit::save( Archive& ar, const unsigned int version ) const
+inline void Commit::save( Archive& ar, const unsigned int ) const
 {
     ar << changes_;
 }
 
 template< class Archive >
-inline void Commit::load( Archive& ar, const unsigned int version )
+inline void Commit::load( Archive& ar, const unsigned int )
 {
     ar >> changes_;
 }

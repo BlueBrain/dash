@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -108,8 +108,8 @@ void Commit::apply() const
                   change.node->insert( change.attribute );
               }
               else
-                  LBINFO << "Ignoring Node::insert change, parent not mapped"
-                         << std::endl;
+                  LBINFO << "Ignoring Attribute::insert change, parent not "
+                         << "mapped" << std::endl;
               break;
 
           case Change::ATTRIBUTE_ERASE:

@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -103,7 +103,7 @@ private:
 };
 
 template< class Archive >
-inline void Node::save( Archive& ar, const unsigned int version ) const
+inline void Node::save( Archive& ar, const unsigned int ) const
 {
     ar << node_;
     ar << parents_.get();
@@ -112,7 +112,7 @@ inline void Node::save( Archive& ar, const unsigned int version ) const
 }
 
 template< class Archive >
-inline void Node::load( Archive& ar, const unsigned int version )
+inline void Node::load( Archive& ar, const unsigned int )
 {
     ar >> node_;
     boost::shared_ptr< Parents > parents( new Parents );

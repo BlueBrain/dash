@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2012, EFPL/Blue Brain Project
+/* Copyright (c) 2012, EPFL/Blue Brain Project
  *                     Daniel Nachbaur <daniel.nachbaur@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -38,32 +38,32 @@
 
 /** Provides generic serialization implementation for classes using a pimpl
     which is a lunchbox::Referenced. */
-#define SERIALIZABLEREF( class, oarchive, iarchive )                    \
-    template<> DASH_API                                                 \
-    void class::save( oarchive& ar, const unsigned int version ) const  \
-    {                                                                   \
-        ar << impl_;                                                    \
-    }                                                                   \
-    template<> DASH_API                                                 \
-    void class::load( iarchive& ar, const unsigned int version )        \
-    {                                                                   \
-        impl_->orphan();                                                \
-        impl_->unref( this );                                           \
-        ar >> impl_;                                                    \
-        impl_->ref( this );                                             \
+#define SERIALIZABLEREF( class, oarchive, iarchive )            \
+    template<> DASH_API                                         \
+    void class::save( oarchive& ar, const unsigned int ) const  \
+    {                                                           \
+        ar << impl_;                                            \
+    }                                                           \
+    template<> DASH_API                                         \
+    void class::load( iarchive& ar, const unsigned int )        \
+    {                                                           \
+        impl_->orphan();                                        \
+        impl_->unref( this );                                   \
+        ar >> impl_;                                            \
+        impl_->ref( this );                                     \
     }
 
 /** Provides generic serialization implementation for classes using a pimpl. */
-#define SERIALIZABLEPLAIN( class, oarchive, iarchive )                  \
-    template<> DASH_API                                                 \
-    void class::save( oarchive& ar, const unsigned int version ) const  \
-    {                                                                   \
-        ar << impl_;                                                    \
-    }                                                                   \
-    template<> DASH_API                                                 \
-    void class::load( iarchive& ar, const unsigned int version )        \
-    {                                                                   \
-        ar >> impl_;                                                    \
+#define SERIALIZABLEPLAIN( class, oarchive, iarchive )          \
+    template<> DASH_API                                         \
+    void class::save( oarchive& ar, const unsigned int ) const  \
+    {                                                           \
+        ar << impl_;                                            \
+    }                                                           \
+    template<> DASH_API                                         \
+    void class::load( iarchive& ar, const unsigned int )        \
+    {                                                           \
+        ar >> impl_;                                            \
     }
 
 /** Provides serialization implementation with boost.textArchive using the

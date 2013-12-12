@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011-2012, EFPL/Blue Brain Project
+/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -88,7 +88,7 @@ public:
     Counter() : nNodes( 0 ) {}
     virtual ~Counter() {}
 
-    virtual dash::VisitorResult visitDown( dash::ConstNodePtr node )
+    virtual dash::VisitorResult visitDown( dash::ConstNodePtr )
         { ++nNodes; return dash::ACCEPT_CONTINUE; }
     size_t nNodes;
 };

@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011, EFPL/Blue Brain Project
+/* Copyright (c) 2011, EPFL/Blue Brain Project
  *                     Stefan Eilemann <stefan.eilemann@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -43,7 +43,7 @@ Attribute::Attribute( dash::Attribute* attribute )
         boost::bind( &Attribute::notifyValueChanged_, this, _1, _2 ));
 }
 
-Attribute::Attribute( dash::Attribute* attribute, AttributePtr from )
+Attribute::Attribute( dash::Attribute* attribute, AttributePtr /*from*/ )
         : attribute_( attribute )
 {
 }
