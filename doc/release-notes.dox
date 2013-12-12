@@ -16,8 +16,8 @@
 
 @section Introduction Introduction
 Welcome to DASH, a C++ library for generic, efficient multi-threaded Data
-Access and Sharing. This is the initial release of DASH, which provides the
-following features:
+Access and Sharing. This is a bugfix release for the initial release of DASH,
+which provides the following features:
 - dash::Attribute providing generic data storage.
 - dash::Node forming generic directed acyclic graphs and storing attributes
 - dash::Context providing thread-safe access to attributes and nodes using
@@ -45,7 +45,8 @@ copy-on-write data protection
 - API Documentation at http://bluebrain.github.com/
 
 @subsection Bug_Fixes Bug Fixes
-- Initial release, no bug fixes
+DASH 1.0.1 fixes the following bugs:
+- Compilation and packaging issues on newer operating systems
 
 @subsection Known_Bugs Known Bugs
 - No Known Bugs
