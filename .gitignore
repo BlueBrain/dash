@@ -5,3 +5,4 @@ doc/html
 doc/man
 CMakeLists.txt.user*
 Makefile
+CMake/common

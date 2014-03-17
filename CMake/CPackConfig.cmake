@@ -5,8 +5,6 @@
 set(CPACK_PROJECT_NAME "libdash")
 set(CPACK_PACKAGE_VENDOR "bluebrain.epfl.ch")
 set(CPACK_PACKAGE_CONTACT "Stefan Eilemann <Stefan.Eilemann@epfl.ch>")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
- "Library for generic, efficient and thread-safe Data Access and Sharing")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS
  "libstdc++6, libboost-serialization-dev, ${LUNCHBOX_DEV_DEPENDENCY}")
 
