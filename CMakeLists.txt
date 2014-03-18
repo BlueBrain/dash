@@ -1,11 +1,14 @@
 
-# Copyright (c) 2011-2012 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
+# Copyright (c) 2011-2014 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
 
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(dash)
 set(CMAKE_MACPORTS_NAME libdash)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake
+  ${CMAKE_SOURCE_DIR}/CMake/common)
+
+include(GitExternal)
 include(Buildyard)
 if(BUILDYARD_STOP)
   return()
@@ -18,8 +21,10 @@ set(VERSION_MAJOR "1")
 set(VERSION_MINOR "1")
 set(VERSION_PATCH "0")
 
+set(DASH_DESCRIPTION
+ "C++ library for generic, efficient and thread-safe Data Access and Sharing")
+set(COMMON_PROJECT_DOMAIN ch.epfl.bluebrain)
 include(Common)
-include(GitTargets)
 include(FindPackages)
 set(DASH_DEPENDENT_LIBRARIES Lunchbox)
 
@@ -29,10 +34,11 @@ add_subdirectory(tests)
 
 file(GLOB DOC_PDF_FILES ${CMAKE_SOURCE_DIR}/doc/*.pdf)
 foreach(DOC_PDF_FILE ${DOC_PDF_FILES})
-  set(DOXYGEN_PDF_FILES "${DOXYGEN_PDF_FILES} ${DOC_PDF_FILE}")
+  set(DOXYGEN_EXTRA_FILES "${DOXYGEN_EXTRA_FILES} ${DOC_PDF_FILE}")
 endforeach()
-include(DoxygenRule)
-
-include(CTest)
 include(CPackConfig)
-include(PackageConfig)
+
+set(DOXYGEN_MAINPAGE_MD README.md)
+set(DOXYGEN_EXTRA_INPUT @dash_SOURCE_DIR@/README.md)
+set(DOXYGEN_EXTRA_EXCLUDE @CMAKE_INSTALL_PREFIX@/include/dash/detail)
+include(DoxygenRule)
