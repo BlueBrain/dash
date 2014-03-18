@@ -34,7 +34,7 @@ add_subdirectory(tests)
 
 file(GLOB DOC_PDF_FILES ${CMAKE_SOURCE_DIR}/doc/*.pdf)
 foreach(DOC_PDF_FILE ${DOC_PDF_FILES})
-  set(DOXYGEN_PDF_FILES "${DOXYGEN_PDF_FILES} ${DOC_PDF_FILE}")
+  set(DOXYGEN_EXTRA_FILES "${DOXYGEN_EXTRA_FILES} ${DOC_PDF_FILE}")
 endforeach()
 include(CPackConfig)
 
