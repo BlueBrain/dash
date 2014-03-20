@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
+/* Copyright (c) 2011-2014, EPFL/Blue Brain Project
  *                          Stefan.Eilemann@epfl.ch
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -31,7 +31,7 @@ namespace detail
 {
 
 /** The attribute implementation. */
-class Attribute : public lunchbox::Referenced, public lunchbox::NonCopyable
+class Attribute : public lunchbox::Referenced, public boost::noncopyable
 {
 public:
     explicit Attribute( dash::Attribute* attribute );
