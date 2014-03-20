@@ -1,6 +1,6 @@
 
-/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
- *                     Stefan Eilemann <stefan.eilemann@epfl.ch>
+/* Copyright (c) 2011-2014, EPFL/Blue Brain Project
+ *                          Stefan.Eilemann@epfl.ch
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
  *
@@ -34,7 +34,7 @@ namespace detail
 {
 
 /** The node implementation. */
-class Node : public lunchbox::Referenced, public lunchbox::NonCopyable
+class Node : public lunchbox::Referenced, public boost::noncopyable
 {
 public:
     explicit Node( dash::Node* node );
