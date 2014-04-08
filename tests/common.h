@@ -18,6 +18,9 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#ifndef DASH_TESTS_COMMON_H
+#define DASH_TESTS_COMMON_H
+
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
@@ -31,10 +34,17 @@ class Node
 public:
     Node() : value_( 42 ) {}
 
-    int get() const;
-    void set( const int value );
+    int get() const
+    {
+        return value_;
+    }
+    void set( const int value )
+    {
+        value_ = value;
+    }
 
 private:
     int value_;
 };
 }
+#endif
