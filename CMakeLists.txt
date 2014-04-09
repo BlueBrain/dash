@@ -24,11 +24,11 @@ set(VERSION_PATCH "0")
 set(DASH_DESCRIPTION
  "C++ library for generic, efficient and thread-safe Data Access and Sharing")
 set(COMMON_PROJECT_DOMAIN ch.epfl.bluebrain)
+set(DASH_PACKAGE_URL https://launchpad.net/~eilemann/+archive/equalizer)
 include(Common)
 include(FindPackages)
 set(DASH_DEPENDENT_LIBRARIES Lunchbox)
 
-# add_subdirectory(examples)
 add_subdirectory(dash)
 add_subdirectory(tests)
 

@@ -49,9 +49,11 @@ int dash::test::main( int argc, char **argv )
     iNode = 0;
     iAttribute = 0;
 
+    // cppcheck-suppress redundantAssignment
     node = new dash::Node;
     TEST( node->getRefCount() == 1 );
 
+    // cppcheck-suppress redundantAssignment
     attribute = new dash::Attribute;
     TEST( attribute->getRefCount() == 1 );
 
