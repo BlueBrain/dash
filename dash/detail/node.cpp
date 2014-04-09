@@ -82,6 +82,7 @@ Node& Node::operator = ( const Node& from )
     if( this == &from )
         return *this;
 
+    node_ = 0;
     LBUNIMPLEMENTED;
     return *this;
 }
