@@ -75,13 +75,7 @@ public:
     void setInputQueue(CommitQueue* input) { inputQ_ = input; }
     void setOutputQueue(CommitQueue* output) { outputQ_ = output; }
 
-    virtual ~TestThread()
-    {
-        context_.setCurrent( );
-        context_.commit( );  // consume remaining changes
-    }
-
-    virtual void run()
+    void run() override
     {
         context_.setCurrent();
         while( true )
@@ -92,8 +86,9 @@ public:
             commit = context_.commit();
             outputQ_->push( commit );
             if( !result )
-                exit( );
+                break;
         }
+        context_.commit( );  // consume remaining changes
     }
 
     void setTree( const dash::NodePtr tree ) { tree_ = tree; }
