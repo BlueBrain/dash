@@ -7,12 +7,12 @@
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
  * by the Free Software Foundation.
- *  
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -45,9 +45,7 @@ public:
         attr_ = new dash::Attribute(ATTR_INIT_VALUE);
     }
 
-    virtual ~Producer() {}
-
-    virtual void run()
+    void run() override
     {
         int producedData = PROD_BEGIN_VAL;
         context_.setCurrent();
@@ -96,13 +94,7 @@ public:
     void setInputQueue(CommitQueue* input) { inputQ_ = input; }
     void setOutputQueue(CommitQueue* output) { outputQ_ = output; }
 
-    virtual ~Filter()
-    {
-        context_.setCurrent();
-        context_.commit();  // consume remaining changes
-    }
-
-    virtual void run()
+    void run() override
     {
         int producerData = PROD_BEGIN_VAL;
         context_.setCurrent();
@@ -123,8 +115,10 @@ public:
             commit = context_.commit();
             outputQ_->push(commit);
             if(outData == 0)
-                exit();
+                break;
         }
+
+        context_.commit();  // consume remaining changes
     }
 
     void setAttribute(const dash::AttributePtr attr) { attr_ = attr; }
@@ -159,13 +153,7 @@ public:
             consumeMultiplier_ *= MULT_CONST;
     }
 
-    virtual ~Consumer()
-    {
-        context_.setCurrent();
-        context_.commit();  // consume remaining changes
-    }
-
-    virtual void run()
+    void run() override
     {
         int producerData = PROD_BEGIN_VAL;
         context_.setCurrent();
@@ -182,8 +170,10 @@ public:
             TESTINFO(consumedData == targetConsumedData,
                      consumedData << "!=" << targetConsumedData);
             if(consumedData == 0)
-                exit();
+                break;
         }
+
+        context_.commit();  // consume remaining changes
     }
 
     void setAttribute(const dash::AttributePtr attr) { attr_ = attr; }
