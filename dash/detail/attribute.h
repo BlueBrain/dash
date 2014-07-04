@@ -1,5 +1,5 @@
 
-/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
+/* Copyright (c) 2011-2014, EPFL/Blue Brain Project
  *                          Stefan.Eilemann@epfl.ch
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
@@ -23,6 +23,7 @@
 
 #include "contextPtr.h" // member (Attributes)
 #include "types.h"
+#include <lunchbox/nonCopyable.h> // base class
 #include <lunchbox/referenced.h> // base class
 
 namespace dash
