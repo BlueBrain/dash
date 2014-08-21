@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(dash)
 set(CMAKE_MACPORTS_NAME libdash)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/CMake
-  ${CMAKE_SOURCE_DIR}/CMake/common)
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake
+  ${PROJECT_SOURCE_DIR}/CMake/common)
 
 include(GitExternal)
 include(Buildyard)
@@ -32,7 +32,7 @@ set(DASH_DEPENDENT_LIBRARIES Lunchbox)
 add_subdirectory(dash)
 add_subdirectory(tests)
 
-file(GLOB DOC_PDF_FILES ${CMAKE_SOURCE_DIR}/doc/*.pdf)
+file(GLOB DOC_PDF_FILES ${PROJECT_SOURCE_DIR}/doc/*.pdf)
 foreach(DOC_PDF_FILE ${DOC_PDF_FILES})
   set(DOXYGEN_EXTRA_FILES "${DOXYGEN_EXTRA_FILES} ${DOC_PDF_FILE}")
 endforeach()
