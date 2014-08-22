@@ -9,10 +9,6 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake
   ${PROJECT_SOURCE_DIR}/CMake/common)
 
 include(GitExternal)
-include(Buildyard)
-if(BUILDYARD_STOP)
-  return()
-endif()
 list(APPEND CMAKE_PREFIX_PATH ${SystemDrive}:/cygwin/bin)
 
 set(RELEASE_VERSION OFF) # OFF or ABI version
@@ -21,11 +17,16 @@ set(VERSION_MAJOR "1")
 set(VERSION_MINOR "1")
 set(VERSION_PATCH "0")
 
+include(Common)
+include(Buildyard)
+if(BUILDYARD_STOP)
+  return()
+endif()
+
 set(DASH_DESCRIPTION
  "C++ library for generic, efficient and thread-safe Data Access and Sharing")
 set(COMMON_PROJECT_DOMAIN ch.epfl.bluebrain)
 set(DASH_PACKAGE_URL https://launchpad.net/~eilemann/+archive/equalizer)
-include(Common)
 include(FindPackages)
 set(DASH_DEPENDENT_LIBRARIES Lunchbox)
 
