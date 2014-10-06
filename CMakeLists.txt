@@ -6,16 +6,15 @@ project(dash)
 set(CMAKE_MACPORTS_NAME libdash)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake
-  ${PROJECT_SOURCE_DIR}/CMake/common)
+                              ${PROJECT_SOURCE_DIR}/CMake/common)
 
 include(GitExternal)
 list(APPEND CMAKE_PREFIX_PATH ${SystemDrive}:/cygwin/bin)
 
-set(RELEASE_VERSION OFF) # OFF or ABI version
-set(LAST_RELEASE 1.0.1)
 set(VERSION_MAJOR "1")
-set(VERSION_MINOR "1")
-set(VERSION_PATCH "0")
+set(VERSION_MINOR "0")
+set(VERSION_PATCH "2")
+set(VERSION_ABI 1)
 
 include(Common)
 include(Buildyard)
