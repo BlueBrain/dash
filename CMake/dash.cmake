@@ -1,5 +1,5 @@
 
-set(DASH_PACKAGE_VERSION 1.1.0)
+set(DASH_PACKAGE_VERSION 1.0)
 set(DASH_DEPENDS bluebrain REQUIRED Lunchbox Boost)
 set(DASH_BOOST_COMPONENTS serialization)
 set(DASH_DEB_DEPENDS libboost-serialization-dev)
