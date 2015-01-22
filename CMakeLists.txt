@@ -27,7 +27,7 @@ include(FindPackages)
 add_subdirectory(dash)
 add_subdirectory(tests)
 
-file(GLOB DOC_PDF_FILES ${CMAKE_SOURCE_DIR}/doc/*.pdf)
+file(GLOB DOC_PDF_FILES ${PROJECT_SOURCE_DIR}/doc/*.pdf)
 foreach(DOC_PDF_FILE ${DOC_PDF_FILES})
   set(DOXYGEN_EXTRA_FILES "${DOXYGEN_EXTRA_FILES} ${DOC_PDF_FILE}")
 endforeach()
