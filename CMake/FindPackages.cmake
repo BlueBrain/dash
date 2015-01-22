@@ -2,36 +2,61 @@
 
 include(System)
 list(APPEND FIND_PACKAGES_DEFINES ${SYSTEM})
+# Copyright (c) 2014 Stefan.Eilemann@epfl.ch
+
+# Provides common_package(Name args) which improves find_package.
+# First invokes find_package with all the given arguments, and then
+# falls back to using pkg_config if available. The pkg_config path
+# does only implement the version, REQUIRED and QUIET find_package
+# arguments (e.g. no COMPONENTS)
+
 find_package(PkgConfig)
+set(ENV{PKG_CONFIG_PATH}
+  "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig:$ENV{PKG_CONFIG_PATH}")
 
-set(ENV{PKG_CONFIG_PATH} "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig:$ENV{PKG_CONFIG_PATH}")
-if(PKG_CONFIG_EXECUTABLE)
-  find_package(Lunchbox 1.9)
-  if((NOT Lunchbox_FOUND) AND (NOT LUNCHBOX_FOUND))
-    pkg_check_modules(Lunchbox Lunchbox>=1.9)
-  endif()
-  if((NOT Lunchbox_FOUND) AND (NOT LUNCHBOX_FOUND))
-    message(FATAL_ERROR "Could not find Lunchbox")
-  endif()
-else()
-  find_package(Lunchbox 1.9  REQUIRED)
-endif()
+macro(COMMON_PACKAGE Name)
+  string(TOUPPER ${Name} COMMON_PACKAGE_NAME)
+  set(COMMON_PACKAGE_ARGS ${ARGN}) # ARGN is not a list. make one.
+  set(COMMON_PACKAGE_VERSION)
 
-if(PKG_CONFIG_EXECUTABLE)
-  find_package(Boost 1.41.0 COMPONENTS serialization)
-  if((NOT Boost_FOUND) AND (NOT BOOST_FOUND))
-    pkg_check_modules(Boost Boost>=1.41.0)
+  if(COMMON_PACKAGE_ARGS)
+    list(GET COMMON_PACKAGE_ARGS 0 COMMON_PACKAGE_VERSION)
+    if(COMMON_PACKAGE_VERSION MATCHES "^[0-9.]+$") # is a version
+      set(COMMON_PACKAGE_VERSION ">=${COMMON_PACKAGE_VERSION}")
+    else()
+      set(COMMON_PACKAGE_VERSION)
+    endif()
   endif()
-  if((NOT Boost_FOUND) AND (NOT BOOST_FOUND))
-    message(FATAL_ERROR "Could not find Boost COMPONENTS serialization")
+
+  list(FIND COMMON_PACKAGE_ARGS "QUIET" COMMON_PACKAGE_QUIET_POS)
+  if(COMMON_PACKAGE_QUIET_POS EQUAL -1)
+    set(COMMON_PACKAGE_QUIET)
+  else()
+    set(COMMON_PACKAGE_QUIET "QUIET")
   endif()
-else()
-  find_package(Boost 1.41.0  REQUIRED serialization)
-endif()
 
+  list(FIND COMMON_PACKAGE_ARGS "REQUIRED" COMMON_PACKAGE_REQUIRED_POS)
+  if(COMMON_PACKAGE_REQUIRED_POS EQUAL -1) # Optional find
+    find_package(${Name} ${COMMON_PACKAGE_ARGS}) # try standard cmake way
+    if((NOT ${Name}_FOUND) AND (NOT ${COMMON_PACKAGE_NAME}_FOUND) AND PKG_CONFIG_EXECUTABLE)
+      pkg_check_modules(${Name} ${Name}${COMMON_PACKAGE_VERSION}
+        ${COMMON_PACKAGE_QUIET}) # try pkg_config way
+    endif()
+  else() # required find
+    list(REMOVE_AT COMMON_PACKAGE_ARGS ${COMMON_PACKAGE_REQUIRED_POS})
+    find_package(${Name} ${COMMON_PACKAGE_ARGS}) # try standard cmake way
+    if((NOT ${Name}_FOUND) AND (NOT ${COMMON_PACKAGE_NAME}_FOUND) AND PKG_CONFIG_EXECUTABLE)
+      pkg_check_modules(${Name} REQUIRED ${Name}${COMMON_PACKAGE_VERSION}
+        ${COMMON_PACKAGE_QUIET}) # try pkg_config way (and fail if needed)
+    endif()
+  endif()
+endmacro()
 
-if(EXISTS ${CMAKE_SOURCE_DIR}/CMake/FindPackagesPost.cmake)
-  include(${CMAKE_SOURCE_DIR}/CMake/FindPackagesPost.cmake)
+common_package(Lunchbox 1.10  REQUIRED )
+common_package(Boost 1.41.0  REQUIRED COMPONENTS serialization)
+
+if(EXISTS ${PROJECT_SOURCE_DIR}/CMake/FindPackagesPost.cmake)
+  include(${PROJECT_SOURCE_DIR}/CMake/FindPackagesPost.cmake)
 endif()
 
 if(LUNCHBOX_FOUND)
@@ -43,6 +68,9 @@ elseif(Lunchbox_FOUND)
 endif()
 if(Lunchbox_name)
   list(APPEND FIND_PACKAGES_DEFINES DASH_USE_LUNCHBOX)
+  if(NOT COMMON_LIBRARY_TYPE MATCHES "SHARED")
+    list(APPEND DASH_DEPENDENT_LIBRARIES Lunchbox)
+  endif()
   set(FIND_PACKAGES_FOUND "${FIND_PACKAGES_FOUND} Lunchbox")
   link_directories(${${Lunchbox_name}_LIBRARY_DIRS})
   if(NOT "${${Lunchbox_name}_INCLUDE_DIRS}" MATCHES "-NOTFOUND")
@@ -59,6 +87,9 @@ elseif(Boost_FOUND)
 endif()
 if(Boost_name)
   list(APPEND FIND_PACKAGES_DEFINES DASH_USE_BOOST)
+  if(NOT COMMON_LIBRARY_TYPE MATCHES "SHARED")
+    list(APPEND DASH_DEPENDENT_LIBRARIES Boost)
+  endif()
   set(FIND_PACKAGES_FOUND "${FIND_PACKAGES_FOUND} Boost")
   link_directories(${${Boost_name}_LIBRARY_DIRS})
   if(NOT "${${Boost_name}_INCLUDE_DIRS}" MATCHES "-NOTFOUND")
@@ -66,27 +97,26 @@ if(Boost_name)
   endif()
 endif()
 
-set(DASH_BUILD_DEBS autoconf;automake;cmake;doxygen;git;git-review;libavahi-compat-libdnssd-dev;libboost-filesystem-dev;libboost-regex-dev;libboost-serialization-dev;libboost-system-dev;libhwloc-dev;libjpeg-turbo8-dev;libleveldb-dev;libturbojpeg;pkg-config;subversion)
+set(DASH_BUILD_DEBS autoconf;automake;avahi-daemon;cmake;doxygen;git;git-review;libavahi-client-dev;libboost-filesystem-dev;libboost-regex-dev;libboost-serialization-dev;libboost-system-dev;libboost-test-dev;libboost-thread-dev;libhwloc-dev;libleveldb-dev;libopenmpi-dev;openmpi-bin;pkg-config;subversion)
 
 set(DASH_DEPENDS Lunchbox;Boost)
 
 # Write defines.h and options.cmake
 if(NOT PROJECT_INCLUDE_NAME)
   message(WARNING "PROJECT_INCLUDE_NAME not set, old or missing Common.cmake?")
-  set(PROJECT_INCLUDE_NAME ${CMAKE_PROJECT_NAME})
+  set(PROJECT_INCLUDE_NAME ${PROJECT_NAME})
 endif()
 if(NOT OPTIONS_CMAKE)
-  set(OPTIONS_CMAKE ${CMAKE_BINARY_DIR}/options.cmake)
+  set(OPTIONS_CMAKE ${CMAKE_CURRENT_BINARY_DIR}/options.cmake)
 endif()
-set(DEFINES_FILE "${CMAKE_BINARY_DIR}/include/${PROJECT_INCLUDE_NAME}/defines${SYSTEM}.h")
+set(DEFINES_FILE "${CMAKE_CURRENT_BINARY_DIR}/include/${PROJECT_INCLUDE_NAME}/defines${SYSTEM}.h")
 list(APPEND COMMON_INCLUDES ${DEFINES_FILE})
 set(DEFINES_FILE_IN ${DEFINES_FILE}.in)
 file(WRITE ${DEFINES_FILE_IN}
   "// generated by CMake/FindPackages.cmake, do not edit.\n\n"
-  "#ifndef ${CMAKE_PROJECT_NAME}_DEFINES_${SYSTEM}_H\n"
-  "#define ${CMAKE_PROJECT_NAME}_DEFINES_${SYSTEM}_H\n\n")
-file(WRITE ${OPTIONS_CMAKE} "# Optional modules enabled during build\n"
-  "list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})\n")
+  "#ifndef ${PROJECT_NAME}_DEFINES_${SYSTEM}_H\n"
+  "#define ${PROJECT_NAME}_DEFINES_${SYSTEM}_H\n\n")
+file(WRITE ${OPTIONS_CMAKE} "# Optional modules enabled during build\n")
 foreach(DEF ${FIND_PACKAGES_DEFINES})
   add_definitions(-D${DEF}=1)
   file(APPEND ${DEFINES_FILE_IN}
@@ -127,7 +157,7 @@ if(QT4_FOUND)
   if(NOT EXISTS ${QT_USE_FILE})
     message(WARNING "Can't find QT_USE_FILE!")
   else()
-    set(_customUseQt4File "${CMAKE_BINARY_DIR}/UseQt4.cmake")
+    set(_customUseQt4File "${CMAKE_CURRENT_BINARY_DIR}/UseQt4.cmake")
     file(READ ${QT_USE_FILE} content)
     # Change all include_directories() to use the SYSTEM option
     string(REPLACE "include_directories(" "include_directories(SYSTEM " content ${content})
@@ -139,8 +169,8 @@ if(QT4_FOUND)
 endif()
 if(FIND_PACKAGES_FOUND)
   if(MSVC)
-    message(STATUS "Configured with ${FIND_PACKAGES_FOUND}")
+    message(STATUS "Configured ${PROJECT_NAME} with ${FIND_PACKAGES_FOUND}")
   else()
-    message(STATUS "Configured with ${CMAKE_BUILD_TYPE}${FIND_PACKAGES_FOUND}")
+    message(STATUS "Configured ${PROJECT_NAME} with ${CMAKE_BUILD_TYPE}${FIND_PACKAGES_FOUND}")
   endif()
 endif()
