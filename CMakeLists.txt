@@ -5,10 +5,9 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(dash)
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMake
-  ${PROJECT_SOURCE_DIR}/CMake/common)
+  ${CMAKE_SOURCE_DIR}/CMake/common)
 
 include(GitExternal)
-include(SubProject)
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "1")
@@ -34,6 +33,6 @@ endforeach()
 include(CPackConfig)
 
 set(DOXYGEN_MAINPAGE_MD README.md)
-set(DOXYGEN_EXTRA_INPUT @dash_SOURCE_DIR@/README.md)
-set(DOXYGEN_EXTRA_EXCLUDE @CMAKE_INSTALL_PREFIX@/include/dash/detail)
+set(DOXYGEN_EXTRA_INPUT ${PROJECT_SOURCE_DIR}/README.md)
+set(DOXYGEN_EXTRA_EXCLUDE ${CMAKE_INSTALL_PREFIX}/include/dash/detail)
 include(DoxygenRule)
