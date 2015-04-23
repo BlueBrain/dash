@@ -23,8 +23,7 @@
 
 int dash::test::main( int argc, char **argv )
 {
-    TEST( &dash::Context::getMain( argc, argv ));
-    TEST( &dash::Context::getCurrent( ));
+    dash::Context::getMain( argc, argv );
     TEST( &dash::Context::getCurrent() == &dash::Context::getMain( ));
 
     return EXIT_SUCCESS;
