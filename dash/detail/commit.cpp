@@ -91,8 +91,8 @@ void Commit::apply() const
                   change.node->insert( change.child );
               }
               else
-                  LBINFO << "Ignoring Node::insert change, parent not mapped"
-                         << std::endl;
+                  LBDEBUG << "Ignoring Node::insert change, parent not mapped"
+                          << std::endl;
               break;
           case Change::NODE_ERASE:
               if( !change.node->isMapped( ))
@@ -108,8 +108,8 @@ void Commit::apply() const
                   change.node->insert( change.attribute );
               }
               else
-                  LBINFO << "Ignoring Attribute::insert change, parent not "
-                         << "mapped" << std::endl;
+                  LBDEBUG << "Ignoring Attribute::insert change, parent not "
+                          << "mapped" << std::endl;
               break;
 
           case Change::ATTRIBUTE_ERASE:
@@ -123,7 +123,7 @@ void Commit::apply() const
               break;
 
           default:
-              LBINFO << change << std::endl;
+              LBERROR << change << std::endl;
               LBUNIMPLEMENTED;
         }
     }

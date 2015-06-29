@@ -77,7 +77,7 @@ Context& Context::getMain( const int argc, char** argv )
         LBASSERT( lunchbox::Version::check( ));
         if( !lunchbox::Version::check()  || !lunchbox::init( argc, argv ))
             LBERROR << "Lunchbox initialization failed" << std::endl;
-        LBINFO << "Initializing main dash::Context v" << Version::getString()
+        LBDEBUG << "Initializing main dash::Context v" << Version::getString()
                << std::boolalpha << std::endl;
         _mainContext = new Context;
     }
