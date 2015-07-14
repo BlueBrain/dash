@@ -21,7 +21,10 @@ set(COMMON_PROJECT_DOMAIN ch.epfl.bluebrain)
 set(DASH_DESCRIPTION
  "C++ library for generic, efficient and thread-safe Data Access and Sharing")
 set(DASH_DEPENDENT_LIBRARIES Lunchbox)
-include(FindPackages)
+
+common_package(Boost REQUIRED COMPONENTS serialization)
+common_package(Lunchbox REQUIRED)
+common_package_post()
 
 add_subdirectory(dash)
 add_subdirectory(tests)

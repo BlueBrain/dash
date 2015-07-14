@@ -2,7 +2,6 @@
 # Copyright (c) 2011-2014 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
 
 set(DASH_PUBLIC_HEADERS # public, installed
-  ${COMMON_INCLUDES}
   attribute.h
   commit.h
   context.h
@@ -27,7 +26,6 @@ set(DASH_PUBLIC_HEADERS # public, installed
 )
 
 set(DASH_SOURCES
-  ${COMMON_SOURCES}
   attribute.cpp
   context.cpp
   commit.cpp
