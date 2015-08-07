@@ -56,7 +56,7 @@ public:
     void apply( ConstCommitPtr commit );
 
 private:
-    friend int test::main( int argc, char **argv );
+    friend int ::testMain( int, char ** );
 
     const size_t slot_; //!< lookup index for data of this Context
     ContextCommit commit_; //!< pending changes

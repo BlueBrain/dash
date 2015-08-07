@@ -1,6 +1,6 @@
 
-/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
- *                     Stefan Eilemann <stefan.eilemann@epfl.ch>
+/* Copyright (c) 2011-2015, EPFL/Blue Brain Project
+ *                          Stefan Eilemann <stefan.eilemann@epfl.ch>
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
  *
@@ -26,14 +26,10 @@
 #include <lunchbox/lfVector.h>
 #include <vector>
 
+int testMain( int, char ** ); //!< @internal
 
 namespace dash
 {
-namespace test
-{
-int main( int argc, char **argv ); //!< @internal
-}
-
 namespace detail
 {
 

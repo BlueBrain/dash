@@ -50,7 +50,7 @@ public:
     size_t up;
 };
 
-int dash::test::main( int argc, char **argv )
+int main( int argc, char **argv )
 {
     dash::Context::getMain( argc, argv );
     //lunchbox::sleep( 5000 );

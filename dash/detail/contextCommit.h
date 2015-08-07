@@ -43,7 +43,7 @@ public:
 
 private:
     friend class Commit;
-    friend int test::main( int argc, char **argv );
+    friend int ::testMain( int, char ** );
     friend std::ostream& operator << ( std::ostream& os,
                                        const ContextCommit& commit );
 

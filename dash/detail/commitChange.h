@@ -39,6 +39,8 @@ class CommitChange : public Change
 {
 public:
     CommitChange() : Change() {}
+
+    // cppcheck-suppress noExplicitConstructor
     CommitChange( const ContextChange& rhs );
 
     bool operator == ( const CommitChange& rhs ) const;

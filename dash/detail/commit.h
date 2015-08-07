@@ -53,7 +53,7 @@ public:
 private:
     LB_SERIALIZABLE
 
-    friend int test::main( int argc, char **argv );
+    friend int ::testMain( int, char ** );
     friend std::ostream& operator << ( std::ostream& os, const Commit& commit );
 
     mutable CommitChanges changes_;

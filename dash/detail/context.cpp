@@ -74,7 +74,7 @@ private:
 class UnmapVisitor : public dash::Node::Visitor
 {
 public:
-    UnmapVisitor( Context& context ) : context_( context ) {}
+    explicit UnmapVisitor( Context& context ) : context_( context ) {}
     virtual ~UnmapVisitor() {}
 
     virtual VisitorResult visitUp( dash::AttributePtr attribute )

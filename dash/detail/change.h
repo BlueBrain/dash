@@ -49,7 +49,7 @@ public:
     };
 
     Change() : type( NONE ) {}
-    Change( dash::AttributePtr a );
+    explicit Change( dash::AttributePtr a );
     Change( const Type t, NodePtr n, dash::NodePtr c );
     Change( const Type t, NodePtr n, dash::AttributePtr a );
     Change( const Change& rhs );
@@ -66,9 +66,6 @@ public:
 DASH_API std::ostream& operator << ( std::ostream& os, const Change& change );
 DASH_API std::ostream& operator << ( std::ostream& os,
                                      const Change::Type& type );
-
-
-
 }
 }
 

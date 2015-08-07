@@ -38,8 +38,8 @@ typedef lunchbox::MTQueue<dash::Commit, MAX_QUEUE_SIZE> CommitQueue;
 class Producer : public lunchbox::Thread
 {
 public:
-    Producer(CommitQueue* output)
-        :outputQ_(output)
+    explicit Producer( CommitQueue* output )
+        : outputQ_(output)
     {
         context_.setCurrent();
         attr_ = new dash::Attribute(ATTR_INIT_VALUE);
@@ -146,8 +146,8 @@ int Filter::sFilterNo_ = 0;
 class Consumer : public lunchbox::Thread
 {
 public:
-    Consumer(CommitQueue* input)
-    : inputQ_(input), consumeMultiplier_(1)
+    explicit Consumer( CommitQueue* input )
+        : inputQ_(input), consumeMultiplier_(1)
     {
         for(int i = 0; i < FILTER_COUNT; ++i)
             consumeMultiplier_ *= MULT_CONST;
@@ -187,7 +187,7 @@ private:
     int consumeMultiplier_;
 };
 
-int dash::test::main( int argc, char **argv )
+int main( int argc, char **argv )
 {
     dash::Context& mainCtx = dash::Context::getMain( argc, argv );
     {

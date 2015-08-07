@@ -93,7 +93,7 @@ public:
     size_t nNodes;
 };
 
-int dash::test::main( int argc, char **argv )
+int main( int argc, char **argv )
 {
     dash::Context& context = dash::Context::getMain( argc, argv );
     //lunchbox::sleep( 5000 );

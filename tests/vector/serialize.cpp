@@ -23,8 +23,7 @@
 
 #include <lunchbox/lfVector.h>
 
-
-int dash::test::main( int , char ** )
+int main( int , char ** )
 {
     lunchbox::LFVector< int > intVector;
     intVector.push_back( 0 );

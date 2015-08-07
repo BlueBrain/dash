@@ -52,7 +52,8 @@ public:
     DASH_API Attribute( const Attribute& from );
 
     /** Construct a new attribute with a default value. @version 0.1 */
-    template< class T > Attribute( const T& value ){ init_(); (*this) = value; }
+    template< class T > explicit Attribute( const T& value )
+        { init_(); (*this) = value; }
 
     DASH_API virtual ~Attribute(); //!< Destruct this attribute. @version 0.1
 
