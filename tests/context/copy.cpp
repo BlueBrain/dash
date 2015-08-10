@@ -30,7 +30,7 @@
 #include <dash/detail/contextChange.h>
 #include <dash/detail/node.h>
 
-int dash::test::main( int argc, char **argv )
+int main( int argc, char **argv )
 {
     dash::Context& mainCtx = dash::Context::getMain( argc, argv );
     dash::NodePtr node = new dash::Node;

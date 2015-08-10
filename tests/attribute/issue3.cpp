@@ -23,7 +23,7 @@
 #include <dash/context.h>
 #include <dash/attribute.h>
 
-int dash::test::main( int argc, char **argv )
+int main( int argc, char **argv )
 {
     dash::Context& mainCtx = dash::Context::getMain( argc, argv );
 

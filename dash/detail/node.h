@@ -93,7 +93,7 @@ public:
 private:
     LB_SERIALIZABLE
 
-    friend int test::main( int argc, char **argv );
+    friend int testMain( int, char ** );
     dash::Node* node_;
     ParentsCtxPtr parents_;
     ChildrenCtxPtr children_;

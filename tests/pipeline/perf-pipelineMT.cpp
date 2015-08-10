@@ -7,12 +7,12 @@
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
  * by the Free Software Foundation.
- *  
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -50,7 +50,7 @@ typedef lunchbox::MTQueue< dash::Commit, MAX_QUEUE_SIZE > CommitQueue;
 class Producer : public lunchbox::Thread
 {
 public:
-    Producer( CommitQueue* output )
+    explicit Producer( CommitQueue* output )
         :outputQ_( output )
     {
         context_.setCurrent();
@@ -81,7 +81,7 @@ public:
             if( producedData == 0 )
             {
                 _producerStopTime = _clock.getTimef();
-                exit();
+                break;
             }
         }
     }
@@ -105,7 +105,7 @@ public:
         :inputQ_( NULL ), outputQ_( NULL ), filterNo_( ++sFilterNo_ ),
          consumeMultiplier_( 1 )
     {
-        for( int i = 0; i < filterNo_ - 1; ++i )
+        for( size_t i = 0; i < filterNo_ - 1; ++i )
             consumeMultiplier_ *= MULT_CONST;
     }
 
@@ -138,7 +138,7 @@ public:
             if( outData == 0 )
             {
                 _filterStopTime[ filterNo_ ] = _clock.getTimef();
-                exit();
+                break;
             }
         }
     }
@@ -153,23 +153,22 @@ public:
     }
 
 private:
-
-    static int sFilterNo_;
+    static size_t sFilterNo_;
     dash::Context context_;
     CommitQueue* inputQ_;
     CommitQueue* outputQ_;
     dash::AttributePtr attr_;
-    int filterNo_;
+    size_t filterNo_;
     int consumeMultiplier_;
 };
 
-int Filter::sFilterNo_ = 0;
+size_t Filter::sFilterNo_ = 0;
 
 class Consumer : public lunchbox::Thread
 {
 public:
-    Consumer( CommitQueue* input )
-    : inputQ_( input ), consumeMultiplier_( 1 )
+    explicit Consumer( CommitQueue* input )
+        : inputQ_( input ), consumeMultiplier_( 1 )
     {
         for( int i = 0; i < FILTER_COUNT; ++i )
             consumeMultiplier_ *= MULT_CONST;
@@ -203,7 +202,7 @@ public:
             if(consumedData == 0)
             {
                 _consumerStopTime = _clock.getTimef();
-                exit();
+                break;
             }
         }
     }
@@ -212,43 +211,42 @@ public:
     dash::Context& getContext() { return context_; }
 
 private:
-
     dash::Context context_;
     CommitQueue* inputQ_;
     dash::AttributePtr attr_;
     int consumeMultiplier_;
 };
 
-int dash::test::main( int argc, char **argv )
+int main( int argc, char **argv )
 {
     dash::Context& mainCtx = dash::Context::getMain( argc, argv );
     {
         CommitQueue queue[ FILTER_COUNT + 1 ];
-
         Filter filter[ FILTER_COUNT ];
-
         Producer producer( &queue[0] );
-        for(int i = 0; i < FILTER_COUNT; ++i)
+
+        for( size_t i = 0; i < FILTER_COUNT; ++i )
         {
             filter[ i ].setInputQueue( &queue[ i ] );
             filter[ i ].setOutputQueue( &queue[ i + 1 ] );
         }
-        Consumer consumer( &queue[ FILTER_COUNT ] );
 
         filter[0].setAttribute( producer.mapAttributeToContext( filter[ 0 ].getContext() ) );
         for( int i = 1; i < FILTER_COUNT; ++i )
             filter[ i ].setAttribute( filter[ i - 1 ].mapAttributeToContext( filter[ i ].getContext() ) );
+
+        Consumer consumer( &queue[ FILTER_COUNT ] );
         consumer.setAttribute( filter[ FILTER_COUNT - 1 ].mapAttributeToContext( consumer.getContext() ) );
 
         producer.start();
-        for( int i = 0; i < FILTER_COUNT; ++i )
+        for( size_t i = 0; i < FILTER_COUNT; ++i )
             filter[ i ].start();
         consumer.start();
 
-        producer.join();
-        for( int i = 0; i < FILTER_COUNT; ++i )
-                filter[ i ].join();
         consumer.join();
+        for( size_t i = 0; i < FILTER_COUNT; ++i )
+            filter[ i ].join();
+        producer.join();
 
         // commits/second
         std::cerr << "Producer start time:  "

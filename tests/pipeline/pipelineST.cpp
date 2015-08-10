@@ -7,12 +7,12 @@
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
  * by the Free Software Foundation.
- *  
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -27,17 +27,15 @@
 #define STEP1_VALUE 50
 #define STEP2_VALUE 500
 
-
-int dash::test::main( int argc, char **argv )
+int main( int argc, char **argv )
 {
     int currentVal = START_VALUE;
 
     dash::Context& mainCtx = dash::Context::getMain( argc, argv );
     dash::AttributePtr attr = new dash::Attribute( currentVal );
+    dash::Context ctx;
 
-    Context ctx;
-
-    mainCtx.map(attr, ctx);
+    mainCtx.map( attr, ctx );
 
     // First iteration
     int previousValue = currentVal;
@@ -47,7 +45,7 @@ int dash::test::main( int argc, char **argv )
     int value = static_cast< dash::ConstAttributePtr >( attr )->get<int>();
     TESTINFO( value == currentVal, value << "!=" << currentVal);
 
-    Commit commit = mainCtx.commit();
+    dash::Commit commit = mainCtx.commit();
 
     ctx.setCurrent();
     value = static_cast< dash::ConstAttributePtr >( attr )->get<int>();

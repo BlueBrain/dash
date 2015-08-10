@@ -24,7 +24,7 @@
 #include <dash/attribute.h>
 
 
-int dash::test::main( int , char ** )
+int main( int, char ** )
 {
     dash::AttributePtr outAttribute = new dash::Attribute;
 

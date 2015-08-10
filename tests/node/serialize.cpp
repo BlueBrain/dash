@@ -25,8 +25,7 @@
 #include <dash/node.h>
 #include <dash/attribute.h>
 
-
-int dash::test::main( int , char ** )
+int main( int , char ** )
 {
     dash::NodePtr root = createSampleNode();
 
