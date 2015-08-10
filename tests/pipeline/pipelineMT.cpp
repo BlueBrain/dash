@@ -1,6 +1,6 @@
 
-/* Copyright (c) 2011-2012, EPFL/Blue Brain Project
- *                     Ahmet Bilgili
+/* Copyright (c) 2011-2015, EPFL/Blue Brain Project
+ *                          Ahmet Bilgili
  *
  * This file is part of DASH <https://github.com/BlueBrain/dash>
  *
@@ -42,7 +42,7 @@ public:
         : outputQ_(output)
     {
         context_.setCurrent();
-        attr_ = new dash::Attribute(ATTR_INIT_VALUE);
+        attr_ = new dash::Attribute( ATTR_INIT_VALUE );
     }
 
     void run() override
@@ -62,15 +62,15 @@ public:
             TESTINFO(attrProducedData == producedData,
                      producedData << "!=" << attrProducedData );
             dash::Commit commit = context_.commit();
-            outputQ_->push(commit);
+            outputQ_->push( commit );
             if( producedData == 0 )
-                exit();
+                break;
         }
     }
 
     dash::AttributePtr mapAttributeToContext(dash::Context& toContext)
     {
-        context_.map(attr_, toContext);
+        context_.map( attr_, toContext );
         return attr_;
     };
 
@@ -84,10 +84,10 @@ class Filter: public lunchbox::Thread
 {
 public:
     Filter()
-        :inputQ_(NULL), outputQ_(NULL), filterNo_(++sFilterNo_),
+        :inputQ_(NULL), outputQ_(NULL), filterNo_( ++sFilterNo_ ),
          consumeMultiplier_(1)
     {
-        for(int i = 0; i < filterNo_ - 1; ++i)
+        for( size_t i = 0; i < filterNo_ - 1; ++i )
             consumeMultiplier_ *= MULT_CONST;
     }
 
@@ -106,15 +106,15 @@ public:
                 producerData = 0;
             lunchbox::sleep( filterNo_ );
             dash::Commit commit = inputQ_->pop();
-            context_.apply(commit);
+            context_.apply( commit );
             const int outData =
                     static_cast< dash::ConstAttributePtr >( attr_ )->get<int>();
             TESTINFO( outData == consumeMultiplier_ * producerData,
                       outData << "!=" << consumeMultiplier_ * producerData );
             *attr_ = MULT_CONST * outData;
             commit = context_.commit();
-            outputQ_->push(commit);
-            if(outData == 0)
+            outputQ_->push( commit );
+            if( outData == 0 )
                 break;
         }
 
@@ -131,17 +131,16 @@ public:
     };
 
 private:
-
-    static int sFilterNo_;
+    static size_t sFilterNo_;
     dash::Context context_;
     CommitQueue* inputQ_;
     CommitQueue* outputQ_;
     dash::AttributePtr attr_;
-    int filterNo_;
+    size_t filterNo_;
     int consumeMultiplier_;
 };
 
-int Filter::sFilterNo_ = 0;
+size_t Filter::sFilterNo_ = 0;
 
 class Consumer : public lunchbox::Thread
 {
@@ -149,7 +148,7 @@ public:
     explicit Consumer( CommitQueue* input )
         : inputQ_(input), consumeMultiplier_(1)
     {
-        for(int i = 0; i < FILTER_COUNT; ++i)
+        for( size_t i = 0; i < FILTER_COUNT; ++i )
             consumeMultiplier_ *= MULT_CONST;
     }
 
@@ -169,7 +168,7 @@ public:
                     static_cast< dash::ConstAttributePtr >( attr_ )->get<int>();
             TESTINFO(consumedData == targetConsumedData,
                      consumedData << "!=" << targetConsumedData);
-            if(consumedData == 0)
+            if( consumedData == 0 )
                 break;
         }
 
@@ -180,7 +179,6 @@ public:
     dash::Context& getContext() { return context_; }
 
 private:
-
     dash::Context context_;
     CommitQueue* inputQ_;
     dash::AttributePtr attr_;
@@ -192,31 +190,36 @@ int main( int argc, char **argv )
     dash::Context& mainCtx = dash::Context::getMain( argc, argv );
     {
         CommitQueue queue[ FILTER_COUNT + 1 ];
-
         Filter filter[ FILTER_COUNT ];
-
         Producer producer( &queue[0] );
-        for(int i = 0; i < FILTER_COUNT; ++i)
+
+        for( size_t i = 0; i < FILTER_COUNT; ++i )
         {
             filter[ i ].setInputQueue( &queue[ i ] );
             filter[ i ].setOutputQueue( &queue[ i + 1 ] );
         }
-        Consumer consumer( &queue[ FILTER_COUNT ] );
 
-        filter[0].setAttribute( producer.mapAttributeToContext( filter[ 0 ].getContext() ) );
-        for(int i = 1; i < FILTER_COUNT; ++i)
-            filter[ i ].setAttribute( filter[ i - 1 ].mapAttributeToContext( filter[ i ].getContext() ) );
-        consumer.setAttribute( filter[ FILTER_COUNT - 1 ].mapAttributeToContext( consumer.getContext() ) );
+        filter[0].setAttribute( producer.mapAttributeToContext(
+                                    filter[ 0 ].getContext( )));
+        for(size_t i = 1; i < FILTER_COUNT; ++i)
+            filter[ i ].setAttribute( filter[ i - 1 ].mapAttributeToContext(
+                                          filter[ i ].getContext( )));
+
+        Consumer consumer( &queue[ FILTER_COUNT ] );
+        consumer.setAttribute( filter[ FILTER_COUNT - 1 ].mapAttributeToContext(
+                                   consumer.getContext( )));
 
         producer.start();
-        for(int i = 0; i < FILTER_COUNT; ++i)
+        for( size_t i = 0; i < FILTER_COUNT; ++i )
             filter[ i ].start();
         consumer.start();
 
-        producer.join();
-        for(int i = 0; i < FILTER_COUNT; ++i)
-                filter[ i ].join();
         consumer.join();
+        for( size_t i = 0; i < FILTER_COUNT; ++i )
+            filter[ i ].join();
+        producer.join();
+        for( size_t i = 0; i <= FILTER_COUNT; ++i )
+            TEST( queue[ i ].empty( ));
     }
 
     mainCtx.commit();

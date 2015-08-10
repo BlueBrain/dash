@@ -98,8 +98,7 @@ private:
 Context::Context()
         : slot_( allocSlot_( ))
         , commit_()
-{
-}
+{}
 
 Context::~Context()
 {
