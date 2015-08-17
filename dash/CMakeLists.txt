@@ -41,7 +41,7 @@ set(DASH_SOURCES
   detail/node.cpp
 )
 
-set(DASH_LINK_LIBRARIES ${LUNCHBOX_LIBRARIES} ${Boost_LIBRARIES})
+set(DASH_LINK_LIBRARIES PUBLIC Lunchbox ${Boost_LIBRARIES})
 
 source_group(\\ FILES CMakeLists.txt ${DASH_ALL})
 source_group(detail FILES ${DASH_DETAIL_ALL})
