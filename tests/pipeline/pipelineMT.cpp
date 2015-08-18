@@ -104,7 +104,7 @@ public:
             ++producerData;
             if( producerData == ITERATION_COUNT )
                 producerData = 0;
-            lunchbox::sleep( filterNo_ );
+            lunchbox::sleep( uint32_t(filterNo_) );
             dash::Commit commit = inputQ_->pop();
             context_.apply( commit );
             const int outData =
