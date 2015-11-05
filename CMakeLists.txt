@@ -22,6 +22,11 @@ set(DASH_DESCRIPTION
  "C++ library for generic, efficient and thread-safe Data Access and Sharing")
 set(DASH_DEPENDENT_LIBRARIES Lunchbox)
 
+set(DASH_ISSUES_URL "https://github.com/BlueBrain/dash/issues")
+set(DASH_MAINTAINER
+  "BBP Visualization Team <bbp-open-source@googlegroups.com>")
+set(DASH_LICENSE LGPL)
+
 common_package(Boost REQUIRED COMPONENTS serialization)
 common_package(Lunchbox REQUIRED)
 common_package_post()
