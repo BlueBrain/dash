@@ -19,7 +19,7 @@
  */
 
 #define DASH_TEST_NO_WATCHDOG
-#include "test.h"
+#include <lunchbox/test.h>
 #include "common.h"
 
 #include <dash/context.h>

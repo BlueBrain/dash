@@ -18,7 +18,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "test.h"
+#include <lunchbox/test.h>
 
 #include <dash/context.h>
 #include <dash/attribute.h>
