@@ -43,7 +43,4 @@ set(DASH_SOURCES
 
 set(DASH_LINK_LIBRARIES PUBLIC Lunchbox ${Boost_LIBRARIES})
 
-source_group(\\ FILES CMakeLists.txt ${DASH_ALL})
-source_group(detail FILES ${DASH_DETAIL_ALL})
-
 common_library(dash)
