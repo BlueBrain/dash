@@ -1,5 +1,5 @@
 # Copyright (c) 2011-2015 Stefan Eilemann <Stefan.Eilemann@epfl.ch>
-# Change this number when adding tests to force a CMake run: 3
+# Change this number when adding tests to force a CMake run: 4
 
 include_directories(${PROJECT_SOURCE_DIR}/tests)
 
